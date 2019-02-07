@@ -1,0 +1,7 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+renato:
+  name: Renato
+  last_name: Ceolin
+  password_digest: $2a$10$Xe3CdeIP9TQdykcl1.gwve3iJfEaq.LPUzPlQ5Xw6KlD5AmngU/be
+  email: renato.ceolin@waycarbon.com
