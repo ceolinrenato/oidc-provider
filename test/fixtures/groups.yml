@@ -2,6 +2,5 @@
 
 example:
   name: Example
-
-example2:
-  name: Example2
+  desc: 'Does example thing on example company'
+  company: example
