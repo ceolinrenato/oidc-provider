@@ -43,7 +43,7 @@ class GroupTest < ActiveSupport::TestCase
   test "group_desc_should_have_at_least_10_characters" do
     short_desc = dummy_group
     short_desc[:desc] = 'aabc'
-    group = Group.new
+    group = Group.new short_desc
     assert_not group.save
   end
 
