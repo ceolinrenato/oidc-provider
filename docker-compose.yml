@@ -1,0 +1,24 @@
+version: '2' # specify docker-compose version
+
+# Define the services/containers to be run
+services:
+  postgres: # name of the third service
+    image: mdillon/postgis # specify image to build container from
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=XYZHXSLJWGMZOLTF
+      - POSTGRES_DB=OIDCProvider_development
+  oidcprovider: #name of the second service
+    build: .
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    volumes:
+      - .:/oidcprovider
+    ports:
+      - "3000:3000" #specify ports forewarding
+    depends_on:
+      - postgres
+    links:
+      - postgres # link this service to the database service
+      #bundle exec rails s -p 3000 -b '0.0.0.0'
