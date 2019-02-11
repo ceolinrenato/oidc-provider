@@ -1,6 +1,0 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
-example:
-  name: Example
-  desc: 'Does example thing on example company'
-  company: example
