@@ -11,7 +11,6 @@ class RefreshTokenTest < ActiveSupport::TestCase
 
   test "should_create_valid_refresh_token" do
     refresh_token = RefreshToken.new dummy_refresh_token
-    refresh_token.class
     assert refresh_token.save
   end
 
