@@ -3,5 +3,6 @@ class AuthorizationCode < ApplicationRecord
 
   belongs_to :user
   belongs_to :redirect_uri
+  has_one :access_token
 
 end
