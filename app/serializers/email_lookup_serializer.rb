@@ -1,7 +1,7 @@
 class EmailLookupSerializer < BaseSerializer
 
   def email_exists(user)
-    user ? true: false
+    user ? true : false
   end
 
   def initialize(user)
