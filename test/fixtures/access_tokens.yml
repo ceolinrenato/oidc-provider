@@ -3,3 +3,4 @@
 example:
   token: 'HASdjhaLKSJDHkjlsahsdlkJASdh'
   authorization_code: example
+  relying_party: example

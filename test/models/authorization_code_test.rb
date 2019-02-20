@@ -4,7 +4,7 @@ class AuthorizationCodeTest < ActiveSupport::TestCase
 
   def dummy_authorization_code
     {
-      relying_party: relying_parties(:example),
+      user: users(:example),
       redirect_uri: redirect_uris(:example),
       used: false
     }
