@@ -1,5 +1,5 @@
 class Session < ApplicationRecord
-  has_many :authorization_codes
+  has_many :access_tokens
   belongs_to :user
   belongs_to :device
 end

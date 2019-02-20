@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_20_175827) do
+ActiveRecord::Schema.define(version: 2019_02_20_183616) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,7 +20,9 @@ ActiveRecord::Schema.define(version: 2019_02_20_175827) do
     t.bigint "authorization_code_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "session_id"
     t.index ["authorization_code_id"], name: "index_access_tokens_on_authorization_code_id"
+    t.index ["session_id"], name: "index_access_tokens_on_session_id"
     t.index ["token"], name: "index_access_tokens_on_token", unique: true
   end
 
@@ -32,12 +34,10 @@ ActiveRecord::Schema.define(version: 2019_02_20_175827) do
     t.boolean "used", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "session_id"
     t.bigint "relying_party_id"
     t.index ["code"], name: "index_authorization_codes_on_code", unique: true
     t.index ["redirect_uri_id"], name: "index_authorization_codes_on_redirect_uri_id"
     t.index ["relying_party_id"], name: "index_authorization_codes_on_relying_party_id"
-    t.index ["session_id"], name: "index_authorization_codes_on_session_id"
   end
 
   create_table "companies", force: :cascade do |t|
@@ -129,9 +129,9 @@ ActiveRecord::Schema.define(version: 2019_02_20_175827) do
   end
 
   add_foreign_key "access_tokens", "authorization_codes"
+  add_foreign_key "access_tokens", "sessions"
   add_foreign_key "authorization_codes", "redirect_uris"
   add_foreign_key "authorization_codes", "relying_parties"
-  add_foreign_key "authorization_codes", "sessions"
   add_foreign_key "password_tokens", "users"
   add_foreign_key "redirect_uris", "relying_parties"
   add_foreign_key "refresh_tokens", "access_tokens"

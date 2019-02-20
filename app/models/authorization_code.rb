@@ -3,7 +3,6 @@ class AuthorizationCode < ApplicationRecord
 
   belongs_to :relying_party
   belongs_to :redirect_uri
-  belongs_to :session
   has_one :access_token
 
 end

@@ -6,7 +6,6 @@ class AuthorizationCodeTest < ActiveSupport::TestCase
     {
       relying_party: relying_parties(:example),
       redirect_uri: redirect_uris(:example),
-      session: sessions(:example),
       used: false
     }
   end

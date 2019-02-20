@@ -3,5 +3,4 @@
 example:
   relying_party: example,
   redirect_uri: example,
-  session: example,
   used: false

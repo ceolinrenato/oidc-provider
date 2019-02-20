@@ -4,7 +4,8 @@ class AccessTokenTest < ActiveSupport::TestCase
 
   def dummy_access_token
     {
-      authorization_code: authorization_codes(:example)
+      authorization_code: authorization_codes(:example),
+      session: sessions(:example)
     }
   end
 
