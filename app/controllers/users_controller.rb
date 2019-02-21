@@ -13,13 +13,15 @@ class UsersController < ApplicationController
   end
 
   def sign_in
-    set_relying_party_by_client_id
-    set_redirect_uri
-    authenticate_user
-    set_device
-    set_session
-    # TODO: Create AuthoizationCode, AccessToken and Serialize Request Return with AuthCode & DeviceToken
-  rescue CustomExceptions::InvalidRequest, CustomExceptions::InvalidGrant => exception
+    ActiveRecord::Base.transaction do
+      set_relying_party_by_client_id
+      set_redirect_uri
+      authenticate_user
+      set_device
+      set_session
+      # TODO: Create AuthoizationCode, AccessToken and Serialize Request Return with AuthCode & DeviceToken
+    end
+  rescue CustomExceptions::InvalidRequest, CustomExceptions::InvalidGrant, CustomExceptions::InvalidClient => exception
     render json: ErrorSerializer.new(exception), status: :bad_request
   end
 
