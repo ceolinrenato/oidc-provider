@@ -4,6 +4,7 @@ class UsersController < ApplicationController
   include DeviceHelper
   include RelyingPartyHelper
   include RedirectUriHelper
+  include SessionHelper
 
   def lookup
     set_user_by_email
@@ -15,7 +16,7 @@ class UsersController < ApplicationController
   def sign_in
     ActiveRecord::Base.transaction do
       set_relying_party_by_client_id
-      set_redirect_uri
+      set_redirect_uri_by_param
       authenticate_user
       set_device
       set_session

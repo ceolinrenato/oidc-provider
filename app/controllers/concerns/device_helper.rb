@@ -11,7 +11,7 @@ module DeviceHelper
       mobile: browser.device.mobile?,
       tablet: browser.device.tablet?
     }
-    Device.create device
+    Device.create! device
   end
 
   def set_device
