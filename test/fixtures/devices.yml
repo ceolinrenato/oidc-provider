@@ -8,3 +8,12 @@ example:
   mobile: false
   tablet: false
   token: AgajkjhadhASLsda
+
+example2:
+  browser_name: Chrome
+  browser_version: 71
+  platform_name: Generic Linux
+  platform_version: 0
+  mobile: false
+  tablet: false
+  token: LKLhQyrSAKqiuALq

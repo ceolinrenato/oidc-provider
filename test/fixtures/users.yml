@@ -5,3 +5,9 @@ example:
   last_name: Ceolin
   password_digest: $2a$10$Xe3CdeIP9TQdykcl1.gwve3iJfEaq.LPUzPlQ5Xw6KlD5AmngU/be
   email: renato.ceolin@waycarbon.com
+
+example2:
+  name: Ighor
+  last_name: Gonçalves
+  password_digest: $2a$10$Xe3CdeIP9TQdykcl1.gwve3iJfEaq.LPUzPlQ5Xw6KlD5AmngU/be
+  email: ighor@licentia.digital
