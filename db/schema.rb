@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_21_181256) do
+ActiveRecord::Schema.define(version: 2019_02_25_130713) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,16 @@ ActiveRecord::Schema.define(version: 2019_02_21_181256) do
     t.index ["relying_party_id"], name: "index_access_tokens_on_relying_party_id"
     t.index ["session_id"], name: "index_access_tokens_on_session_id"
     t.index ["token"], name: "index_access_tokens_on_token", unique: true
+  end
+
+  create_table "authorization_code_scopes", force: :cascade do |t|
+    t.bigint "authorization_code_id"
+    t.bigint "scope_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["authorization_code_id", "scope_id"], name: "index_on_scope_and_auth_code", unique: true
+    t.index ["authorization_code_id"], name: "index_authorization_code_scopes_on_authorization_code_id"
+    t.index ["scope_id"], name: "index_authorization_code_scopes_on_scope_id"
   end
 
   create_table "authorization_codes", force: :cascade do |t|
@@ -108,6 +118,13 @@ ActiveRecord::Schema.define(version: 2019_02_21_181256) do
     t.index ["client_secret"], name: "index_relying_parties_on_client_secret", unique: true
   end
 
+  create_table "scopes", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_scopes_on_name", unique: true
+  end
+
   create_table "sessions", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "device_id"
@@ -133,6 +150,8 @@ ActiveRecord::Schema.define(version: 2019_02_21_181256) do
   add_foreign_key "access_tokens", "authorization_codes"
   add_foreign_key "access_tokens", "relying_parties"
   add_foreign_key "access_tokens", "sessions"
+  add_foreign_key "authorization_code_scopes", "authorization_codes"
+  add_foreign_key "authorization_code_scopes", "scopes"
   add_foreign_key "authorization_codes", "redirect_uris"
   add_foreign_key "authorization_codes", "users"
   add_foreign_key "password_tokens", "users"
