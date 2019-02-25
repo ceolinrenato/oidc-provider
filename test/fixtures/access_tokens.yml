@@ -1,6 +1,6 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 example:
-  token: 'HASdjhaLKSJDHkjlsahsdlkJASdh'
   authorization_code: example
   relying_party: example
+  session: example

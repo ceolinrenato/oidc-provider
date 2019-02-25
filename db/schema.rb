@@ -10,13 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_25_130713) do
+ActiveRecord::Schema.define(version: 2019_02_25_150540) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "access_tokens", force: :cascade do |t|
-    t.string "token"
     t.bigint "authorization_code_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -25,7 +24,6 @@ ActiveRecord::Schema.define(version: 2019_02_25_130713) do
     t.index ["authorization_code_id"], name: "index_access_tokens_on_authorization_code_id"
     t.index ["relying_party_id"], name: "index_access_tokens_on_relying_party_id"
     t.index ["session_id"], name: "index_access_tokens_on_session_id"
-    t.index ["token"], name: "index_access_tokens_on_token", unique: true
   end
 
   create_table "authorization_code_scopes", force: :cascade do |t|

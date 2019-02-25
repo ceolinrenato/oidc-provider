@@ -5,6 +5,7 @@ example:
   last_name: Ceolin
   password_digest: $2a$10$Xe3CdeIP9TQdykcl1.gwve3iJfEaq.LPUzPlQ5Xw6KlD5AmngU/be
   email: renato.ceolin@waycarbon.com
+  verified_email: true
 
 example2:
   name: Ighor

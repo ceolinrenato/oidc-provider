@@ -5,6 +5,10 @@ class UsersController < ApplicationController
   include RelyingPartyHelper
   include RedirectUriHelper
   include SessionHelper
+  include AuthorizationCodeHelper
+  include ScopeHelper
+  include AccessTokenHelper
+  include RefreshTokenHelper
 
   def lookup
     set_user_by_email
@@ -20,7 +24,10 @@ class UsersController < ApplicationController
       authenticate_user
       set_device
       set_session
-      # TODO: Create AuthoizationCode, AccessToken and Serialize Request Return with AuthCode & DeviceToken
+      generate_auth_code
+      generate_auth_scopes
+      generate_access_token
+      generate_refresh_token
     end
   rescue CustomExceptions::InvalidRequest, CustomExceptions::InvalidGrant, CustomExceptions::InvalidClient => exception
     render json: ErrorSerializer.new(exception), status: :bad_request
