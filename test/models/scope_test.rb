@@ -30,5 +30,19 @@ class ScopeTest < ActiveSupport::TestCase
     assert_equal list, [scopes(:example).name, scopes(:example2).name].sort
   end
 
+  test "test_parse_scope_method" do
+    request_scope = "#{scopes(:example).name} #{scopes(:example2).name} abcdfqw"
+    assert_equal Scope::parse_authorization_scope(request_scope), Scope::scope_list
+  end
+
+  test "test_invalid_scope_format" do
+    request_scope = "openid $%*("
+    assert_raises(CustomExceptions::InvalidRequest) { Scope::parse_authorization_scope(request_scope) }
+  end
+
+  test "test_empty_scope" do
+    request_scope = nil
+    assert_equal Scope::parse_authorization_scope(request_scope), []
+  end
 
 end
