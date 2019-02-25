@@ -17,7 +17,7 @@ module DeviceHelper
   def set_device
     if params[:device_token]
       @device = Device.find_by token: params[:device_token]
-      raise CustomExceptions::InvalidRequest.new "Unrecognized device." unless @device
+      raise CustomExceptions::InvalidRequest.new 2 unless @device
     else
       @device = create_device_from_user_agent
     end
