@@ -2,3 +2,6 @@
 
 example:
   name: openid
+
+example2:
+  name: email

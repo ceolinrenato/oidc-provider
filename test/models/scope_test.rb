@@ -4,7 +4,7 @@ class ScopeTest < ActiveSupport::TestCase
 
   def dummy_scope
     {
-      name: 'email'
+      name: 'list_company_users'
     }
   end
 
@@ -23,6 +23,11 @@ class ScopeTest < ActiveSupport::TestCase
     scope = Scope.new dummy_scope
     scope.name = scopes(:example).name
     assert_not scope.save
+  end
+
+  test "test_scope_list_method" do
+    list = Scope::scope_list
+    assert_equal list, [scopes(:example).name, scopes(:example2).name].sort
   end
 
 
