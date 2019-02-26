@@ -1,4 +1,4 @@
-class UsersController < ApplicationController
+class AuthController < ApplicationController
 
   include UserHelper
   include DeviceHelper
