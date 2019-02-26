@@ -48,3 +48,4 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # Project Extra GEMs
 
 gem 'browser'
+gem 'simplecov', require: false, group: :test
