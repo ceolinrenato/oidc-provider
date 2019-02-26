@@ -28,6 +28,7 @@ class UsersController < ApplicationController
       generate_auth_scopes
       generate_access_token
       generate_refresh_token
+      render json: SignInSerializer.new(@authorization_code, @device)
     end
   rescue CustomExceptions::InvalidRequest, CustomExceptions::InvalidGrant, CustomExceptions::InvalidClient => exception
     render json: ErrorSerializer.new(exception), status: :bad_request

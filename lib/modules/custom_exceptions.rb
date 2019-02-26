@@ -34,9 +34,7 @@ module CustomExceptions
   class InvalidClient < BaseException
     def initialize
       @error = "invalid_client"
-      @error_code = 1
-      @error_description = "Client authentication failed."
-      super @error_description
+      super @error_description, 1
     end
   end
 
