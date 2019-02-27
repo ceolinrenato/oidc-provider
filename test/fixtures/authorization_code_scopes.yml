@@ -2,5 +2,4 @@
 
 example:
   authorization_code: example
-  relying_party: example
-  session: example
+  scope: example

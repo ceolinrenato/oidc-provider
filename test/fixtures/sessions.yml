@@ -1,6 +1,6 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 example:
-  authorization_code: example
-  relying_party: example
-  session: example
+  user: example
+  device: example
+  last_activity: 2019-02-20 13:17:38

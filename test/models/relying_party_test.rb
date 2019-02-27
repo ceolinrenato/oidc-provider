@@ -61,4 +61,12 @@ class RelyingPartyTest < ActiveSupport::TestCase
     assert_not relying_party.save
   end
 
+  test "authorized_redirect_uri_should_return_true_if_authorized" do
+    assert relying_parties(:example).authorized_redirect_uri? redirect_uris(:example).uri
+  end
+
+  test "authorized_redirect_uri_should_return_false_if_not_authorized" do
+    assert_not relying_parties(:example).authorized_redirect_uri? 'https://not.authorized.com'
+  end
+
 end

@@ -4,3 +4,8 @@ example:
   user: example,
   redirect_uri: example,
   used: false
+
+example2:
+  user: example,
+  redirect_uri: example,
+  used: false

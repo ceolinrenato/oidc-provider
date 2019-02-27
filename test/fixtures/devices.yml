@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+example:
+  browser_name: Firefox
+  browser_version: 52
+  platform_name: Generic Linux
+  platform_version: 0
+  mobile: false
+  tablet: false
+  token: AgajkjhadhASLsda
+
+example2:
+  browser_name: Chrome
+  browser_version: 71
+  platform_name: Generic Linux
+  platform_version: 0
+  mobile: false
+  tablet: false
+  token: LKLhQyrSAKqiuALq
