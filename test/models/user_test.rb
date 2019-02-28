@@ -66,4 +66,9 @@ class UserTest < ActiveSupport::TestCase
     assert_not user.save
   end
 
+  test "full_name_method" do
+    full_name = "#{users(:example).name} #{users(:example).last_name}"
+    assert_equal full_name, users(:example).full_name
+  end
+
 end

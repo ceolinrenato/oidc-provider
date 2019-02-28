@@ -6,4 +6,9 @@ class User < ApplicationRecord
   validates :last_name, presence: true
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }, uniqueness: true
   validates :password, length: { minimum: 6, allow_blank: true }
+
+  def full_name
+    "#{name} #{last_name}"
+  end
+
 end
