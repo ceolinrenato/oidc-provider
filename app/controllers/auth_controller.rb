@@ -9,6 +9,7 @@ class AuthController < ApplicationController
   include ScopeHelper
   include AccessTokenHelper
   include RefreshTokenHelper
+  include ResponseTypeHelper
 
   def lookup
     set_user_by_email
@@ -17,9 +18,21 @@ class AuthController < ApplicationController
     render json: ErrorSerializer.new(exception), status: :bad_request
   end
 
+  def request_check
+    set_relying_party_by_client_id
+    set_response_type
+    set_redirect_uri_by_param
+    head :ok
+  rescue CustomExceptions::InvalidRequest, CustomExceptions::InvalidClient => exception
+    render json: ErrorSerializer.new(exception), status: :bad_request
+  rescue CustomExceptions::UnauthorizedClient => exception
+    render json: ErrorSerializer.new(exception), status: :unauthorized
+  end
+
   def sign_in
     ActiveRecord::Base.transaction do
       set_relying_party_by_client_id
+      set_response_type
       set_redirect_uri_by_param
       authenticate_user
       set_device
@@ -32,6 +45,8 @@ class AuthController < ApplicationController
     end
   rescue CustomExceptions::InvalidRequest, CustomExceptions::InvalidGrant, CustomExceptions::InvalidClient => exception
     render json: ErrorSerializer.new(exception), status: :bad_request
+  rescue CustomExceptions::UnauthorizedClient => exception
+    render json: ErrorSerializer.new(exception), status: :unauthorized
   end
 
 end
