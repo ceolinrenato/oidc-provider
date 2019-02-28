@@ -18,3 +18,7 @@
   :error_description: "User's email address not yet verified."
 - :error_code: 10
   :error_description: "Invalid scope format."
+- :error_code: 11
+  :error_description: "The client is not authorized to request an authorization code using this method."
+- :error_code: 12
+  :error_description: "'response_type' required."

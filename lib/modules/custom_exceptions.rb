@@ -58,4 +58,11 @@ module CustomExceptions
     end
   end
 
+  class UnauthorizedClient < BaseException
+    def initialize
+      @error = "unauthorized_client"
+      super @error_description, 11
+    end
+  end
+
 end

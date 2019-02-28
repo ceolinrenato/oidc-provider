@@ -4,6 +4,7 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
 
   def dummy_sign_in_request
     {
+      response_type: 'code',
       client_id: relying_parties(:example).client_id,
       redirect_uri: relying_parties(:example).redirect_uris.first.uri,
       email: users(:example).email,
@@ -13,6 +14,16 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
       nonce: 'b'
     }
   end
+
+  def dummy_request_check_request
+    {
+      response_type: 'code',
+      client_id: relying_parties(:example).client_id,
+      redirect_uri: relying_parties(:example).redirect_uris.first.uri
+    }
+  end
+
+  # LookUp Tests
 
   test "lookup_should_return_true_when_user_does_exist" do
     get '/auth/lookup',
@@ -32,6 +43,70 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
     get '/auth/lookup'
     assert_response :bad_request
   end
+
+  # RequestCheck Tests
+
+  test "request_check_must_include_client_id" do
+    request_params = dummy_request_check_request
+    request_params[:client_id] = nil
+    get '/auth/request_check',
+      params: request_params
+    assert_response :bad_request
+    assert_equal 5, parsed_response(@response)["error_code"]
+  end
+
+  test "request_check_must_include_a_valid_client_id" do
+    request_params = dummy_request_check_request
+    request_params[:client_id] = 'AGsjHAKDhsakdSAK'
+    get '/auth/request_check',
+      params: request_params
+    assert_response :bad_request
+    assert_equal 1, parsed_response(@response)["error_code"]
+  end
+
+  test "request_check_must_include_redirect_uri" do
+    request_params = dummy_request_check_request
+    request_params[:redirect_uri] = nil
+    get '/auth/request_check',
+      params: request_params
+    assert_response :bad_request
+    assert_equal 3, parsed_response(@response)["error_code"]
+  end
+
+  test "request_check_must_include_an_authorized_redirect_uri" do
+    request_params = dummy_request_check_request
+    request_params[:redirect_uri] = relying_parties(:example2).redirect_uris.first.uri
+    get '/auth/request_check',
+      params: request_params
+    assert_response :bad_request
+    assert_equal 4, parsed_response(@response)["error_code"]
+  end
+
+  test "request_check_must_include_response_type" do
+    request_params = dummy_sign_in_request
+    request_params[:response_type] = nil
+    get '/auth/request_check',
+      params: request_params
+    assert_response :bad_request
+    assert_equal 12, parsed_response(@response)["error_code"]
+  end
+
+  test "request_check_must_have_authorized_response_type" do
+    request_params = dummy_sign_in_request
+    request_params[:response_type] = 'not_authorized_response_type'
+    get '/auth/request_check',
+      params: request_params
+    assert_response :unauthorized
+    assert_equal 11, parsed_response(@response)["error_code"]
+  end
+
+  test "request_check_must_return_ok_in_case_of_success" do
+    get '/auth/request_check',
+      params: dummy_request_check_request
+    assert_response :ok
+  end
+
+  # SignIn Tests
 
   test "sign_in_should_include_client_id" do
     request_params = dummy_sign_in_request
@@ -113,6 +188,22 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
     post '/auth/sign_in', params: request_params
     assert_response :bad_request
     assert_equal 10, parsed_response(@response)["error_code"]
+  end
+
+  test "sign_in_must_have_authorized_response_type" do
+    request_params = dummy_sign_in_request
+    request_params[:response_type] = 'not_authorized_response_type'
+    post '/auth/sign_in', params: request_params
+    assert_response :unauthorized
+    assert_equal 11, parsed_response(@response)["error_code"]
+  end
+
+  test "sign_in_must_include_response_type" do
+    request_params = dummy_sign_in_request
+    request_params[:response_type] = nil
+    post '/auth/sign_in', params: request_params
+    assert_response :bad_request
+    assert_equal 12, parsed_response(@response)["error_code"]
   end
 
   test "sign_in_should_create_a_new_device_if_no_device_token_provided" do
