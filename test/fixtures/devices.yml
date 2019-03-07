@@ -17,3 +17,12 @@ example2:
   mobile: false
   tablet: false
   token: LKLhQyrSAKqiuALq
+
+example3:
+  browser_name: Opera
+  browser_version: 86
+  platform_name: Generic Linux
+  platform_version: 0
+  mobile: false
+  tablet: false
+  token: LLAKqkaAKkdwQJQh
