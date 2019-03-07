@@ -49,4 +49,24 @@ class AuthController < ApplicationController
     render json: ErrorSerializer.new(exception), status: :unauthorized
   end
 
+  def sign_in_with_device
+    ActiveRecord::Base.transaction do
+      set_relying_party_by_client_id
+      set_response_type
+      set_redirect_uri_by_param
+      set_user_by_email!
+      set_device!
+      set_session!
+      generate_auth_code
+      generate_auth_scopes
+      generate_access_token
+      generate_refresh_token
+      render json: SignInSerializer.new(@authorization_code, @device)
+    end
+  rescue CustomExceptions::InvalidRequest, CustomExceptions::InvalidGrant, CustomExceptions::InvalidClient, CustomExceptions::EntityNotFound => exception
+    render json: ErrorSerializer.new(exception), status: :bad_request
+  rescue CustomExceptions::UnauthorizedClient => exception
+    render json: ErrorSerializer.new(exception), status: :unauthorized
+  end
+
 end

@@ -23,4 +23,12 @@ class SessionTest < ActiveSupport::TestCase
     assert session.save
   end
 
+  test "expired_method_should_return_true_when_session_expired" do
+    assert sessions(:expired).expired?
+  end
+
+  test "expired_method_should_return_false_when_session_is_not_expired" do
+    assert_not sessions(:not_expired).expired?
+  end
+
 end

@@ -22,3 +22,7 @@
   :error_description: "The client is not authorized to request an authorization code using this method."
 - :error_code: 12
   :error_description: "'response_type' required."
+- :error_code: 13
+  :error_description: "User has no session on device."
+- :error_code: 14
+  :error_description: "Session expired, user must sign in again."

@@ -23,4 +23,9 @@ module DeviceHelper
     end
   end
 
+  def set_device!
+    @device = Device.find_by token: params[:device_token]
+    raise CustomExceptions::InvalidRequest.new 2 unless @device
+  end
+
 end
