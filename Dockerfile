@@ -10,7 +10,7 @@ WORKDIR /oidcprovider
 COPY Gemfile /oidcprovider/Gemfile
 COPY Gemfile.lock /oidcprovider/Gemfile.lock
 
-RUN bundle install
+RUN bundle install -j 4
 
 COPY . /oidcprovider
 
