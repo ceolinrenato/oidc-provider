@@ -20,8 +20,8 @@ class AuthController < ApplicationController
 
   def request_check
     set_relying_party_by_client_id
-    set_response_type
     set_redirect_uri_by_param
+    set_response_type
     head :ok
   rescue CustomExceptions::InvalidRequest, CustomExceptions::InvalidClient => exception
     render json: ErrorSerializer.new(exception), status: :bad_request
@@ -32,8 +32,8 @@ class AuthController < ApplicationController
   def sign_in
     ActiveRecord::Base.transaction do
       set_relying_party_by_client_id
-      set_response_type
       set_redirect_uri_by_param
+      set_response_type
       authenticate_user
       set_device
       set_session
@@ -52,8 +52,8 @@ class AuthController < ApplicationController
   def sign_in_with_device
     ActiveRecord::Base.transaction do
       set_relying_party_by_client_id
-      set_response_type
       set_redirect_uri_by_param
+      set_response_type
       set_user_by_email!
       set_device!
       set_session!
