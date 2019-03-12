@@ -22,9 +22,14 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
       methods: [:post, :options],
       credentials: true
 
-    resource '/sessions/*',
+    resource '/sessions',
       headers: :any,
-      methods: [:get, :post, :options],
+      methods: [:get],
+      credentials: true
+
+    resource '/sessions/sign_in',
+      headers: :any,
+      methods: [:post, :options],
       credentials: true
 
   end
