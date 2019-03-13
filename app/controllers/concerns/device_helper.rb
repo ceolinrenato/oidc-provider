@@ -1,6 +1,10 @@
 module DeviceHelper
   extend ActiveSupport::Concern
 
+  def set_device_token_cookie
+    cookies.permanent[:device_token] = @device.token
+  end
+
   def create_device_from_user_agent
     browser = Browser.new request.headers['User-Agent']
     device = {
@@ -15,17 +19,19 @@ module DeviceHelper
   end
 
   def set_device
-    if params[:device_token]
-      @device = Device.find_by token: params[:device_token]
+    if cookies[:device_token]
+      @device = Device.find_by token: cookies[:device_token]
       raise CustomExceptions::InvalidRequest.new 2 unless @device
     else
       @device = create_device_from_user_agent
     end
+    set_device_token_cookie
   end
 
   def set_device!
-    @device = Device.find_by token: params[:device_token]
+    @device = Device.find_by token: cookies[:device_token]
     raise CustomExceptions::InvalidRequest.new 2 unless @device
+    set_device_token_cookie
   end
 
 end

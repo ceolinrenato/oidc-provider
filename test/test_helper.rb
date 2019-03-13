@@ -14,4 +14,8 @@ class ActiveSupport::TestCase
     JSON.parse(response.body)
   end
 
+  def set_device_token_cookie(token)
+    "device_token=#{token}"
+  end
+
 end
