@@ -291,8 +291,8 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
 
   test "sign_in_response_should_contain_authorization_code_and_device_token" do
     post '/auth/sign_in', params: dummy_sign_in_request
-    assert_not_equal parsed_response(@response)["authorization_code"], nil
-    assert_not_equal cookies[:device_token], nil
+    assert_not_nil parsed_response(@response)["authorization_code"]
+    assert_not_nil cookies[:device_token]
     assert_response :success
   end
 
@@ -472,8 +472,8 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
         params: dummy_device_sign_in_request,
         headers: { 'Cookie' => set_device_token_cookie(devices(:example2).token) }
     response_body = parsed_response(@response)
-    assert_not_equal response_body["authorization_code"], nil
-    assert_not_equal cookies[:device_token], nil
+    assert_not_nil response_body["authorization_code"]
+    assert_not_nil cookies[:device_token]
     assert_response :success
   end
 
