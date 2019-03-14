@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_07_184702) do
+ActiveRecord::Schema.define(version: 2019_03_14_123651) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -105,6 +105,8 @@ ActiveRecord::Schema.define(version: 2019_03_07_184702) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "third_party", default: false
+    t.string "frontchannel_logout_uri"
+    t.boolean "frontchannel_logout_session_required", default: false
     t.index ["client_id"], name: "index_relying_parties_on_client_id", unique: true
     t.index ["client_secret"], name: "index_relying_parties_on_client_secret", unique: true
   end
