@@ -269,8 +269,7 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
   test "sign_in_should_create_auth_scopes" do
     request_params = dummy_sign_in_request
     request_params[:scope] = 'openid email nonExistentScope'
-    former_count = authorization_code_scopes.count
-    assert_changes 'AuthorizationCodeScope.count', from: former_count, to: former_count + 2 do
+    assert_changes('AuthorizationCodeScope.count', 2) do
       post '/auth/sign_in', params: request_params
     end
     assert_response :success
@@ -389,6 +388,17 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
     assert_equal 14, parsed_response(@response)["error_code"]
   end
 
+  test "device_sign_in_must_return_invalid_grant_if_user_signed_out" do
+    request_params = dummy_device_sign_in_request
+    request_params[:email] = users(:example2).email
+    post "/sessions/sign_in",
+      params: request_params,
+      headers: { 'Cookie' => set_device_token_cookie(devices(:example2).token) }
+    assert_response :bad_request
+    assert_equal 'invalid_grant', parsed_response(@response)["error"]
+    assert_equal 16, parsed_response(@response)["error_code"]
+  end
+
   test "device_sign_in_must_include_scope_with_valid_format" do
     request_params = dummy_device_sign_in_request
     request_params[:scope] = 'inv@lidScope $hit happens'
@@ -431,8 +441,7 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
   test "device_sign_in_should_create_auth_scopes" do
     request_params = dummy_device_sign_in_request
     request_params[:scope] = 'openid email nonExistentScope'
-    former_count = authorization_code_scopes.count
-    assert_changes 'AuthorizationCodeScope.count', from: former_count, to: former_count + 2 do
+    assert_difference('AuthorizationCodeScope.count', 2) do
       post "/sessions/sign_in",
         params: request_params,
         headers: { 'Cookie' => set_device_token_cookie(devices(:example2).token) }

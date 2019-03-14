@@ -3,14 +3,24 @@
 example:
   user: example
   device: example
+  token: JKGSKLJDHaisdahdsal
   last_activity: 2019-02-20 13:17:38
 
 expired:
   user: example3
   device: example
+  token: LKJASdgiGKSdkaASD
   last_activity: <%= Time.now - Session::SESSION_EXPIRATION_TIME %>
 
 not_expired:
   user: example3
   device: example2
+  token: AJSDHlahLSHDUAUODS
   last_activity: <%= Time.now - Session::SESSION_EXPIRATION_TIME + 1.hour %>
+
+signed_out:
+  user: example2
+  device: example2
+  token: LKHASHdlaHSDlaAsa
+  last_activity: <%= Time.now - Session::SESSION_EXPIRATION_TIME + 1.hour %>
+  signed_out: true

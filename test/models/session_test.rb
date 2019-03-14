@@ -31,4 +31,16 @@ class SessionTest < ActiveSupport::TestCase
     assert_not sessions(:not_expired).expired?
   end
 
+  test "active_method_should_return_false_when_session_is_not_expired_but_signed_out" do
+    assert_not sessions(:signed_out).active?
+  end
+
+  test "active_method_should_return_false_when_session_is_expired" do
+    assert_not sessions(:expired).active?
+  end
+
+  test "active_method_should_return_true_when_session_is_not_expired_and_not_signed_out" do
+    assert sessions(:not_expired).active?
+  end
+
 end

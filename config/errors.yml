@@ -26,3 +26,7 @@
   :error_description: "User has no session on device."
 - :error_code: 14
   :error_description: "Session expired, user must sign in again."
+- :error_code: 15
+  :error_description: "Session not found."
+- :error_code: 16
+  :error_description: "User has signed out, mut sign in again."

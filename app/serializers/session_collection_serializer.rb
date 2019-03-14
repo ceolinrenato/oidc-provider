@@ -6,9 +6,10 @@ class SessionCollectionSerializer < BaseCollectionSerializer
         access_token.relying_party.frontchannel_logout_uri
       end
       {
+        session_token: session.token,
         full_name: session.user.full_name,
         email: session.user.email,
-        last_activity: session.last_activity,
+        active: session.active?,
         frontchannel_logout_uris: logout_uris.uniq.select(&:presence)
       }
     end
