@@ -29,4 +29,4 @@
 - :error_code: 15
   :error_description: "Session not found."
 - :error_code: 16
-  :error_description: "User has signed out, mut sign in again."
+  :error_description: "User has signed out, must sign in again."
