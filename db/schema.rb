@@ -127,6 +127,7 @@ ActiveRecord::Schema.define(version: 2019_03_14_142934) do
     t.string "token"
     t.boolean "signed_out", default: false
     t.index ["device_id"], name: "index_sessions_on_device_id"
+    t.index ["token"], name: "index_sessions_on_token", unique: true
     t.index ["user_id", "device_id"], name: "index_sessions_on_user_id_and_device_id", unique: true
     t.index ["user_id"], name: "index_sessions_on_user_id"
   end
