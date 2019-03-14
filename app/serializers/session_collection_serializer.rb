@@ -9,7 +9,7 @@ class SessionCollectionSerializer < BaseCollectionSerializer
         full_name: session.user.full_name,
         email: session.user.email,
         last_activity: session.last_activity,
-        frontchannel_logout_uris: logout_uris.uniq
+        frontchannel_logout_uris: logout_uris.uniq.select(&:presence)
       }
     end
     super(collection)
