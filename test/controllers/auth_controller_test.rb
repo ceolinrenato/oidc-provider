@@ -269,7 +269,7 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
   test "sign_in_should_create_auth_scopes" do
     request_params = dummy_sign_in_request
     request_params[:scope] = 'openid email nonExistentScope'
-    assert_changes('AuthorizationCodeScope.count', 2) do
+    assert_difference('AuthorizationCodeScope.count', 2) do
       post '/auth/sign_in', params: request_params
     end
     assert_response :success
