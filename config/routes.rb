@@ -4,8 +4,9 @@ Rails.application.routes.draw do
   get    'auth/lookup',                    to: 'auth#lookup'
   get    'auth/request_check',             to: 'auth#request_check'
   post   'auth/sign_in',                   to: 'auth#sign_in'
-  post   'sessions/sign_in',               to: 'auth#sign_in_with_device'
+  post   'auth/sign_in_with_session',      to: 'auth#sign_in_with_device'
   # Sessions
+  patch  'sessions/:session_token',        to: 'sessions#sign_out'
   get    'sessions',                       to: 'sessions#index_by_device'
   delete 'sessions/:session_token',        to: 'sessions#destroy'
 end

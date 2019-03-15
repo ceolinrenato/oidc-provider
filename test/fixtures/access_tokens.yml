@@ -4,3 +4,4 @@ example:
   authorization_code: example
   relying_party: example
   session: example
+  user: example
