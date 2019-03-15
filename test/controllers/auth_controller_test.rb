@@ -309,7 +309,7 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
   test "device_sign_in_should_include_client_id" do
     request_params = dummy_device_sign_in_request
     request_params[:client_id] = nil
-    post "/sessions/sign_in", params: request_params
+    post "/auth/sign_in_with_session", params: request_params
     assert_response :bad_request
     assert_equal 5, parsed_response(@response)["error_code"]
   end
@@ -317,20 +317,20 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
   test "device_sign_in_must_include_a_valid_client_id" do
     request_params = dummy_device_sign_in_request
     request_params[:client_id] = 'AGsjHAKDhsakdSAK'
-    post "/sessions/sign_in", params: request_params
+    post "/auth/sign_in_with_session", params: request_params
     assert_response :bad_request
     assert_equal 1, parsed_response(@response)["error_code"]
   end
 
   test "device_sign_in_must_include_device_token" do
-    post '/sessions/sign_in',
+    post '/auth/sign_in_with_session',
       params: dummy_device_sign_in_request
     assert_response :bad_request
     assert_equal 2, parsed_response(@response)["error_code"]
   end
 
   test "device_sign_in_must_not_accept_unrecognized_devices" do
-    post '/sessions/sign_in',
+    post '/auth/sign_in_with_session',
       params: dummy_device_sign_in_request,
       headers: { 'Cookie': set_device_token_cookie('not_recognized_device') }
     assert_response :bad_request
@@ -340,7 +340,7 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
   test "device_sign_in_must_include_redirect_uri" do
     request_params = dummy_device_sign_in_request
     request_params[:redirect_uri] = nil
-    post "/sessions/sign_in", params: request_params
+    post "/auth/sign_in_with_session", params: request_params
     assert_response :bad_request
     assert_equal 3, parsed_response(@response)["error_code"]
   end
@@ -348,7 +348,7 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
   test "device_sign_in_must_include_an_authorized_redirect_uri" do
     request_params = dummy_device_sign_in_request
     request_params[:redirect_uri] = relying_parties(:example2).redirect_uris.first.uri
-    post "/sessions/sign_in", params: request_params
+    post "/auth/sign_in_with_session", params: request_params
     assert_response :bad_request
     assert_equal 4, parsed_response(@response)["error_code"]
   end
@@ -356,7 +356,7 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
   test "device_sign_in_must_include_email_address" do
     request_params = dummy_device_sign_in_request
     request_params[:email] = nil
-    post "/sessions/sign_in", params: request_params
+    post "/auth/sign_in_with_session", params: request_params
     assert_response :bad_request
     assert_equal 6, parsed_response(@response)["error_code"]
   end
@@ -364,13 +364,13 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
   test "device_sign_in_must_include_an_existing_email_address" do
     request_params = dummy_device_sign_in_request
     request_params[:email] = 'not_existent@email.address.com'
-    post "/sessions/sign_in", params: request_params
+    post "/auth/sign_in_with_session", params: request_params
     assert_response :bad_request
     assert_equal 0, parsed_response(@response)["error_code"]
   end
 
   test "device_sign_in_must_return_invalid_grant_if_no_session_on_device" do
-    post "/sessions/sign_in",
+    post "/auth/sign_in_with_session",
       params: dummy_device_sign_in_request,
       headers: { 'Cookie' => set_device_token_cookie(devices(:example3).token) }
     assert_response :bad_request
@@ -380,7 +380,7 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
 
   test "device_sign_in_must_return_invalid_grant_if_session_expired" do
     request_params = dummy_device_sign_in_request
-    post "/sessions/sign_in",
+    post "/auth/sign_in_with_session",
       params: request_params,
       headers: { 'Cookie' => set_device_token_cookie(devices(:example).token) }
     assert_response :bad_request
@@ -391,7 +391,7 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
   test "device_sign_in_must_return_invalid_grant_if_user_signed_out" do
     request_params = dummy_device_sign_in_request
     request_params[:email] = users(:example2).email
-    post "/sessions/sign_in",
+    post "/auth/sign_in_with_session",
       params: request_params,
       headers: { 'Cookie' => set_device_token_cookie(devices(:example2).token) }
     assert_response :bad_request
@@ -402,7 +402,7 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
   test "device_sign_in_must_include_scope_with_valid_format" do
     request_params = dummy_device_sign_in_request
     request_params[:scope] = 'inv@lidScope $hit happens'
-    post "/sessions/sign_in",
+    post "/auth/sign_in_with_session",
       params: request_params,
       headers: { 'Cookie' => set_device_token_cookie(devices(:example2).token) }
     assert_response :bad_request
@@ -412,7 +412,7 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
   test "device_sign_in_must_have_authorized_response_type" do
     request_params = dummy_device_sign_in_request
     request_params[:response_type] = 'not_authorized_response_type'
-    post "/sessions/sign_in",
+    post "/auth/sign_in_with_session",
       params: request_params,
       headers: { 'Cookie' => set_device_token_cookie(devices(:example2).token) }
     assert_response :unauthorized
@@ -422,7 +422,7 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
   test "device_sign_in_must_include_response_type" do
     request_params = dummy_device_sign_in_request
     request_params[:response_type] = nil
-    post "/sessions/sign_in",
+    post "/auth/sign_in_with_session",
       params: request_params,
       headers: { 'Cookie' => set_device_token_cookie(devices(:example2).token) }
     assert_response :bad_request
@@ -431,7 +431,7 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
 
   test "device_sign_in_should_create_an_authorization_code" do
     assert_difference('AuthorizationCode.count') do
-      post "/sessions/sign_in",
+      post "/auth/sign_in_with_session",
         params: dummy_device_sign_in_request,
         headers: { 'Cookie' => set_device_token_cookie(devices(:example2).token) }
     end
@@ -442,7 +442,7 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
     request_params = dummy_device_sign_in_request
     request_params[:scope] = 'openid email nonExistentScope'
     assert_difference('AuthorizationCodeScope.count', 2) do
-      post "/sessions/sign_in",
+      post "/auth/sign_in_with_session",
         params: request_params,
         headers: { 'Cookie' => set_device_token_cookie(devices(:example2).token) }
     end
@@ -451,7 +451,7 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
 
   test "device_sign_in_should_create_an_access_token" do
     assert_difference('AccessToken.count') do
-      post "/sessions/sign_in",
+      post "/auth/sign_in_with_session",
         params: dummy_device_sign_in_request,
         headers: { 'Cookie' => set_device_token_cookie(devices(:example2).token) }
     end
@@ -460,7 +460,7 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
 
   test "device_sign_in_should_create_a_refresh_token" do
     assert_difference('RefreshToken.count') do
-      post "/sessions/sign_in",
+      post "/auth/sign_in_with_session",
         params: dummy_device_sign_in_request,
         headers: { 'Cookie' => set_device_token_cookie(devices(:example2).token) }
     end
@@ -468,7 +468,7 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "device_sign_in_response_should_contain_authorization_code_and_device_token" do
-    post "/sessions/sign_in",
+    post "/auth/sign_in_with_session",
         params: dummy_device_sign_in_request,
         headers: { 'Cookie' => set_device_token_cookie(devices(:example2).token) }
     response_body = parsed_response(@response)

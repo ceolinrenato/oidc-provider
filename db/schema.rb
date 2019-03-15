@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_14_142934) do
+ActiveRecord::Schema.define(version: 2019_03_15_142246) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,9 +21,11 @@ ActiveRecord::Schema.define(version: 2019_03_14_142934) do
     t.datetime "updated_at", null: false
     t.bigint "session_id"
     t.bigint "relying_party_id"
+    t.bigint "user_id"
     t.index ["authorization_code_id"], name: "index_access_tokens_on_authorization_code_id"
     t.index ["relying_party_id"], name: "index_access_tokens_on_relying_party_id"
     t.index ["session_id"], name: "index_access_tokens_on_session_id"
+    t.index ["user_id"], name: "index_access_tokens_on_user_id"
   end
 
   create_table "authorization_code_scopes", force: :cascade do |t|
@@ -146,6 +148,7 @@ ActiveRecord::Schema.define(version: 2019_03_14_142934) do
   add_foreign_key "access_tokens", "authorization_codes"
   add_foreign_key "access_tokens", "relying_parties"
   add_foreign_key "access_tokens", "sessions"
+  add_foreign_key "access_tokens", "users"
   add_foreign_key "authorization_code_scopes", "authorization_codes"
   add_foreign_key "authorization_code_scopes", "scopes"
   add_foreign_key "authorization_codes", "redirect_uris"

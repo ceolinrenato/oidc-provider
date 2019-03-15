@@ -41,6 +41,7 @@ class AuthController < ApplicationController
       generate_auth_scopes
       generate_access_token
       generate_refresh_token
+      @session.update! signed_out: false
       render json: SignInSerializer.new(@authorization_code, @device)
     end
   rescue CustomExceptions::InvalidRequest, CustomExceptions::InvalidGrant, CustomExceptions::InvalidClient => exception
