@@ -75,6 +75,8 @@ class RelyingPartyTest < ActiveSupport::TestCase
     assert relying_party.save
     relying_party.frontchannel_logout_uri = 'https://notregistereduri.com/logout'
     assert_not relying_party.save
+    relying_party.frontchannel_logout_uri = "#{relying_parties(:example2).redirect_uris.first.uri}/logout"
+    assert_not relying_party.save
   end
 
 end

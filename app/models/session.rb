@@ -2,7 +2,9 @@ class Session < ApplicationRecord
 
   SESSION_EXPIRATION_TIME = 12.hours
 
-  has_many :access_tokens
+  has_secure_token
+
+  has_many :access_tokens, dependent: :destroy
   belongs_to :user
   belongs_to :device
 
@@ -10,6 +12,10 @@ class Session < ApplicationRecord
 
   def expired?
     Time.now > last_activity + SESSION_EXPIRATION_TIME
+  end
+
+  def active?
+    !expired? && !signed_out
   end
 
 end
