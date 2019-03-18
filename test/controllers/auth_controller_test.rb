@@ -112,11 +112,20 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
 
   test "request_check_must_have_authorized_response_type" do
     request_params = dummy_request_check_request
-    request_params[:response_type] = 'not_authorized_response_type'
+    request_params[:response_type] = 'token'
     get '/auth/request_check',
       params: request_params
     assert_response :unauthorized
     assert_equal 11, parsed_response(@response)["error_code"]
+  end
+
+  test "request_check_must_have_supported_response_type" do
+    request_params = dummy_request_check_request
+    request_params[:response_type] = 'not_supported_response_type'
+    get '/auth/request_check',
+      params: request_params
+    assert_response :bad_request
+    assert_equal 22, parsed_response(@response)["error_code"]
   end
 
   test "request_check_must_have_a_valid_scope" do
@@ -304,12 +313,25 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
 
   test "sign_in_must_have_authorized_response_type" do
     request_params = dummy_sign_in_request
-    request_params[:response_type] = 'not_authorized_response_type'
+    request_params[:response_type] = 'token'
     post '/auth/sign_in', params: request_params
     error = {
       error: 'unauthorized_client',
       error_code: 11,
       error_description: "The client is not authorized to request an authorization code using this method.",
+      state: dummy_sign_in_request[:state]
+    }
+    assert_redirected_to build_redirection_uri(dummy_sign_in_request[:redirect_uri], error)
+  end
+
+  test "sign_in_must_have_authorized_supported_type" do
+    request_params = dummy_sign_in_request
+    request_params[:response_type] = 'not_supported_response_type'
+    post '/auth/sign_in', params: request_params
+    error = {
+      error: 'unsupported_response_type',
+      error_code: 22,
+      error_description: "We do not support obtaining an authorization code using this method.",
       state: dummy_sign_in_request[:state]
     }
     assert_redirected_to build_redirection_uri(dummy_sign_in_request[:redirect_uri], error)
@@ -621,7 +643,7 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
 
   test "device_sign_in_must_have_authorized_response_type" do
     request_params = dummy_device_sign_in_request
-    request_params[:response_type] = 'not_authorized_response_type'
+    request_params[:response_type] = 'token'
     post "/auth/sign_in_with_session",
       params: request_params,
       headers: { 'Cookie' => set_device_token_cookie(devices(:example2).token) }
@@ -629,6 +651,19 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
       error: 'unauthorized_client',
       error_code: 11,
       error_description: "The client is not authorized to request an authorization code using this method.",
+      state: dummy_device_sign_in_request[:state]
+    }
+    assert_redirected_to build_redirection_uri(dummy_sign_in_request[:redirect_uri], error)
+  end
+
+  test "device_sign_in_must_have_authorized_supported_type" do
+    request_params = dummy_device_sign_in_request
+    request_params[:response_type] = 'not_supported_response_type'
+    post '/auth/sign_in_with_session', params: request_params
+    error = {
+      error: 'unsupported_response_type',
+      error_code: 22,
+      error_description: "We do not support obtaining an authorization code using this method.",
       state: dummy_device_sign_in_request[:state]
     }
     assert_redirected_to build_redirection_uri(dummy_sign_in_request[:redirect_uri], error)
@@ -765,13 +800,27 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
 
   test "oauth2_authorize_must_have_authorized_response_type" do
     request_params = dummy_request_check_request
-    request_params[:response_type] = 'not_authorized_response_type'
+    request_params[:response_type] = 'token'
     get '/oauth2/authorize',
       params: request_params
     error = {
       error: 'unauthorized_client',
       error_code: 11,
       error_description: "The client is not authorized to request an authorization code using this method.",
+      state: dummy_request_check_request[:state]
+    }
+    assert_redirected_to build_redirection_uri(request_params[:redirect_uri], error)
+  end
+
+  test "oauth2_authorize_must_have_supported_response_type" do
+    request_params = dummy_request_check_request
+    request_params[:response_type] = 'not_supported_response_type'
+    get '/oauth2/authorize',
+      params: request_params
+    error = {
+      error: 'unsupported_response_type',
+      error_code: 22,
+      error_description: "We do not support obtaining an authorization code using this method.",
       state: dummy_request_check_request[:state]
     }
     assert_redirected_to build_redirection_uri(request_params[:redirect_uri], error)
@@ -791,13 +840,13 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to build_redirection_uri(request_params[:redirect_uri], error)
   end
 
-  test "oauth2_must_redirect_to_login_service_in_case_of_success" do
+  test "oauth2_authorize_must_redirect_to_login_service_in_case_of_success" do
     get '/oauth2/authorize',
       params: dummy_request_check_request
     assert_redirected_to build_redirection_uri(SIGN_IN_SERVICE_CONFIG[:uri], dummy_request_check_request)
   end
 
-  test "oauth2_with_prompt_none_should_have_a_device" do
+  test "oauth2_authorize_with_prompt_none_should_have_a_device" do
     request_params = dummy_request_check_request
     request_params[:prompt] = 'none'
     get '/oauth2/authorize',
@@ -811,7 +860,7 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to build_redirection_uri(request_params[:redirect_uri], error)
   end
 
-  test "oauth2_with_prompt_none_should_have_just_one_user_session_on_device" do
+  test "oauth2_authorize_with_prompt_none_should_have_just_one_user_session_on_device" do
     request_params = dummy_request_check_request
     request_params[:prompt] = 'none'
     get '/oauth2/authorize',
@@ -826,7 +875,7 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to build_redirection_uri(request_params[:redirect_uri], error)
   end
 
-  test "oauth2_with_prompt_none_should_redirect_with_code_if_just_one_user_session_on_device" do
+  test "oauth2_authorize_with_prompt_none_should_redirect_with_code_if_just_one_user_session_on_device" do
     request_params = dummy_request_check_request
     request_params[:prompt] = 'none'
     get '/oauth2/authorize',

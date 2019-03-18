@@ -49,6 +49,7 @@ class AuthController < ApplicationController
       params.permit(:client_id, :redirect_uri, :response_type, :scope, :state, :nonce, :prompt)
   rescue CustomExceptions::InvalidRequest,
     CustomExceptions::InvalidClient,
+    CustomExceptions::UnsupportedResponseType,
     CustomExceptions::LoginRequired,
     CustomExceptions::AccountSelectionRequired,
     CustomExceptions::RequestNotSupported,
@@ -96,6 +97,7 @@ class AuthController < ApplicationController
   rescue CustomExceptions::InvalidRequest,
     CustomExceptions::InvalidGrant,
     CustomExceptions::InvalidClient,
+    CustomExceptions::UnsupportedResponseType,
     CustomExceptions::UnauthorizedClient,
     CustomExceptions::RequestNotSupported,
     CustomExceptions::RequestUriNotSupported,
@@ -132,6 +134,7 @@ class AuthController < ApplicationController
     CustomExceptions::InvalidClient,
     CustomExceptions::EntityNotFound,
     CustomExceptions::UnauthorizedClient,
+    CustomExceptions::UnsupportedResponseType,
     CustomExceptions::RequestNotSupported,
     CustomExceptions::RequestUriNotSupported,
     CustomExceptions::RegistrationNotSupported => exception
