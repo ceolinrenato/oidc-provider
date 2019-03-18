@@ -59,12 +59,18 @@ class AuthController < ApplicationController
       generate_access_token
       generate_refresh_token
       @session.update! signed_out: false
-      render json: SignInSerializer.new(@authorization_code, @device)
+      redirect_with_params @redirect_uri.uri,
+        {
+          code: @authorization_code.code,
+          state: params[:state]
+        }
     end
-  rescue CustomExceptions::InvalidRequest, CustomExceptions::InvalidGrant, CustomExceptions::InvalidClient => exception
-    render json: ErrorSerializer.new(exception), status: :bad_request
-  rescue CustomExceptions::UnauthorizedClient => exception
-    render json: ErrorSerializer.new(exception), status: :unauthorized
+  rescue CustomExceptions::InvalidRequest, CustomExceptions::InvalidGrant, CustomExceptions::InvalidClient, CustomExceptions::UnauthorizedClient => exception
+    if @redirect_uri
+      redirect_with_error @redirect_uri.uri, exception
+    else
+      redirect_with_error "#{SIGN_IN_SERVICE_CONFIG[:uri]}/error/400", exception
+    end
   end
 
   def sign_in_with_device
@@ -80,12 +86,18 @@ class AuthController < ApplicationController
       generate_auth_scopes
       generate_access_token
       generate_refresh_token
-      render json: SignInSerializer.new(@authorization_code, @device)
+      redirect_with_params @redirect_uri.uri,
+        {
+          code: @authorization_code.code,
+          state: params[:state]
+        }
     end
-  rescue CustomExceptions::InvalidRequest, CustomExceptions::InvalidGrant, CustomExceptions::InvalidClient, CustomExceptions::EntityNotFound => exception
-    render json: ErrorSerializer.new(exception), status: :bad_request
-  rescue CustomExceptions::UnauthorizedClient => exception
-    render json: ErrorSerializer.new(exception), status: :unauthorized
+  rescue CustomExceptions::InvalidRequest, CustomExceptions::InvalidGrant, CustomExceptions::InvalidClient, CustomExceptions::EntityNotFound, CustomExceptions::UnauthorizedClient => exception
+    if @redirect_uri
+      redirect_with_error @redirect_uri.uri, exception
+    else
+      redirect_with_error "#{SIGN_IN_SERVICE_CONFIG[:uri]}/error/400", exception
+    end
   end
 
 end
