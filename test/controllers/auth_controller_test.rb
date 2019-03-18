@@ -179,7 +179,8 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
     error = {
       error: 'invalid_request',
       error_code: 5,
-      error_description: "'client_id' required."
+      error_description: "'client_id' required.",
+      state: dummy_sign_in_request[:state]
     }
     assert_redirected_to build_redirection_uri("#{SIGN_IN_SERVICE_CONFIG[:uri]}/error/400", error)
   end
@@ -191,7 +192,8 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
     error = {
       error: 'invalid_client',
       error_code: 1,
-      error_description: "Client authentication failed."
+      error_description: "Client authentication failed.",
+      state: dummy_sign_in_request[:state]
     }
     assert_redirected_to build_redirection_uri("#{SIGN_IN_SERVICE_CONFIG[:uri]}/error/400", error)
   end
@@ -203,7 +205,8 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
     error = {
       error: 'invalid_request',
       error_code: 2,
-      error_description: "Unrecognized device."
+      error_description: "Unrecognized device.",
+      state: dummy_sign_in_request[:state]
     }
     assert_redirected_to build_redirection_uri(dummy_sign_in_request[:redirect_uri], error)
   end
@@ -215,7 +218,8 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
     error = {
       error: 'invalid_request',
       error_code: 3,
-      error_description: "'redirect_uri' required."
+      error_description: "'redirect_uri' required.",
+      state: dummy_sign_in_request[:state]
     }
     assert_redirected_to build_redirection_uri("#{SIGN_IN_SERVICE_CONFIG[:uri]}/error/400", error)
   end
@@ -227,7 +231,8 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
     error = {
       error: 'invalid_request',
       error_code: 4,
-      error_description: "'redirect_uri' not authorized by Relying Party"
+      error_description: "'redirect_uri' not authorized by Relying Party",
+      state: dummy_sign_in_request[:state]
     }
     assert_redirected_to build_redirection_uri("#{SIGN_IN_SERVICE_CONFIG[:uri]}/error/400", error)
   end
@@ -239,7 +244,8 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
     error = {
       error: 'invalid_request',
       error_code: 7,
-      error_description: "'email' and 'password' are required."
+      error_description: "'email' and 'password' are required.",
+      state: dummy_sign_in_request[:state]
     }
     assert_redirected_to build_redirection_uri(dummy_sign_in_request[:redirect_uri], error)
   end
@@ -251,7 +257,8 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
     error = {
       error: 'invalid_request',
       error_code: 7,
-      error_description: "'email' and 'password' are required."
+      error_description: "'email' and 'password' are required.",
+      state: dummy_sign_in_request[:state]
     }
     assert_redirected_to build_redirection_uri(dummy_sign_in_request[:redirect_uri], error)
   end
@@ -263,7 +270,8 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
     error = {
       error: 'invalid_grant',
       error_code: 8,
-      error_description: "The credentials provided are invalid."
+      error_description: "The credentials provided are invalid.",
+      state: dummy_sign_in_request[:state]
     }
     assert_redirected_to build_redirection_uri(dummy_sign_in_request[:redirect_uri], error)
   end
@@ -275,7 +283,8 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
     error = {
       error: 'invalid_grant',
       error_code: 9,
-      error_description: "User's email address not yet verified."
+      error_description: "User's email address not yet verified.",
+      state: dummy_sign_in_request[:state]
     }
     assert_redirected_to build_redirection_uri(dummy_sign_in_request[:redirect_uri], error)
   end
@@ -287,7 +296,8 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
     error = {
       error: 'invalid_request',
       error_code: 10,
-      error_description: "Invalid scope format."
+      error_description: "Invalid scope format.",
+      state: dummy_sign_in_request[:state]
     }
     assert_redirected_to build_redirection_uri(dummy_sign_in_request[:redirect_uri], error)
   end
@@ -299,7 +309,8 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
     error = {
       error: 'unauthorized_client',
       error_code: 11,
-      error_description: "The client is not authorized to request an authorization code using this method."
+      error_description: "The client is not authorized to request an authorization code using this method.",
+      state: dummy_sign_in_request[:state]
     }
     assert_redirected_to build_redirection_uri(dummy_sign_in_request[:redirect_uri], error)
   end
@@ -311,7 +322,8 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
     error = {
       error: 'invalid_request',
       error_code: 12,
-      error_description: "'response_type' required."
+      error_description: "'response_type' required.",
+      state: dummy_sign_in_request[:state]
     }
     assert_redirected_to build_redirection_uri(dummy_sign_in_request[:redirect_uri], error)
   end
@@ -454,7 +466,8 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
     error = {
       error: 'invalid_request',
       error_code: 5,
-      error_description: "'client_id' required."
+      error_description: "'client_id' required.",
+      state: dummy_device_sign_in_request[:state]
     }
     assert_redirected_to build_redirection_uri("#{SIGN_IN_SERVICE_CONFIG[:uri]}/error/400", error)
   end
@@ -466,7 +479,8 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
     error = {
       error: 'invalid_client',
       error_code: 1,
-      error_description: "Client authentication failed."
+      error_description: "Client authentication failed.",
+      state: dummy_device_sign_in_request[:state]
     }
     assert_redirected_to build_redirection_uri("#{SIGN_IN_SERVICE_CONFIG[:uri]}/error/400", error)
   end
@@ -477,7 +491,8 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
     error = {
       error: 'invalid_request',
       error_code: 2,
-      error_description: "Unrecognized device."
+      error_description: "Unrecognized device.",
+      state: dummy_device_sign_in_request[:state]
     }
     assert_redirected_to build_redirection_uri(dummy_sign_in_request[:redirect_uri], error)
   end
@@ -489,7 +504,8 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
     error = {
       error: 'invalid_request',
       error_code: 2,
-      error_description: "Unrecognized device."
+      error_description: "Unrecognized device.",
+      state: dummy_device_sign_in_request[:state]
     }
     assert_redirected_to build_redirection_uri(dummy_sign_in_request[:redirect_uri], error)
   end
@@ -501,7 +517,8 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
     error = {
       error: 'invalid_request',
       error_code: 3,
-      error_description: "'redirect_uri' required."
+      error_description: "'redirect_uri' required.",
+      state: dummy_device_sign_in_request[:state]
     }
     assert_redirected_to build_redirection_uri("#{SIGN_IN_SERVICE_CONFIG[:uri]}/error/400", error)
   end
@@ -513,7 +530,8 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
     error = {
       error: 'invalid_request',
       error_code: 4,
-      error_description: "'redirect_uri' not authorized by Relying Party"
+      error_description: "'redirect_uri' not authorized by Relying Party",
+      state: dummy_device_sign_in_request[:state]
     }
     assert_redirected_to build_redirection_uri("#{SIGN_IN_SERVICE_CONFIG[:uri]}/error/400", error)
   end
@@ -525,7 +543,8 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
     error = {
       error: 'invalid_request',
       error_code: 6,
-      error_description: "'email' is required."
+      error_description: "'email' is required.",
+      state: dummy_device_sign_in_request[:state]
     }
     assert_redirected_to build_redirection_uri(dummy_sign_in_request[:redirect_uri], error)
   end
@@ -537,7 +556,8 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
     error = {
       error: 'entity_not_found',
       error_code: 0,
-      error_description: "Entity not found: User."
+      error_description: "Entity not found: User.",
+      state: dummy_device_sign_in_request[:state]
     }
     assert_redirected_to build_redirection_uri(dummy_sign_in_request[:redirect_uri], error)
   end
@@ -549,7 +569,8 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
     error = {
       error: 'invalid_grant',
       error_code: 13,
-      error_description: "User has no session on device."
+      error_description: "User has no session on device.",
+      state: dummy_device_sign_in_request[:state]
     }
     assert_redirected_to build_redirection_uri(dummy_sign_in_request[:redirect_uri], error)
   end
@@ -562,7 +583,8 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
     error = {
       error: 'invalid_grant',
       error_code: 14,
-      error_description: "Session expired, user must sign in again."
+      error_description: "Session expired, user must sign in again.",
+      state: dummy_device_sign_in_request[:state]
     }
     assert_redirected_to build_redirection_uri(dummy_sign_in_request[:redirect_uri], error)
   end
@@ -576,7 +598,8 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
     error = {
       error: 'invalid_grant',
       error_code: 16,
-      error_description: "User has signed out, must sign in again."
+      error_description: "User has signed out, must sign in again.",
+      state: dummy_device_sign_in_request[:state]
     }
     assert_redirected_to build_redirection_uri(dummy_sign_in_request[:redirect_uri], error)
   end
@@ -590,7 +613,8 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
     error = {
       error: 'invalid_request',
       error_code: 10,
-      error_description: "Invalid scope format."
+      error_description: "Invalid scope format.",
+      state: dummy_device_sign_in_request[:state]
     }
     assert_redirected_to build_redirection_uri(dummy_sign_in_request[:redirect_uri], error)
   end
@@ -604,7 +628,8 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
     error = {
       error: 'unauthorized_client',
       error_code: 11,
-      error_description: "The client is not authorized to request an authorization code using this method."
+      error_description: "The client is not authorized to request an authorization code using this method.",
+      state: dummy_device_sign_in_request[:state]
     }
     assert_redirected_to build_redirection_uri(dummy_sign_in_request[:redirect_uri], error)
   end
@@ -618,7 +643,8 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
     error = {
       error: 'invalid_request',
       error_code: 12,
-      error_description: "'response_type' required."
+      error_description: "'response_type' required.",
+      state: dummy_device_sign_in_request[:state]
     }
     assert_redirected_to build_redirection_uri(dummy_sign_in_request[:redirect_uri], error)
   end
@@ -731,7 +757,8 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
     error = {
       error: 'invalid_request',
       error_code: 12,
-      error_description: "'response_type' required."
+      error_description: "'response_type' required.",
+      state: dummy_request_check_request[:state]
     }
     assert_redirected_to build_redirection_uri(request_params[:redirect_uri], error)
   end
@@ -744,7 +771,8 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
     error = {
       error: 'unauthorized_client',
       error_code: 11,
-      error_description: "The client is not authorized to request an authorization code using this method."
+      error_description: "The client is not authorized to request an authorization code using this method.",
+      state: dummy_request_check_request[:state]
     }
     assert_redirected_to build_redirection_uri(request_params[:redirect_uri], error)
   end
@@ -757,7 +785,8 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
     error = {
       error: 'invalid_request',
       error_code: 10,
-      error_description: "Invalid scope format."
+      error_description: "Invalid scope format.",
+      state: dummy_request_check_request[:state]
     }
     assert_redirected_to build_redirection_uri(request_params[:redirect_uri], error)
   end

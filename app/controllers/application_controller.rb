@@ -13,7 +13,8 @@ class ApplicationController < ActionController::API
       {
         error: exception.error,
         error_code: exception.error_code,
-        error_description: exception.error_description
+        error_description: exception.error_description,
+        state: params[:state]
       }
   end
 
