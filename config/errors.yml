@@ -30,3 +30,13 @@
   :error_description: "Session not found."
 - :error_code: 16
   :error_description: "User has signed out, must sign in again."
+- :error_code: 17
+  :error_description: "End-User authetication is required."
+- :error_code: 18
+  :error_description: "End-User is required to select a session."
+- :error-code: 19
+  :error_description: "Use of 'request' parameter is not supported"
+- :error-code: 20
+  :error_description: "Use of 'request_uri' parameter is not supported"
+- :error-code: 21
+  :error_description: "Use of 'registration' parameter is not supported"

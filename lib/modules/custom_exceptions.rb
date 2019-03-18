@@ -65,4 +65,39 @@ module CustomExceptions
     end
   end
 
+  class LoginRequired < BaseException
+    def initialize
+      @error = "login_required"
+      super @error_description, 17
+    end
+  end
+
+  class AccountSelectionRequired < BaseException
+    def initialize
+      @error = "account_selection_required"
+      super @error_description, 18
+    end
+  end
+
+  class RequestNotSupported < BaseException
+    def initialize
+      @error = "request_not_supported"
+      super @error_description, 19
+    end
+  end
+
+  class RequestUriNotSupported < BaseException
+    def initialize
+      @error = "request_uri_not_supported"
+      super @error_description, 20
+    end
+  end
+
+  class RegistrationNotSupported < BaseException
+    def initialize
+      @error = "registration_not_supported"
+      super @error_description, 21
+    end
+  end
+
 end
