@@ -23,6 +23,13 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
     }
   end
 
+  def dummy_credentials_check_request
+    {
+      email: users(:example).email,
+      password: '909031'
+    }
+  end
+
   def dummy_device_sign_in_request
     {
       response_type: 'code',
@@ -125,6 +132,42 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
     get '/auth/request_check',
       params: dummy_request_check_request
     assert_response :ok
+  end
+
+  # Credentials Check Tests
+
+  test "credentials_check_must_include_email_address" do
+    request_params = dummy_credentials_check_request
+    request_params[:email] = nil
+    get '/auth/credentials_check', params: request_params
+    assert_response :bad_request
+    assert_equal 7, parsed_response(@response)["error_code"]
+  end
+
+  test "credentials_check_must_include_password" do
+    request_params = dummy_credentials_check_request
+    request_params[:password] = nil
+    get '/auth/credentials_check', params: request_params
+    assert_response :bad_request
+    assert_equal 7, parsed_response(@response)["error_code"]
+  end
+
+  test "credentials_check_must_return_invalid_grant_if_user_credentials_are_wrong" do
+    request_params = dummy_credentials_check_request
+    request_params[:password] = 'wrong_password'
+    get '/auth/credentials_check', params: request_params
+    assert_response :bad_request
+    assert_equal 'invalid_grant', parsed_response(@response)["error"]
+    assert_equal 8, parsed_response(@response)["error_code"]
+  end
+
+  test "credentials_check_must_return_invalid_grant_if_user_email_is_not_verified" do
+    request_params = dummy_credentials_check_request
+    request_params[:email] = users(:example2).email
+    get '/auth/credentials_check', params: request_params
+    assert_response :bad_request
+    assert_equal 'invalid_grant', parsed_response(@response)["error"]
+    assert_equal 9, parsed_response(@response)["error_code"]
   end
 
   # SignIn Tests
