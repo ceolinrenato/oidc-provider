@@ -100,4 +100,11 @@ module CustomExceptions
     end
   end
 
+  class UnsupportedResponseType < BaseException
+    def initialize
+      @error = "unsupported_response_type"
+      super @error_description, 22
+    end
+  end
+
 end

@@ -25,6 +25,7 @@ class AuthController < ApplicationController
     raise CustomExceptions::AccountSelectionRequired if @device.active_session_count > 1
     @session = @device.sessions.first
     @session.update! last_activity: Time.now
+    @user = @session.user
     generate_auth_code
     generate_auth_scopes
     generate_access_token
@@ -48,6 +49,8 @@ class AuthController < ApplicationController
       params.permit(:client_id, :redirect_uri, :response_type, :scope, :state, :nonce, :prompt)
   rescue CustomExceptions::InvalidRequest,
     CustomExceptions::InvalidClient,
+    CustomExceptions::LoginRequired,
+    CustomExceptions::AccountSelectionRequired,
     CustomExceptions::RequestNotSupported,
     CustomExceptions::RequestUriNotSupported,
     CustomExceptions::RegistrationNotSupported => exception

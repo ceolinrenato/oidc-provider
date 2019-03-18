@@ -797,4 +797,50 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to build_redirection_uri(SIGN_IN_SERVICE_CONFIG[:uri], dummy_request_check_request)
   end
 
+  test "oauth2_with_prompt_none_should_have_a_device" do
+    request_params = dummy_request_check_request
+    request_params[:prompt] = 'none'
+    get '/oauth2/authorize',
+      params: request_params
+    error = {
+      error: 'login_required',
+      error_code: 17,
+      error_description: "End-User authetication is required.",
+      state: request_params[:state]
+    }
+    assert_redirected_to build_redirection_uri(request_params[:redirect_uri], error)
+  end
+
+  test "oauth2_with_prompt_none_should_have_just_one_user_session_on_device" do
+    request_params = dummy_request_check_request
+    request_params[:prompt] = 'none'
+    get '/oauth2/authorize',
+      params: request_params,
+      headers: { 'Cookie' => set_device_token_cookie(devices(:example4).token) }
+    error = {
+      error: 'account_selection_required',
+      error_code: 18,
+      error_description: "End-User is required to select a session.",
+      state: request_params[:state]
+    }
+    assert_redirected_to build_redirection_uri(request_params[:redirect_uri], error)
+  end
+
+  test "oauth2_with_prompt_none_should_redirect_with_code_if_just_one_user_session_on_device" do
+    request_params = dummy_request_check_request
+    request_params[:prompt] = 'none'
+    get '/oauth2/authorize',
+      params: request_params,
+      headers: { 'Cookie' => set_device_token_cookie(devices(:example2).token) }
+    success_params = {
+      code: AuthorizationCode.last.code,
+      state: dummy_request_check_request[:state]
+    }
+    assert_redirected_to build_redirection_uri(request_params[:redirect_uri], success_params)
+  end
+
+  # Unsupported
+
+
+
 end

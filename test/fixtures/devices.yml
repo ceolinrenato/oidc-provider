@@ -26,3 +26,12 @@ example3:
   mobile: false
   tablet: false
   token: LLAKqkaAKkdwQJQh
+
+example4:
+  browser_name: Safari
+  browser_version: 37
+  platform_name: OS X
+  platform_version: High Sierra
+  mobile: false
+  tablet: false
+  token: ASDhshalkDHSLKAasd
