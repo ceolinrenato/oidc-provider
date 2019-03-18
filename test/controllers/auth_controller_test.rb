@@ -95,7 +95,7 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "request_check_must_include_response_type" do
-    request_params = dummy_sign_in_request
+    request_params = dummy_request_check_request
     request_params[:response_type] = nil
     get '/auth/request_check',
       params: request_params
@@ -104,12 +104,21 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "request_check_must_have_authorized_response_type" do
-    request_params = dummy_sign_in_request
+    request_params = dummy_request_check_request
     request_params[:response_type] = 'not_authorized_response_type'
     get '/auth/request_check',
       params: request_params
     assert_response :unauthorized
     assert_equal 11, parsed_response(@response)["error_code"]
+  end
+
+  test "request_check_must_have_a_valid_scope" do
+    request_params = dummy_request_check_request
+    request_params[:scope] = "invalid $cope"
+    get '/auth/request_check',
+      params: request_params
+    assert_response :bad_request
+    assert_equal 10, parsed_response(@response)["error_code"]
   end
 
   test "request_check_must_return_ok_in_case_of_success" do
@@ -475,6 +484,85 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
     assert_not_nil response_body["authorization_code"]
     assert_not_nil cookies[:device_token]
     assert_response :success
+  end
+
+  # OAuth2 Authorize Tests
+
+  test "oauth2_authorize_must_include_client_id" do
+    request_params = dummy_request_check_request
+    request_params[:client_id] = nil
+    get '/oauth2/authorize',
+      params: request_params
+    assert_redirected_to build_redirection_uri("#{SIGN_IN_SERVICE_CONFIG[:uri]}/error/400", request_params)
+  end
+
+  test "oauth2_authorize_must_include_a_valid_client_id" do
+    request_params = dummy_request_check_request
+    request_params[:client_id] = 'AGsjHAKDhsakdSAK'
+    get '/oauth2/authorize',
+      params: request_params
+    assert_redirected_to build_redirection_uri("#{SIGN_IN_SERVICE_CONFIG[:uri]}/error/400", request_params)
+  end
+
+  test "oauth2_authorize_must_include_redirect_uri" do
+    request_params = dummy_request_check_request
+    request_params[:redirect_uri] = nil
+    get '/oauth2/authorize',
+      params: request_params
+    assert_redirected_to build_redirection_uri("#{SIGN_IN_SERVICE_CONFIG[:uri]}/error/400", request_params)
+  end
+
+  test "oauth2_authorize_must_include_an_authorized_redirect_uri" do
+    request_params = dummy_request_check_request
+    request_params[:redirect_uri] = relying_parties(:example2).redirect_uris.first.uri
+    get '/oauth2/authorize',
+      params: request_params
+    assert_redirected_to build_redirection_uri("#{SIGN_IN_SERVICE_CONFIG[:uri]}/error/400", request_params)
+  end
+
+  test "oauth2_authorize_must_include_response_type" do
+    request_params = dummy_request_check_request
+    request_params[:response_type] = nil
+    get '/oauth2/authorize',
+      params: request_params
+    error = {
+      error: 'invalid_request',
+      error_code: 12,
+      error_description: "'response_type' required."
+    }
+    assert_redirected_to build_redirection_uri(request_params[:redirect_uri], error)
+  end
+
+  test "oauth2_authorize_must_have_authorized_response_type" do
+    request_params = dummy_request_check_request
+    request_params[:response_type] = 'not_authorized_response_type'
+    get '/oauth2/authorize',
+      params: request_params
+    error = {
+      error: 'unauthorized_client',
+      error_code: 11,
+      error_description: "The client is not authorized to request an authorization code using this method."
+    }
+    assert_redirected_to build_redirection_uri(request_params[:redirect_uri], error)
+  end
+
+  test "oauth2_authorize_must_have_a_valid_scope" do
+    request_params = dummy_request_check_request
+    request_params[:scope] = "invalid $cope"
+    get '/oauth2/authorize',
+      params: request_params
+    error = {
+      error: 'invalid_request',
+      error_code: 10,
+      error_description: "Invalid scope format."
+    }
+    assert_redirected_to build_redirection_uri(request_params[:redirect_uri], error)
+  end
+
+  test "oauth2_must_redirect_to_login_service_in_case_of_success" do
+    get '/oauth2/authorize',
+      params: dummy_request_check_request
+    assert_redirected_to build_redirection_uri(SIGN_IN_SERVICE_CONFIG[:uri], dummy_request_check_request)
   end
 
 end

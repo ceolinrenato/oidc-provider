@@ -22,11 +22,27 @@ class AuthController < ApplicationController
     set_relying_party_by_client_id
     set_redirect_uri_by_param
     set_response_type
-    head :ok
+    parse_scopes
+    head :ok and return if request.path == '/auth/request_check'
+    redirect_with_params SIGN_IN_SERVICE_CONFIG[:uri],
+      params.permit(:client_id, :redirect_uri, :response_type, :scope, :state, :nonce)
   rescue CustomExceptions::InvalidRequest, CustomExceptions::InvalidClient => exception
-    render json: ErrorSerializer.new(exception), status: :bad_request
+    render json: ErrorSerializer.new(exception), status: :bad_request and return if request.path == '/auth/request_check'
+    if @redirect_uri
+      redirect_with_error @redirect_uri.uri, exception
+    else
+      redirect_with_params "#{SIGN_IN_SERVICE_CONFIG[:uri]}/error/400",
+        params.permit(:client_id, :redirect_uri, :response_type, :scope, :state, :nonce)
+    end
   rescue CustomExceptions::UnauthorizedClient => exception
-    render json: ErrorSerializer.new(exception), status: :unauthorized
+    render json: ErrorSerializer.new(exception), status: :unauthorized and return if request.path == '/auth/request_check'
+    redirect_with_error @redirect_uri.uri, exception
+  end
+
+  def credentials_check
+    authenticate_user
+  rescue CustomExceptions::InvalidRequest, CustomExceptions::InvalidGrant => exception
+    render json: ErrorSerializer.new(exception), status: :bad_request
   end
 
   def sign_in
@@ -34,6 +50,7 @@ class AuthController < ApplicationController
       set_relying_party_by_client_id
       set_redirect_uri_by_param
       set_response_type
+      parse_scopes
       authenticate_user
       set_device
       set_session
@@ -55,6 +72,7 @@ class AuthController < ApplicationController
       set_relying_party_by_client_id
       set_redirect_uri_by_param
       set_response_type
+      parse_scopes
       set_user_by_email!
       set_device!
       set_session!
