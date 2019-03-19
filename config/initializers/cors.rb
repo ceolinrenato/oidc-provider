@@ -19,7 +19,7 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
 
     resource '/auth/credentials_check',
       headers: :any,
-      methods: [:get]
+      methods: [:post]
 
     resource '/sessions',
       headers: :any,
