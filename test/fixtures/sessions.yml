@@ -24,3 +24,17 @@ signed_out:
   token: LKHASHdlaHSDlaAsa
   last_activity: <%= Time.now - Session::SESSION_EXPIRATION_TIME + 1.hour %>
   signed_out: true
+
+# More Than A Active User Session On Device 4
+
+active1:
+  user: example
+  device: example4
+  token: SKAJDH917SHDLADsa
+  last_activity: <%= Time.now - Session::SESSION_EXPIRATION_TIME + 1.hour %>
+
+active2:
+  user: example2
+  device: example4
+  token: ASdhLKSAdalkDHSAS
+  last_activity: <%= Time.now - Session::SESSION_EXPIRATION_TIME + 1.hour %>
