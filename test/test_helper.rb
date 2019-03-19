@@ -18,4 +18,11 @@ class ActiveSupport::TestCase
     "device_token=#{token}"
   end
 
+  def build_redirection_uri(location, params)
+    uri = URI(location)
+    uri_params = Rack::Utils.parse_nested_query uri.query
+    uri.query = uri_params.deep_merge(params).to_query
+    uri.to_s
+  end
+
 end

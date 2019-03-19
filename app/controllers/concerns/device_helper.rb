@@ -18,7 +18,7 @@ module DeviceHelper
     Device.create! device
   end
 
-  def set_device
+  def set_or_create_device
     if cookies[:device_token]
       @device = Device.find_by token: cookies[:device_token]
       raise CustomExceptions::InvalidRequest.new 2 unless @device
@@ -26,6 +26,11 @@ module DeviceHelper
       @device = create_device_from_user_agent
     end
     set_device_token_cookie
+  end
+
+  def set_device
+    @device = Device.find_by token: cookies[:device_token]
+    set_device_token_cookie if @device
   end
 
   def set_device!

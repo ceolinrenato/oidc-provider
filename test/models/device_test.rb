@@ -17,4 +17,11 @@ class DeviceTest < ActiveSupport::TestCase
     assert device.save
   end
 
+  test "active_session_count_should_return_number_of_device_active_sessions" do
+    devices().each do |device|
+      active_count = device.sessions.map { |session| session.active? }.filter { |active| active }.count
+      assert_equal active_count, device.active_session_count
+    end
+  end
+
 end
