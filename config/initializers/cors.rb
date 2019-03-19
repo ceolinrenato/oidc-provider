@@ -17,15 +17,9 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
       headers: :any,
       methods: [:get]
 
-    resource '/auth/sign_in',
+    resource '/auth/credentials_check',
       headers: :any,
-      methods: [:post, :options],
-      credentials: true
-
-    resource '/auth/sign_in_with_session',
-      headers: :any,
-      methods: [:post, :options],
-      credentials: true
+      methods: [:get]
 
     resource '/sessions',
       headers: :any,
