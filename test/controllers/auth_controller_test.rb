@@ -181,4 +181,9 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
     assert_equal 9, parsed_response(@response)["error_code"]
   end
 
+  test "credentials_check_must_resolve_to_no_content_if_request_is_okay" do
+    post '/auth/credentials_check', params: dummy_credentials_check_request
+    assert_response :no_content
+  end
+
 end

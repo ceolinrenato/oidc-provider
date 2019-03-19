@@ -69,6 +69,7 @@ class AuthController < ApplicationController
 
   def credentials_check
     authenticate_user
+    head :no_content
   rescue CustomExceptions::InvalidRequest, CustomExceptions::InvalidGrant => exception
     render json: ErrorSerializer.new(exception), status: :bad_request
   end
