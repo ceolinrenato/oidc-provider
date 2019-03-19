@@ -43,7 +43,7 @@ class AuthController < ApplicationController
     check_for_unsupported_params
     set_response_type
     parse_scopes
-    head :ok and return if request.path == '/auth/request_check'
+    head :no_content and return if request.path == '/auth/request_check'
     handle_prompt_none and return if params[:prompt] == 'none'
     redirect_with_params SIGN_IN_SERVICE_CONFIG[:uri],
       params.permit(:client_id, :redirect_uri, :response_type, :scope, :state, :nonce, :prompt)

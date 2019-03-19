@@ -142,7 +142,7 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
   test "request_check_must_return_ok_in_case_of_success" do
     get '/auth/request_check',
       params: dummy_request_check_request
-    assert_response :ok
+    assert_response :no_content
   end
 
   # Credentials Check Tests
