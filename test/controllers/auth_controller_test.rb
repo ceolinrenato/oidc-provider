@@ -40,6 +40,33 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
 
   # RequestCheck Tests
 
+  test "request_check_unsupported_request_param" do
+    request_params = dummy_request_check_request
+    request_params[:request] = 'test'
+    get '/auth/request_check',
+      params: request_params
+    assert_response :bad_request
+    assert_equal 19, parsed_response(@response)["error_code"]
+  end
+
+  test "request_check_unsupported_request_uri_param" do
+    request_params = dummy_request_check_request
+    request_params[:request_uri] = 'test'
+    get '/auth/request_check',
+      params: request_params
+    assert_response :bad_request
+    assert_equal 20, parsed_response(@response)["error_code"]
+  end
+
+  test "request_check_unsupported_registration_param" do
+    request_params = dummy_request_check_request
+    request_params[:registration] = 'test'
+    get '/auth/request_check',
+      params: request_params
+    assert_response :bad_request
+    assert_equal 21, parsed_response(@response)["error_code"]
+  end
+
   test "request_check_must_include_client_id" do
     request_params = dummy_request_check_request
     request_params[:client_id] = nil

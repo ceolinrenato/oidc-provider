@@ -10,6 +10,45 @@ class AuthControllerOAuth2AuthorizeTest < ActionDispatch::IntegrationTest
     }
   end
 
+  test "oauth2_authorize_unsupported_request_param" do
+    request_params = dummy_oauth2_authorize_request
+    request_params[:request] = 'test'
+    get '/oauth2/authorize', params: request_params
+    error = {
+      error: 'request_not_supported',
+      error_code: 19,
+      error_description: "Use of 'request' parameter is not supported",
+      state: request_params[:state]
+    }
+    assert_redirected_to build_redirection_uri(request_params[:redirect_uri], error)
+  end
+
+  test "oauth2_authorize_unsupported_request_uri_param" do
+    request_params = dummy_oauth2_authorize_request
+    request_params[:request_uri] = 'test'
+    get '/oauth2/authorize', params: request_params
+    error = {
+      error: 'request_uri_not_supported',
+      error_code: 20,
+      error_description: "Use of 'request_uri' parameter is not supported",
+      state: request_params[:state]
+    }
+    assert_redirected_to build_redirection_uri(request_params[:redirect_uri], error)
+  end
+
+  test "oauth2_authorize_unsupported_registration_param" do
+    request_params = dummy_oauth2_authorize_request
+    request_params[:registration] = 'test'
+    get '/oauth2/authorize', params: request_params
+    error = {
+      error: 'registration_not_supported',
+      error_code: 21,
+      error_description: "Use of 'registration' parameter is not supported",
+      state: request_params[:state]
+    }
+    assert_redirected_to build_redirection_uri(request_params[:redirect_uri], error)
+  end
+
   test "oauth2_authorize_must_include_client_id" do
     request_params = dummy_oauth2_authorize_request
     request_params[:client_id] = nil

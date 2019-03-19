@@ -38,9 +38,9 @@ class AuthController < ApplicationController
   end
 
   def request_check
-    check_for_unsupported_params
     set_relying_party_by_client_id
     set_redirect_uri_by_param
+    check_for_unsupported_params
     set_response_type
     parse_scopes
     head :ok and return if request.path == '/auth/request_check'
@@ -75,9 +75,9 @@ class AuthController < ApplicationController
 
   def sign_in
     ActiveRecord::Base.transaction do
-      check_for_unsupported_params
       set_relying_party_by_client_id
       set_redirect_uri_by_param
+      check_for_unsupported_params
       set_response_type
       parse_scopes
       authenticate_user
@@ -111,9 +111,9 @@ class AuthController < ApplicationController
 
   def sign_in_with_device
     ActiveRecord::Base.transaction do
-      check_for_unsupported_params
       set_relying_party_by_client_id
       set_redirect_uri_by_param
+      check_for_unsupported_params
       set_response_type
       parse_scopes
       set_user_by_email!

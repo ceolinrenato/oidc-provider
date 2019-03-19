@@ -14,6 +14,45 @@ class AuthControllerSignInWithSessionTest < ActionDispatch::IntegrationTest
     }
   end
 
+  test "device_sign_in_unsupported_request_param" do
+    request_params = dummy_device_sign_in_request
+    request_params[:request] = 'test'
+    post '/auth/sign_in_with_session', params: request_params
+    error = {
+      error: 'request_not_supported',
+      error_code: 19,
+      error_description: "Use of 'request' parameter is not supported",
+      state: request_params[:state]
+    }
+    assert_redirected_to build_redirection_uri(request_params[:redirect_uri], error)
+  end
+
+  test "device_sign_in_unsupported_request_uri_param" do
+    request_params = dummy_device_sign_in_request
+    request_params[:request_uri] = 'test'
+    post '/auth/sign_in_with_session', params: request_params
+    error = {
+      error: 'request_uri_not_supported',
+      error_code: 20,
+      error_description: "Use of 'request_uri' parameter is not supported",
+      state: request_params[:state]
+    }
+    assert_redirected_to build_redirection_uri(request_params[:redirect_uri], error)
+  end
+
+  test "device_sign_in_unsupported_registration_param" do
+    request_params = dummy_device_sign_in_request
+    request_params[:registration] = 'test'
+    post '/auth/sign_in_with_session', params: request_params
+    error = {
+      error: 'registration_not_supported',
+      error_code: 21,
+      error_description: "Use of 'registration' parameter is not supported",
+      state: request_params[:state]
+    }
+    assert_redirected_to build_redirection_uri(request_params[:redirect_uri], error)
+  end
+
   test "device_sign_in_should_include_client_id" do
     request_params = dummy_device_sign_in_request
     request_params[:client_id] = nil
