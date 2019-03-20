@@ -9,15 +9,15 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
     origins Rails.application.config.allowed_cors_origins
 
-    resource '/auth/lookup',
+    resource '/login_service/email_lookup',
       headers: :any,
       methods: [:get]
 
-    resource '/auth/request_check',
+    resource '/login_service/request_validation',
       headers: :any,
       methods: [:get]
 
-    resource '/auth/credentials_check',
+    resource '/login_service/credential_validation',
       headers: :any,
       methods: [:post]
 
