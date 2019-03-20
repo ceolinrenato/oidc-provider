@@ -45,6 +45,13 @@ module CustomExceptions
     end
   end
 
+  class InvalidRedirectURI < BaseException
+    def initialize
+      @error = "invalid_redirect_uri"
+      super @error_description, 4
+    end
+  end
+
   class InvalidGrant < BaseException
     def initialize(code)
       @error = "invalid_grant"

@@ -1,4 +1,4 @@
-class SessionsController < ApplicationController
+class SessionManagementController < ApplicationController
 
   include SessionHelper
   include DeviceHelper

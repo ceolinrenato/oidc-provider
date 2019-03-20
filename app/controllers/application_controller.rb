@@ -12,7 +12,6 @@ class ApplicationController < ActionController::API
     redirect_with_params location,
       {
         error: exception.error,
-        error_code: exception.error_code,
         error_description: exception.error_description,
         state: params[:state]
       }
