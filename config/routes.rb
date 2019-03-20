@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   post   'oauth2/credential_authorization',         to: 'authorization_endpoint#credential_authorization'
   post   'oauth2/session_authorization',            to: 'authorization_endpoint#session_authorization'
   get    'oauth2/authorize',                        to: 'authorization_endpoint#request_validation'
+  post   'oauth2/authorize',                        to: 'authorization_endpoint#request_validation'
 
   # SessionManagement Routes
   patch  'sessions/:session_token',                 to: 'session_management#sign_out'
