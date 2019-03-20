@@ -1,4 +1,4 @@
-class LoginServiceController < ApplicationController
+class SignInServiceController < ApplicationController
 
   include UserHelper
   include RelyingPartyHelper
