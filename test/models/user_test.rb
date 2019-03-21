@@ -7,7 +7,8 @@ class UserTest < ActiveSupport::TestCase
       name: 'Example',
       last_name: 'Example',
       email: 'example@example.com',
-      password: '123456'
+      password: '123456',
+      verified_email: true
     }
   end
 
@@ -69,6 +70,14 @@ class UserTest < ActiveSupport::TestCase
   test "full_name_method" do
     full_name = "#{users(:example).name} #{users(:example).last_name}"
     assert_equal full_name, users(:example).full_name
+  end
+
+  test "email_can_be_blank_if_not_verified" do
+    no_email = dummy_user
+    no_email[:email] = nil
+    no_email[:verified_email] = false
+    user = User.new no_email
+    assert user.save
   end
 
 end

@@ -4,7 +4,7 @@ class Session < ApplicationRecord
 
   has_secure_token
 
-  has_many :access_tokens, dependent: :nullify
+  has_many :access_tokens, dependent: :destroy
   belongs_to :user
   belongs_to :device
 

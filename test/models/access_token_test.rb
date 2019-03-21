@@ -7,7 +7,6 @@ class AccessTokenTest < ActiveSupport::TestCase
       authorization_code: authorization_codes(:example),
       relying_party: relying_parties(:example),
       session: sessions(:example),
-      user: sessions(:example).user
     }
   end
 

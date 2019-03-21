@@ -1,5 +1,5 @@
 class Device < ApplicationRecord
-  has_many :sessions
+  has_many :sessions, dependent: :destroy
   has_many :device_tokens
 
   def active_session_count
