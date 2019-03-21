@@ -30,7 +30,7 @@ class SessionAuthorizationCodeFlowTest < ActionDispatch::IntegrationTest
   test "must_create_auth_scopes" do
     request_params = session_authorization_example
     request_params[:scope] = 'openid email nonExistentScope'
-    assert_difference('AuthorizationCodeScope.count', 2) do
+    assert_difference('AccessTokenScope.count', 2) do
       post "/oauth2/session_authorization",
         params: request_params,
         headers: { 'Cookie' => set_device_token_cookie(devices(:example2).token) }

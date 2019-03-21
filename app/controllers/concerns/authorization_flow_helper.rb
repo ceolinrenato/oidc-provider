@@ -7,8 +7,8 @@ module AuthorizationFlowHelper
 
   def authorization_code_flow
     generate_auth_code
-    generate_auth_scopes
     generate_access_token
+    generate_auth_scopes
     generate_refresh_token
     redirect_with_params @redirect_uri.uri,
       {

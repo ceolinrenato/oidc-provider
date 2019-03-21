@@ -5,3 +5,9 @@ example:
   relying_party: example
   session: example
   user: example
+
+example2:
+  authorization_code: example
+  relying_party: example
+  session: example
+  user: example

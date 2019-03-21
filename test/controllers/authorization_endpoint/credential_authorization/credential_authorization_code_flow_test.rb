@@ -90,7 +90,7 @@ class CredentialAuthorizationCodeFlowTest < ActionDispatch::IntegrationTest
   test "credential_authorization_method_should_create_auth_scopes" do
     request_params = credential_authorization_example
     request_params[:scope] = 'openid email nonExistentScope'
-    assert_difference('AuthorizationCodeScope.count', 2) do
+    assert_difference('AccessTokenScope.count', 2) do
       post '/oauth2/credential_authorization', params: request_params
     end
     success_params = {

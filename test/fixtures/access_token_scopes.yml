@@ -1,5 +1,5 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 example:
-  authorization_code: example
+  access_token: example
   scope: example
