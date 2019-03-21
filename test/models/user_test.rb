@@ -72,12 +72,4 @@ class UserTest < ActiveSupport::TestCase
     assert_equal full_name, users(:example).full_name
   end
 
-  test "email_can_be_blank_if_not_verified" do
-    no_email = dummy_user
-    no_email[:email] = nil
-    no_email[:verified_email] = false
-    user = User.new no_email
-    assert user.save
-  end
-
 end

@@ -14,7 +14,7 @@ module UserHelper
 
   def authenticate_user
     raise CustomExceptions::InvalidRequest.new 7 unless params[:email] && params[:password]
-    @user = User.find_by(email: params[:email]).authenticate params[:password]
+    @user = User.find_by(email: params[:email]).try(:authenticate, params[:password])
     raise CustomExceptions::InvalidGrant.new 8 unless @user
     raise CustomExceptions::InvalidGrant.new 9 unless @user.verified_email
   end
