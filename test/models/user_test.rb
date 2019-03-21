@@ -7,8 +7,7 @@ class UserTest < ActiveSupport::TestCase
       name: 'Example',
       last_name: 'Example',
       email: 'example@example.com',
-      password: '123456',
-      verified_email: true
+      password: '123456'
     }
   end
 
