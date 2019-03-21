@@ -50,7 +50,7 @@ module DeviceHelper
   end
 
   def rotate_device_token
-    @device.device_tokens.last.update! used: true
+    @device.device_tokens.lock.last.update! used: true
     DeviceToken.create! device: @device
   end
 
