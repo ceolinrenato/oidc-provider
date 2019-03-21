@@ -114,4 +114,18 @@ module CustomExceptions
     end
   end
 
+  class UnrecognizedDevice < BaseException
+    def initialize
+      @error = "unrecognized_device"
+      super @error_description, 2
+    end
+  end
+
+  class CompromisedDevice < BaseException
+    def initialize
+      @error = "compromised_device"
+      super @error_description, 23
+    end
+  end
+
 end

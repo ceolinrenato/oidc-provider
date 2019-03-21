@@ -61,6 +61,12 @@ class AuthorizationEndpointController < ApplicationController
     else
       redirect_with_error "#{SIGN_IN_SERVICE_CONFIG[:uri]}/error", exception
     end
+  rescue CustomExceptions::UnrecognizedDevice => exception
+    clear_device_token_cookie
+    redirect_with_error @redirect_uri.uri, exception
+  rescue CustomExceptions::CompromisedDevice => exception
+    destroy_compromised_device
+    redirect_with_error @redirect_uri.uri, exception
   end
 
   def session_authorization
@@ -88,6 +94,12 @@ class AuthorizationEndpointController < ApplicationController
     else
       redirect_with_error "#{SIGN_IN_SERVICE_CONFIG[:uri]}/error", exception
     end
+  rescue CustomExceptions::UnrecognizedDevice => exception
+    clear_device_token_cookie
+    redirect_with_error @redirect_uri.uri, exception
+  rescue CustomExceptions::CompromisedDevice => exception
+    destroy_compromised_device
+    redirect_with_error @redirect_uri.uri, exception
   end
 
   private

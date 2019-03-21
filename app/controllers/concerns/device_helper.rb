@@ -24,30 +24,39 @@ module DeviceHelper
     device
   end
 
+  def verify_device(options = { raise_on_invalid: true })
+    device_token = DeviceToken.find_by(token: cookies[:device_token])
+    raise CustomExceptions::UnrecognizedDevice unless (device_token or !options[:raise_on_invalid])
+    if device_token
+      raise CustomExceptions::CompromisedDevice.new if device_token.used
+      @device = device_token.device
+    end
+  end
+
   def set_or_create_device
     if cookies[:device_token]
-      device_token = DeviceToken.find_by(token: cookies[:device_token])
-      @device = device_token.device if (device_token && !device_token.used)
-      raise CustomExceptions::InvalidRequest.new 2 unless @device
+      verify_device
     else
       @device = create_device_from_user_agent
     end
   end
 
   def set_device
-    device_token = DeviceToken.find_by(token: cookies[:device_token])
-    @device = device_token.device if (device_token && !device_token.used)
+    verify_device raise_on_invalid: false
   end
 
   def set_device!
-    device_token = DeviceToken.find_by(token: cookies[:device_token])
-    @device = device_token.device if (device_token && !device_token.used)
-    raise CustomExceptions::InvalidRequest.new 2 unless @device
+    verify_device
   end
 
   def rotate_device_token
     @device.device_tokens.last.update! used: true
     DeviceToken.create! device: @device
+  end
+
+  def destroy_compromised_device
+    @device.destroy
+    clear_device_token_cookie
   end
 
 end

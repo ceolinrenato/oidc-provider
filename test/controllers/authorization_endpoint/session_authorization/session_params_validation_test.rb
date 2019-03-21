@@ -78,22 +78,24 @@ class SessionParamsValidationTest < ActionDispatch::IntegrationTest
     post '/oauth2/session_authorization',
       params: session_authorization_example
     error = {
-      error: 'invalid_request',
+      error: 'unrecognized_device',
       error_description: "Unrecognized device.",
       state: session_authorization_example[:state]
     }
+    assert_nil cookies[:device_token]
     assert_redirected_to build_redirection_uri(session_authorization_example[:redirect_uri], error)
   end
 
   test "must_not_accept_unrecognized_devices" do
     post '/oauth2/session_authorization',
       params: session_authorization_example,
-      headers: { 'Cookie': set_device_token_cookie('not_recognized_device') }
+      headers: { 'Cookie' => set_device_token_cookie('not_recognized_device') }
     error = {
-      error: 'invalid_request',
+      error: 'unrecognized_device',
       error_description: "Unrecognized device.",
       state: session_authorization_example[:state]
     }
+    assert_equal cookies[:device_token], ""
     assert_redirected_to build_redirection_uri(session_authorization_example[:redirect_uri], error)
   end
 

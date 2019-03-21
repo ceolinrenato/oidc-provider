@@ -80,10 +80,11 @@ class CredentialParamsValidationTest < ActionDispatch::IntegrationTest
       params: credential_authorization_example,
       headers: { 'Cookie' => set_device_token_cookie('not_existent_device') }
     error = {
-      error: 'invalid_request',
+      error: 'unrecognized_device',
       error_description: "Unrecognized device.",
       state: credential_authorization_example[:state]
     }
+    assert_equal cookies[:device_token], ""
     assert_redirected_to build_redirection_uri(credential_authorization_example[:redirect_uri], error)
   end
 

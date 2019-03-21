@@ -136,7 +136,7 @@ class CredentialAuthorizationCodeFlowTest < ActionDispatch::IntegrationTest
     device_token = device_tokens(:example).token
     post '/oauth2/credential_authorization',
       params: credential_authorization_example,
-      headers: { 'Cookie': set_device_token_cookie(device_token) }
+      headers: { 'Cookie' => set_device_token_cookie(device_token) }
     assert_equal cookies[:device_token], device_token
     success_params = {
       code: AuthorizationCode.last.code,
