@@ -148,7 +148,7 @@ class SessionParamsValidationTest < ActionDispatch::IntegrationTest
   test "must_return_invalid_grant_if_no_session_on_device" do
     post "/oauth2/session_authorization",
       params: session_authorization_example,
-      headers: { 'Cookie' => set_device_token_cookie(devices(:example3).token) }
+      headers: { 'Cookie' => set_device_token_cookie(device_tokens(:example3).token) }
     error = {
       error: 'invalid_grant',
       error_description: "User has no session on device.",
@@ -161,7 +161,7 @@ class SessionParamsValidationTest < ActionDispatch::IntegrationTest
     request_params = session_authorization_example
     post "/oauth2/session_authorization",
       params: request_params,
-      headers: { 'Cookie' => set_device_token_cookie(devices(:example).token) }
+      headers: { 'Cookie' => set_device_token_cookie(device_tokens(:example).token) }
     error = {
       error: 'invalid_grant',
       error_description: "Session expired, user must sign in again.",
@@ -175,7 +175,7 @@ class SessionParamsValidationTest < ActionDispatch::IntegrationTest
     request_params[:email] = users(:example2).email
     post "/oauth2/session_authorization",
       params: request_params,
-      headers: { 'Cookie' => set_device_token_cookie(devices(:example2).token) }
+      headers: { 'Cookie' => set_device_token_cookie(device_tokens(:example2).token) }
     error = {
       error: 'invalid_grant',
       error_description: "User has signed out, must sign in again.",
@@ -189,7 +189,7 @@ class SessionParamsValidationTest < ActionDispatch::IntegrationTest
     request_params[:scope] = 'inv@lidScope $hit happens'
     post "/oauth2/session_authorization",
       params: request_params,
-      headers: { 'Cookie' => set_device_token_cookie(devices(:example2).token) }
+      headers: { 'Cookie' => set_device_token_cookie(device_tokens(:example2).token) }
     error = {
       error: 'invalid_request',
       error_description: "Invalid scope format.",
@@ -203,7 +203,7 @@ class SessionParamsValidationTest < ActionDispatch::IntegrationTest
     request_params[:response_type] = 'token'
     post "/oauth2/session_authorization",
       params: request_params,
-      headers: { 'Cookie' => set_device_token_cookie(devices(:example2).token) }
+      headers: { 'Cookie' => set_device_token_cookie(device_tokens(:example2).token) }
     error = {
       error: 'unauthorized_client',
       error_description: "The client is not authorized to request an authorization code using this method.",
@@ -229,7 +229,7 @@ class SessionParamsValidationTest < ActionDispatch::IntegrationTest
     request_params[:response_type] = nil
     post "/oauth2/session_authorization",
       params: request_params,
-      headers: { 'Cookie' => set_device_token_cookie(devices(:example2).token) }
+      headers: { 'Cookie' => set_device_token_cookie(device_tokens(:example2).token) }
     error = {
       error: 'invalid_request',
       error_description: "'response_type' required.",

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_21_130218) do
+ActiveRecord::Schema.define(version: 2019_03_21_131611) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,6 +52,16 @@ ActiveRecord::Schema.define(version: 2019_03_21_130218) do
     t.index ["user_id"], name: "index_authorization_codes_on_user_id"
   end
 
+  create_table "device_tokens", force: :cascade do |t|
+    t.string "token"
+    t.bigint "device_id"
+    t.boolean "used", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["device_id"], name: "index_device_tokens_on_device_id"
+    t.index ["token"], name: "index_device_tokens_on_token", unique: true
+  end
+
   create_table "devices", force: :cascade do |t|
     t.string "browser_name"
     t.string "browser_version"
@@ -59,10 +69,8 @@ ActiveRecord::Schema.define(version: 2019_03_21_130218) do
     t.string "platform_version"
     t.boolean "mobile"
     t.boolean "tablet"
-    t.string "token"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["token"], name: "index_devices_on_token", unique: true
   end
 
   create_table "password_tokens", force: :cascade do |t|
@@ -153,6 +161,7 @@ ActiveRecord::Schema.define(version: 2019_03_21_130218) do
   add_foreign_key "access_tokens", "users"
   add_foreign_key "authorization_codes", "redirect_uris"
   add_foreign_key "authorization_codes", "users"
+  add_foreign_key "device_tokens", "devices"
   add_foreign_key "password_tokens", "users"
   add_foreign_key "redirect_uris", "relying_parties"
   add_foreign_key "refresh_tokens", "access_tokens"

@@ -154,7 +154,7 @@ class AuthorizationEndpointRequestValidationTest < ActionDispatch::IntegrationTe
     request_params[:prompt] = 'none'
     get '/oauth2/authorize',
       params: request_params,
-      headers: { 'Cookie' => set_device_token_cookie(devices(:example4).token) }
+      headers: { 'Cookie' => set_device_token_cookie(device_tokens(:example4).token) }
     error = {
       error: 'account_selection_required',
       error_description: "End-User is required to select a session.",
@@ -169,7 +169,7 @@ class AuthorizationEndpointRequestValidationTest < ActionDispatch::IntegrationTe
     request_params[:state] = 'test'
     get '/oauth2/authorize',
       params: request_params,
-      headers: { 'Cookie' => set_device_token_cookie(devices(:example2).token) }
+      headers: { 'Cookie' => set_device_token_cookie(device_tokens(:example2).token) }
     success_params = {
       code: AuthorizationCode.last.code,
       state: request_params[:state]

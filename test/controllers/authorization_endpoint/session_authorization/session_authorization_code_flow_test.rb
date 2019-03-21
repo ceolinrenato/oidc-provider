@@ -18,7 +18,7 @@ class SessionAuthorizationCodeFlowTest < ActionDispatch::IntegrationTest
     assert_difference('AuthorizationCode.count') do
       post "/oauth2/session_authorization",
         params: session_authorization_example,
-        headers: { 'Cookie' => set_device_token_cookie(devices(:example2).token) }
+        headers: { 'Cookie' => set_device_token_cookie(device_tokens(:example2).token) }
     end
     success_params = {
       code: AuthorizationCode.last.code,
@@ -33,7 +33,7 @@ class SessionAuthorizationCodeFlowTest < ActionDispatch::IntegrationTest
     assert_difference('AccessTokenScope.count', 2) do
       post "/oauth2/session_authorization",
         params: request_params,
-        headers: { 'Cookie' => set_device_token_cookie(devices(:example2).token) }
+        headers: { 'Cookie' => set_device_token_cookie(device_tokens(:example2).token) }
     end
     success_params = {
       code: AuthorizationCode.last.code,
@@ -46,7 +46,7 @@ class SessionAuthorizationCodeFlowTest < ActionDispatch::IntegrationTest
     assert_difference('AccessToken.count') do
       post "/oauth2/session_authorization",
         params: session_authorization_example,
-        headers: { 'Cookie' => set_device_token_cookie(devices(:example2).token) }
+        headers: { 'Cookie' => set_device_token_cookie(device_tokens(:example2).token) }
     end
     success_params = {
       code: AuthorizationCode.last.code,
@@ -59,7 +59,7 @@ class SessionAuthorizationCodeFlowTest < ActionDispatch::IntegrationTest
     assert_difference('RefreshToken.count') do
       post "/oauth2/session_authorization",
         params: session_authorization_example,
-        headers: { 'Cookie' => set_device_token_cookie(devices(:example2).token) }
+        headers: { 'Cookie' => set_device_token_cookie(device_tokens(:example2).token) }
     end
     success_params = {
       code: AuthorizationCode.last.code,
@@ -70,9 +70,24 @@ class SessionAuthorizationCodeFlowTest < ActionDispatch::IntegrationTest
 
   test "response_must_contain_authorization_code_and_device_token" do
     post "/oauth2/session_authorization",
-        params: session_authorization_example,
-        headers: { 'Cookie' => set_device_token_cookie(devices(:example2).token) }
+      params: session_authorization_example,
+      headers: { 'Cookie' => set_device_token_cookie(device_tokens(:example2).token) }
     assert_not_nil cookies[:device_token]
+    success_params = {
+      code: AuthorizationCode.last.code,
+      state: session_authorization_example[:state]
+    }
+    assert_redirected_to build_redirection_uri(session_authorization_example[:redirect_uri], success_params)
+  end
+
+  test "device_token_must_be_rotated_on_successful_authorization" do
+    device_token = device_tokens(:example2).token
+    post "/oauth2/session_authorization",
+      params: session_authorization_example,
+      headers: { 'Cookie' => set_device_token_cookie(device_token) }
+    assert_not_equal device_token, cookies[:device_token]
+    assert DeviceToken.find_by(token: device_token).used
+    assert_not DeviceToken.find_by(token: cookies[:device_token]).used
     success_params = {
       code: AuthorizationCode.last.code,
       state: session_authorization_example[:state]

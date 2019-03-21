@@ -45,6 +45,7 @@ class AuthorizationEndpointController < ApplicationController
       set_session
       @session.update! signed_out: false
       send AUTHORIZATION_FLOWS[@response_type]
+      set_device_token_cookie
     end
   rescue CustomExceptions::InvalidRequest,
     CustomExceptions::InvalidGrant,
@@ -69,6 +70,8 @@ class AuthorizationEndpointController < ApplicationController
       set_device!
       set_session!
       send AUTHORIZATION_FLOWS[@response_type]
+      rotate_device_token
+      set_device_token_cookie
     end
   rescue CustomExceptions::InvalidRequest,
     CustomExceptions::InvalidGrant,
