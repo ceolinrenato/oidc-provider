@@ -35,6 +35,9 @@ class AuthorizationEndpointController < ApplicationController
       redirect_with_params "#{SIGN_IN_SERVICE_CONFIG[:uri]}/error",
       params.permit(:client_id, :redirect_uri, :response_type, :scope, :state, :nonce, :prompt)
     end
+  rescue CustomExceptions::CompromisedDevice => exception
+    destroy_compromised_device
+    redirect_with_error @redirect_uri.uri, exception
   end
 
   def credential_authorization

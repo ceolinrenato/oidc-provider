@@ -177,4 +177,19 @@ class AuthorizationEndpointRequestValidationTest < ActionDispatch::IntegrationTe
     assert_redirected_to build_redirection_uri(request_params[:redirect_uri], success_params)
   end
 
+  test "must_destroy_compromised_device" do
+    request_params = request_validation_example
+    request_params[:prompt] = 'none'
+    get '/oauth2/authorize',
+      params: request_params,
+      headers: { 'Cookie' => set_device_token_cookie(device_tokens(:example2_used).token) }
+    assert_equal cookies[:device_token], ""
+    error = {
+      error: 'compromised_device',
+      error_description: "End-Use device has been compromised.",
+      state: request_params[:state]
+    }
+    assert_redirected_to build_redirection_uri(request_params[:redirect_uri], error)
+  end
+
 end
