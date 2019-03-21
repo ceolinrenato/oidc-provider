@@ -208,4 +208,19 @@ class CredentialParamsValidationTest < ActionDispatch::IntegrationTest
     assert_redirected_to build_redirection_uri(credential_authorization_example[:redirect_uri], error)
   end
 
+  test "must_destroy_compromised_devices" do
+    assert_difference('Device.count', -1) do
+      post '/oauth2/credential_authorization',
+        params: credential_authorization_example,
+        headers: { 'Cookie' => set_device_token_cookie(device_tokens(:example2_used).token) }
+    end
+    assert_equal cookies[:device_token], ""
+    error = {
+      error: 'compromised_device',
+      error_description: "End-Use device has been compromised.",
+      state: credential_authorization_example[:state]
+    }
+    assert_redirected_to build_redirection_uri(credential_authorization_example[:redirect_uri], error)
+  end
+
 end
