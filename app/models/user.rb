@@ -7,6 +7,8 @@ class User < ApplicationRecord
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }, uniqueness: true
   validates :password, length: { minimum: 6, allow_blank: true }
 
+  before_save { |user| user.email = user.email.downcase }
+
   def full_name
     "#{name} #{last_name}"
   end
