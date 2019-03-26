@@ -7,7 +7,6 @@ example:
   platform_version: 0
   mobile: false
   tablet: false
-  token: AgajkjhadhASLsda
 
 example2:
   browser_name: Chrome
@@ -16,7 +15,6 @@ example2:
   platform_version: 0
   mobile: false
   tablet: false
-  token: LKLhQyrSAKqiuALq
 
 example3:
   browser_name: Opera
@@ -25,7 +23,6 @@ example3:
   platform_version: 0
   mobile: false
   tablet: false
-  token: LLAKqkaAKkdwQJQh
 
 example4:
   browser_name: Safari
@@ -34,4 +31,3 @@ example4:
   platform_version: High Sierra
   mobile: false
   tablet: false
-  token: ASDhshalkDHSLKAasd

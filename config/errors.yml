@@ -42,3 +42,5 @@
   :error_description: "Use of 'registration' parameter is not supported"
 - :error_code: 22
   :error_description: "We do not support obtaining an authorization code using this method."
+- :error_code: 23
+  :error_description: "End-Use device has been compromised."

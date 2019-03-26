@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_15_142246) do
+ActiveRecord::Schema.define(version: 2019_03_21_150922) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "access_token_scopes", force: :cascade do |t|
+    t.bigint "access_token_id"
+    t.bigint "scope_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["access_token_id", "scope_id"], name: "index_access_token_scopes_on_access_token_id_and_scope_id", unique: true
+    t.index ["access_token_id"], name: "index_access_token_scopes_on_access_token_id"
+    t.index ["scope_id"], name: "index_access_token_scopes_on_scope_id"
+  end
 
   create_table "access_tokens", force: :cascade do |t|
     t.bigint "authorization_code_id"
@@ -21,21 +31,9 @@ ActiveRecord::Schema.define(version: 2019_03_15_142246) do
     t.datetime "updated_at", null: false
     t.bigint "session_id"
     t.bigint "relying_party_id"
-    t.bigint "user_id"
     t.index ["authorization_code_id"], name: "index_access_tokens_on_authorization_code_id"
     t.index ["relying_party_id"], name: "index_access_tokens_on_relying_party_id"
     t.index ["session_id"], name: "index_access_tokens_on_session_id"
-    t.index ["user_id"], name: "index_access_tokens_on_user_id"
-  end
-
-  create_table "authorization_code_scopes", force: :cascade do |t|
-    t.bigint "authorization_code_id"
-    t.bigint "scope_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["authorization_code_id", "scope_id"], name: "index_on_scope_and_auth_code", unique: true
-    t.index ["authorization_code_id"], name: "index_authorization_code_scopes_on_authorization_code_id"
-    t.index ["scope_id"], name: "index_authorization_code_scopes_on_scope_id"
   end
 
   create_table "authorization_codes", force: :cascade do |t|
@@ -52,6 +50,16 @@ ActiveRecord::Schema.define(version: 2019_03_15_142246) do
     t.index ["user_id"], name: "index_authorization_codes_on_user_id"
   end
 
+  create_table "device_tokens", force: :cascade do |t|
+    t.string "token"
+    t.bigint "device_id"
+    t.boolean "used", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["device_id"], name: "index_device_tokens_on_device_id"
+    t.index ["token"], name: "index_device_tokens_on_token", unique: true
+  end
+
   create_table "devices", force: :cascade do |t|
     t.string "browser_name"
     t.string "browser_version"
@@ -59,10 +67,8 @@ ActiveRecord::Schema.define(version: 2019_03_15_142246) do
     t.string "platform_version"
     t.boolean "mobile"
     t.boolean "tablet"
-    t.string "token"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["token"], name: "index_devices_on_token", unique: true
   end
 
   create_table "password_tokens", force: :cascade do |t|
@@ -145,14 +151,14 @@ ActiveRecord::Schema.define(version: 2019_03_15_142246) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "access_token_scopes", "access_tokens"
+  add_foreign_key "access_token_scopes", "scopes"
   add_foreign_key "access_tokens", "authorization_codes"
   add_foreign_key "access_tokens", "relying_parties"
   add_foreign_key "access_tokens", "sessions"
-  add_foreign_key "access_tokens", "users"
-  add_foreign_key "authorization_code_scopes", "authorization_codes"
-  add_foreign_key "authorization_code_scopes", "scopes"
   add_foreign_key "authorization_codes", "redirect_uris"
   add_foreign_key "authorization_codes", "users"
+  add_foreign_key "device_tokens", "devices"
   add_foreign_key "password_tokens", "users"
   add_foreign_key "redirect_uris", "relying_parties"
   add_foreign_key "refresh_tokens", "access_tokens"

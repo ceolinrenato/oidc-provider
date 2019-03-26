@@ -17,4 +17,3 @@ Rails.application.routes.draw do
   get    'sessions',                                to: 'session_management#index_by_device'
   delete 'sessions/:session_token',                 to: 'session_management#destroy'
 end
-

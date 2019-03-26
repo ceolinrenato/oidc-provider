@@ -8,7 +8,7 @@ module ScopeHelper
   def generate_auth_scopes
     @scopes.each do |scope_name|
       scope = Scope.find_by name: scope_name
-      AuthorizationCodeScope.create! authorization_code: @authorization_code, scope: scope
+      AccessTokenScope.create! access_token: @access_token, scope: scope
     end
   end
 

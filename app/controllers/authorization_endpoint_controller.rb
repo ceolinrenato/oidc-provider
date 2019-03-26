@@ -35,6 +35,9 @@ class AuthorizationEndpointController < ApplicationController
       redirect_with_params "#{SIGN_IN_SERVICE_CONFIG[:uri]}/error",
       params.permit(:client_id, :redirect_uri, :response_type, :scope, :state, :nonce, :prompt)
     end
+  rescue CustomExceptions::CompromisedDevice => exception
+    destroy_compromised_device
+    redirect_with_error @redirect_uri.uri, exception
   end
 
   def credential_authorization
@@ -42,9 +45,10 @@ class AuthorizationEndpointController < ApplicationController
       params_validation
       authenticate_user
       set_or_create_device
-      set_session
+      set_or_create_session
       @session.update! signed_out: false
       send AUTHORIZATION_FLOWS[@response_type]
+      set_device_token_cookie
     end
   rescue CustomExceptions::InvalidRequest,
     CustomExceptions::InvalidGrant,
@@ -60,6 +64,12 @@ class AuthorizationEndpointController < ApplicationController
     else
       redirect_with_error "#{SIGN_IN_SERVICE_CONFIG[:uri]}/error", exception
     end
+  rescue CustomExceptions::UnrecognizedDevice => exception
+    clear_device_token_cookie
+    redirect_with_error @redirect_uri.uri, exception
+  rescue CustomExceptions::CompromisedDevice => exception
+    destroy_compromised_device
+    redirect_with_error @redirect_uri.uri, exception
   end
 
   def session_authorization
@@ -69,6 +79,8 @@ class AuthorizationEndpointController < ApplicationController
       set_device!
       set_session!
       send AUTHORIZATION_FLOWS[@response_type]
+      rotate_device_token
+      set_device_token_cookie
     end
   rescue CustomExceptions::InvalidRequest,
     CustomExceptions::InvalidGrant,
@@ -85,6 +97,12 @@ class AuthorizationEndpointController < ApplicationController
     else
       redirect_with_error "#{SIGN_IN_SERVICE_CONFIG[:uri]}/error", exception
     end
+  rescue CustomExceptions::UnrecognizedDevice => exception
+    clear_device_token_cookie
+    redirect_with_error @redirect_uri.uri, exception
+  rescue CustomExceptions::CompromisedDevice => exception
+    destroy_compromised_device
+    redirect_with_error @redirect_uri.uri, exception
   end
 
   private
@@ -97,6 +115,22 @@ class AuthorizationEndpointController < ApplicationController
     @session.update! last_activity: Time.now
     @user = @session.user
     send AUTHORIZATION_FLOWS[@response_type]
+  end
+
+  def redirect_with_params(location, params)
+    uri = URI(location)
+    uri_params = Rack::Utils.parse_nested_query uri.query
+    uri.query = uri_params.deep_merge(params).to_query
+    redirect_to uri.to_s, status: :found
+  end
+
+  def redirect_with_error(location, exception)
+    redirect_with_params location,
+      {
+        error: exception.error,
+        error_description: exception.error_description,
+        state: params[:state]
+      }
   end
 
 end

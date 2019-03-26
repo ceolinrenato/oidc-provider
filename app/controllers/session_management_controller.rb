@@ -6,7 +6,11 @@ class SessionManagementController < ApplicationController
   def index_by_device
     set_device!
     render json: SessionCollectionSerializer.new(@device.sessions)
-  rescue CustomExceptions::InvalidRequest => exception
+  rescue CustomExceptions::UnrecognizedDevice => exception
+    clear_device_token_cookie
+    render json: ErrorSerializer.new(exception), status: :bad_request
+  rescue CustomExceptions::CompromisedDevice => exception
+    destroy_compromised_device
     render json: ErrorSerializer.new(exception), status: :bad_request
   end
 
@@ -19,6 +23,12 @@ class SessionManagementController < ApplicationController
     head :no_content
   rescue CustomExceptions::InvalidRequest => exception
     render json: ErrorSerializer.new(exception), status: :bad_request
+  rescue CustomExceptions::UnrecognizedDevice => exception
+    clear_device_token_cookie
+    render json: ErrorSerializer.new(exception), status: :bad_request
+  rescue CustomExceptions::CompromisedDevice => exception
+    destroy_compromised_device
+    render json: ErrorSerializer.new(exception), status: :bad_request
   end
 
   def sign_out
@@ -29,6 +39,12 @@ class SessionManagementController < ApplicationController
     end
     render json: SessionSerializer.new(@session)
   rescue CustomExceptions::InvalidRequest => exception
+    render json: ErrorSerializer.new(exception), status: :bad_request
+  rescue CustomExceptions::UnrecognizedDevice => exception
+    clear_device_token_cookie
+    render json: ErrorSerializer.new(exception), status: :bad_request
+  rescue CustomExceptions::CompromisedDevice => exception
+    destroy_compromised_device
     render json: ErrorSerializer.new(exception), status: :bad_request
   end
 

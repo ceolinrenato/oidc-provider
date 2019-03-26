@@ -30,7 +30,7 @@ class CredentialAuthorizationCodeFlowTest < ActionDispatch::IntegrationTest
     assert_no_difference('Device.count') do
       post '/oauth2/credential_authorization',
         params: credential_authorization_example,
-        headers: { 'Cookie' => set_device_token_cookie(devices(:example).token) }
+        headers: { 'Cookie' => set_device_token_cookie(device_tokens(:example).token) }
     end
     success_params = {
       code: AuthorizationCode.last.code,
@@ -52,7 +52,7 @@ class CredentialAuthorizationCodeFlowTest < ActionDispatch::IntegrationTest
 
   test "credential_authorization_method_should_create_a_new_session_if_user_is_new_on_device" do
     request_params = credential_authorization_example
-    request_params[:device_token] = devices(:example2).token
+    request_params[:device_token] = device_tokens(:example2).token
     assert_difference('Session.count') do
       post '/oauth2/credential_authorization', params: request_params
     end
@@ -67,7 +67,7 @@ class CredentialAuthorizationCodeFlowTest < ActionDispatch::IntegrationTest
     assert_no_difference('Session.count') do
       post '/oauth2/credential_authorization',
         params: credential_authorization_example,
-        headers: { 'Cookie' => set_device_token_cookie(devices(:example).token) }
+        headers: { 'Cookie' => set_device_token_cookie(device_tokens(:example).token) }
     end
     success_params = {
       code: AuthorizationCode.last.code,
@@ -90,7 +90,7 @@ class CredentialAuthorizationCodeFlowTest < ActionDispatch::IntegrationTest
   test "credential_authorization_method_should_create_auth_scopes" do
     request_params = credential_authorization_example
     request_params[:scope] = 'openid email nonExistentScope'
-    assert_difference('AuthorizationCodeScope.count', 2) do
+    assert_difference('AccessTokenScope.count', 2) do
       post '/oauth2/credential_authorization', params: request_params
     end
     success_params = {
@@ -133,10 +133,11 @@ class CredentialAuthorizationCodeFlowTest < ActionDispatch::IntegrationTest
   end
 
   test "credential_authorization_method_response_should_return_the_same_device_token_if_device_provided" do
+    device_token = device_tokens(:example).token
     post '/oauth2/credential_authorization',
       params: credential_authorization_example,
-      headers: { 'Cookie': set_device_token_cookie(devices(:example).token) }
-    assert_equal cookies[:device_token], devices(:example).token
+      headers: { 'Cookie' => set_device_token_cookie(device_token) }
+    assert_equal cookies[:device_token], device_token
     success_params = {
       code: AuthorizationCode.last.code,
       state: credential_authorization_example[:state]
