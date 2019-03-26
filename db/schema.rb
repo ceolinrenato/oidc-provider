@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_21_150922) do
+ActiveRecord::Schema.define(version: 2019_03_26_163001) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,10 +44,8 @@ ActiveRecord::Schema.define(version: 2019_03_21_150922) do
     t.boolean "used", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "user_id"
     t.index ["code"], name: "index_authorization_codes_on_code", unique: true
     t.index ["redirect_uri_id"], name: "index_authorization_codes_on_redirect_uri_id"
-    t.index ["user_id"], name: "index_authorization_codes_on_user_id"
   end
 
   create_table "device_tokens", force: :cascade do |t|
@@ -157,7 +155,6 @@ ActiveRecord::Schema.define(version: 2019_03_21_150922) do
   add_foreign_key "access_tokens", "relying_parties"
   add_foreign_key "access_tokens", "sessions"
   add_foreign_key "authorization_codes", "redirect_uris"
-  add_foreign_key "authorization_codes", "users"
   add_foreign_key "device_tokens", "devices"
   add_foreign_key "password_tokens", "users"
   add_foreign_key "redirect_uris", "relying_parties"

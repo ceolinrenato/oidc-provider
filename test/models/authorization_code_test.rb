@@ -4,7 +4,6 @@ class AuthorizationCodeTest < ActiveSupport::TestCase
 
   def dummy_authorization_code
     {
-      user: users(:example),
       redirect_uri: redirect_uris(:example),
       used: false
     }

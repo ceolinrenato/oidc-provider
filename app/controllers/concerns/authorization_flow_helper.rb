@@ -1,6 +1,8 @@
 module AuthorizationFlowHelper
   extend ActiveSupport::Concern
 
+  private
+
   AUTHORIZATION_FLOWS = {
     'code' => :authorization_code_flow
   }

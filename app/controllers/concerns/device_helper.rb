@@ -1,6 +1,8 @@
 module DeviceHelper
   extend ActiveSupport::Concern
 
+  private
+
   def set_device_token_cookie
     cookies.permanent[:device_token] = @device.device_tokens.last.token
   end

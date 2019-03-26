@@ -66,9 +66,9 @@ module CustomExceptions
   end
 
   class UnauthorizedClient < BaseException
-    def initialize
+    def initialize(code)
       @error = "unauthorized_client"
-      super @error_description, 11
+      super @error_description, code
     end
   end
 
@@ -125,6 +125,13 @@ module CustomExceptions
     def initialize
       @error = "compromised_device"
       super @error_description, 23
+    end
+  end
+
+  class UnsupportedGrantType < BaseException
+    def initialize
+      @error = "unsupported_grant_type"
+      super @error_description, 28
     end
   end
 

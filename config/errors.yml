@@ -3,9 +3,9 @@
 - :error_code: 2
   :error_description: "Unrecognized device."
 - :error_code: 3
-  :error_description: "'redirect_uri' required."
+  :error_description: "'redirect_uri' is required."
 - :error_code: 4
-  :error_description: "'redirect_uri' not authorized by Relying Party"
+  :error_description: "'redirect_uri' not authorized by the client."
 - :error_code: 5
   :error_description: "'client_id' required."
 - :error_code: 6
@@ -44,3 +44,15 @@
   :error_description: "We do not support obtaining an authorization code using this method."
 - :error_code: 23
   :error_description: "End-Use device has been compromised."
+- :error_code: 24
+  :error_description: "'client_id' AND 'client_secret' are required for client authentication."
+- :error_code: 25
+  :error_description: "'code' is required."
+- :error_code: 26
+  :error_description: "Invalid Authorization Code ('code')."
+- :error_code: 27
+  :error_description: "The authenticated client is not authorized to use this authorization grant type."
+- :error_code: 28
+  :error_description: "The authorization grant type is not supported."
+- :error_code: 29
+  :error_description: "'grant_type' is required."
