@@ -1,0 +1,10 @@
+development: &non_production_settings
+  iss: https://accounts.licentia.digital
+  expiration_time: 3600
+
+test:
+  <<: *non_production_settings
+
+production:
+  iss: https://accounts.licentia.digital
+  expiration_time: 3600
