@@ -5,24 +5,28 @@ example:
   device: example
   token: JKGSKLJDHaisdahdsal
   last_activity: 2019-02-20 13:17:38
+  auth_time: <%= Time.now %>
 
 expired:
   user: example3
   device: example
   token: LKJASdgiGKSdkaASD
   last_activity: <%= Time.now - Session::SESSION_EXPIRATION_TIME %>
+  auth_time: <%= Time.now %>
 
 not_expired:
   user: example3
   device: example2
   token: AJSDHlahLSHDUAUODS
   last_activity: <%= Time.now - Session::SESSION_EXPIRATION_TIME + 1.hour %>
+  auth_time: <%= Time.now %>
 
 signed_out:
   user: example2
   device: example2
   token: LKHASHdlaHSDlaAsa
   last_activity: <%= Time.now - Session::SESSION_EXPIRATION_TIME + 1.hour %>
+  auth_time: <%= Time.now %>
   signed_out: true
 
 # More Than A Active User Session On Device 4
@@ -32,9 +36,11 @@ active1:
   device: example4
   token: SKAJDH917SHDLADsa
   last_activity: <%= Time.now - Session::SESSION_EXPIRATION_TIME + 1.hour %>
+  auth_time: <%= Time.now %>
 
 active2:
   user: example2
   device: example4
   token: ASdhLKSAdalkDHSAS
   last_activity: <%= Time.now - Session::SESSION_EXPIRATION_TIME + 1.hour %>
+  auth_time: <%= Time.now %>

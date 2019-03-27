@@ -1,9 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 example:
-  redirect_uri: example,
+  redirect_uri: example
+  code: AHdlkaHSDLhalksdasdaa
+  nonce: ABC
   used: false
 
 example2:
-  redirect_uri: example,
+  redirect_uri: example
+  code: AHUheuaheuaheuahuesaa
+  nonce: DEF
   used: false
