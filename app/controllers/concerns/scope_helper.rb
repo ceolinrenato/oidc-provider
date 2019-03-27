@@ -1,6 +1,8 @@
 module ScopeHelper
   extend ActiveSupport::Concern
 
+  private
+
   def parse_scopes
     @scopes = Scope::parse_authorization_scope params[:scope]
   end

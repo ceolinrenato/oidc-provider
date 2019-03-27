@@ -8,7 +8,7 @@ module SessionHelper
     if @session
       @session.update! last_activity: Time.now
     else
-      @session = Session.create user: @user, device: @device, last_activity: Time.now, auth_time: Time.now
+      @session = Session.create! user: @user, device: @device, last_activity: Time.now, auth_time: Time.now
     end
   end
 
