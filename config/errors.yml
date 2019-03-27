@@ -56,3 +56,7 @@
   :error_description: "The authorization grant type is not supported."
 - :error_code: 29
   :error_description: "'grant_type' is required."
+- :error_code: 30
+  :error_description: "'refresh_token' is required."
+- :error_code: 31
+  :error_description: "Invalid Refresh Token ('refresh_token')."

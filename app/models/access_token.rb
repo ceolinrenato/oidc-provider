@@ -13,8 +13,8 @@ class AccessToken < ApplicationRecord
       iss: OIDC_PROVIDER_CONFIG[:iss],
       sub: session.user.id.to_s,
       aud: relying_party.client_id,
-      exp: created_at.to_i + OIDC_PROVIDER_CONFIG[:expiration_time],
-      iat: created_at.to_i,
+      exp: updated_at.to_i + OIDC_PROVIDER_CONFIG[:expiration_time],
+      iat: updated_at.to_i,
       sid: session.token,
       scopes: scopes.map { |scope| scope.name }
     }
@@ -26,8 +26,8 @@ class AccessToken < ApplicationRecord
       iss: OIDC_PROVIDER_CONFIG[:iss],
       sub: session.user.id.to_s,
       aud: relying_party.client_id,
-      exp: created_at.to_i + OIDC_PROVIDER_CONFIG[:expiration_time],
-      iat: created_at.to_i,
+      exp: updated_at.to_i + OIDC_PROVIDER_CONFIG[:expiration_time],
+      iat: updated_at.to_i,
       sid: session.token,
       auth_time: session.auth_time.to_i,
       at_hash: calc_at_hash

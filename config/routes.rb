@@ -18,5 +18,5 @@ Rails.application.routes.draw do
   delete 'sessions/:session_token',                 to: 'session_management#destroy'
 
   # TokenEndpoint Routes
-  post   '/oauth2/token',                           to: 'token_endpoint#code_grant'
+  post   '/oauth2/token',                           to: 'token_endpoint#grant_token'
 end

@@ -1,6 +1,5 @@
 class TokenEndpointSerializer < BaseSerializer
-  def initialize(authorization_code)
-    access_token = authorization_code.access_token
+  def initialize(access_token)
     response_body = {
       access_token: access_token.token,
       token_type: "Bearer",

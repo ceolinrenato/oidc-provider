@@ -3,3 +3,8 @@ example:
   access_token: example
   token: AHSdhKAJSdhkajHDka
   used: false
+
+used:
+  access_token: example
+  token: HLAshdlKHSDHALSDHASd
+  used: true
