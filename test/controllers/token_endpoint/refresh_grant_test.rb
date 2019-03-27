@@ -140,6 +140,7 @@ class RefreshGrantTest < ActionDispatch::IntegrationTest
       post '/oauth2/token', params: example_token_request(:used)
     end
     assert_response :bad_request
+    assert_nil cookies[:device_token]
   end
 
   test "refresh_token_must_belong_to_authenticated_relying_party" do
