@@ -33,7 +33,7 @@ class AccessToken < ApplicationRecord
       at_hash: calc_at_hash
     }
     if authorization_code
-      payload[:nonce] = authorization_code.nonce
+      payload[:nonce] = authorization_code.nonce if authorization_code.nonce
       payload[:c_hash] = calc_c_hash
     else
       payload[:nonce] = nonce if nonce
