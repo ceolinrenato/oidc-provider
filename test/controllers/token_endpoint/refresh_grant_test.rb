@@ -36,7 +36,6 @@ class RefreshGrantTest < ActionDispatch::IntegrationTest
   end
 
   test "device_must_be_rotated_on_sucessfull_request" do
-    request_params = example_token_request(:example)
     old_device_token = refresh_tokens(:example).access_token.session.device.device_tokens.last
     post '/oauth2/token', params: example_token_request(:example)
     old_device_token.reload
