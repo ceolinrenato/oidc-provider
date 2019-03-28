@@ -45,7 +45,6 @@ class AccessTokenTest < ActiveSupport::TestCase
       assert_nil payload["c_hash"]
     end
     assert_equal headers["alg"], 'RS256'
-
   end
 
 end
