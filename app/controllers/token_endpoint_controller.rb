@@ -35,7 +35,6 @@ class TokenEndpointController < ApplicationController
     set_authorization_code
     @authorization_code.update! used: true
     access_token = @authorization_code.access_token
-    access_token.touch
     render json: TokenEndpointSerializer.new(access_token)
   end
 
@@ -43,7 +42,6 @@ class TokenEndpointController < ApplicationController
     set_refresh_token
     @refresh_token.update! used: true
     access_token = @refresh_token.access_token
-    access_token.touch
     rotate_refresh_token
     rotate_device_token
     set_device_token_cookie

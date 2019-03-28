@@ -1,5 +1,6 @@
 class TokenEndpointSerializer < BaseSerializer
   def initialize(access_token)
+    access_token.touch
     encrypted_access_token = access_token.token
     response_body = {
       access_token: encrypted_access_token,
