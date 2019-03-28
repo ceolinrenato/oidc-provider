@@ -21,7 +21,7 @@ class AccessToken < ApplicationRecord
     encrypt(jwt_encode(payload))
   end
 
-  def id_token(encrypted_access_token, nonce = nil)
+  def id_token(encrypted_access_token = nil, nonce = nil)
     payload = {
       iss: OIDC_PROVIDER_CONFIG[:iss],
       sub: session.user.id.to_s,
@@ -29,9 +29,9 @@ class AccessToken < ApplicationRecord
       exp: updated_at.to_i + OIDC_PROVIDER_CONFIG[:expiration_time],
       iat: updated_at.to_i,
       sid: session.token,
-      auth_time: session.auth_time.to_i,
-      at_hash: calc_at_hash(encrypted_access_token)
+      auth_time: session.auth_time.to_i
     }
+    payload[:at_hash] = calc_at_hash(encrypted_access_token) if encrypted_access_token
     if authorization_code
       payload[:nonce] = authorization_code.nonce if authorization_code.nonce
       payload[:c_hash] = calc_c_hash

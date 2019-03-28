@@ -60,3 +60,7 @@
   :error_description: "'refresh_token' is required."
 - :error_code: 31
   :error_description: "Invalid Refresh Token ('refresh_token')."
+- :error_code: 32
+  :error_description: "The provided Access Token is invalid."
+- :error_code: 33
+  :error_description: "The provided ID Token is invalid."
