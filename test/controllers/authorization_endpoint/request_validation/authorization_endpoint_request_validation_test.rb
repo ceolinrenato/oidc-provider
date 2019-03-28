@@ -165,6 +165,7 @@ class AuthorizationEndpointRequestValidationTest < ActionDispatch::IntegrationTe
 
   test "must_have_a_valid_id_token_hint_if_provided_in_prompt_none_and_multiple_active_sessions" do
     payload = {
+      iss: OIDC_PROVIDER_CONFIG[:iss],
       sub: users(:example).id.to_s
     }
     invalid_id_token = JWT.encode payload, nil, 'none'
