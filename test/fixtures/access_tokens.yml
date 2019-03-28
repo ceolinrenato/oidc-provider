@@ -9,3 +9,13 @@ example2:
   authorization_code: example
   relying_party: example
   session: example
+
+example3:
+  authorization_code: expired
+  relying_party: example
+  session: example
+
+example4:
+  authorization_code: used
+  relying_party: example
+  session: example

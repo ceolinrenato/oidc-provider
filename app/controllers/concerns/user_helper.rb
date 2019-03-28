@@ -1,6 +1,8 @@
 module UserHelper
   extend ActiveSupport::Concern
 
+  private
+
   def set_user_by_email
     raise CustomExceptions::InvalidRequest.new 6 unless params[:email]
     @user = User.find_by email: params[:email].downcase

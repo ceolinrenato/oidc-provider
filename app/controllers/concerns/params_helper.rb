@@ -1,6 +1,8 @@
 module ParamsHelper
   extend ActiveSupport::Concern
 
+  private
+
   def check_for_unsupported_params
     raise CustomExceptions::RequestNotSupported if params[:request]
     raise CustomExceptions::RequestUriNotSupported if params[:request_uri]

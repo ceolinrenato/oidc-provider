@@ -46,7 +46,7 @@ class AuthorizationEndpointController < ApplicationController
       authenticate_user
       set_or_create_device
       set_or_create_session
-      @session.update! signed_out: false
+      @session.update! signed_out: false, auth_time: Time.now
       send AUTHORIZATION_FLOWS[@response_type]
       set_device_token_cookie
     end

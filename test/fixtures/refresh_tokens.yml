@@ -1,1 +1,10 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+example:
+  access_token: example
+  token: AHSdhKAJSdhkajHDka
+  used: false
+
+used:
+  access_token: example
+  token: HLAshdlKHSDHALSDHASd
+  used: true

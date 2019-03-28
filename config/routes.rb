@@ -16,4 +16,7 @@ Rails.application.routes.draw do
   patch  'sessions/:session_token',                 to: 'session_management#sign_out'
   get    'sessions',                                to: 'session_management#index_by_device'
   delete 'sessions/:session_token',                 to: 'session_management#destroy'
+
+  # TokenEndpoint Routes
+  post   '/oauth2/token',                           to: 'token_endpoint#grant_token'
 end

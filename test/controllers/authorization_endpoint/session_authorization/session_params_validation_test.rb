@@ -105,7 +105,7 @@ class SessionParamsValidationTest < ActionDispatch::IntegrationTest
     post "/oauth2/session_authorization", params: request_params
     error = {
       error: 'invalid_request',
-      error_description: "'redirect_uri' required.",
+      error_description: "'redirect_uri' is required.",
       state: request_params[:state]
     }
     assert_redirected_to build_redirection_uri("#{SIGN_IN_SERVICE_CONFIG[:uri]}/error", error)
@@ -117,7 +117,7 @@ class SessionParamsValidationTest < ActionDispatch::IntegrationTest
     post "/oauth2/session_authorization", params: request_params
     error = {
       error: 'invalid_redirect_uri',
-      error_description: "'redirect_uri' not authorized by Relying Party",
+      error_description: "'redirect_uri' not authorized by the client.",
       state: request_params[:state]
     }
     assert_redirected_to build_redirection_uri("#{SIGN_IN_SERVICE_CONFIG[:uri]}/error", error)
