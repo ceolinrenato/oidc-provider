@@ -152,4 +152,17 @@ class CodeGrantTest < ActionDispatch::IntegrationTest
     assert_equal parsed_response(@response), error
   end
 
+  test "must_include_redirect_uri" do
+    request_params = example_token_request(:example)
+    request_params[:redirect_uri] = nil
+    post '/oauth2/token', params: request_params
+    assert_response :bad_request
+    error = {
+      "error" => "invalid_request",
+      "error_code" => 3,
+      "error_description" => "'redirect_uri' is required."
+    }
+    assert_equal parsed_response(@response), error
+  end
+
 end
