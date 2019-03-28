@@ -165,7 +165,7 @@ class AuthorizationEndpointRequestValidationTest < ActionDispatch::IntegrationTe
 
   test "must_have_a_valid_id_token_hint_if_provided_in_prompt_none_and_multiple_active_sessions" do
     payload = {
-      sub: users(:example).id
+      sub: users(:example).id.to_s
     }
     invalid_id_token = JWT.encode payload, nil, 'none'
     request_params = request_validation_example
@@ -185,7 +185,7 @@ class AuthorizationEndpointRequestValidationTest < ActionDispatch::IntegrationTe
   test "must_redirect_with_code_and_state_if_prompt_none_multiple_sessions_and_valid_id_token" do
     payload = {
       iss: OIDC_PROVIDER_CONFIG[:iss],
-      sub: users(:example).id
+      sub: users(:example).id.to_s
     }
     valid_id_token = JWT.encode payload, TokenDecode::RSA_PRIVATE, 'RS256'
     request_params = request_validation_example
@@ -199,13 +199,13 @@ class AuthorizationEndpointRequestValidationTest < ActionDispatch::IntegrationTe
       state: request_params[:state]
     }
     assert_redirected_to build_redirection_uri(request_params[:redirect_uri], success_params)
-    assert_equal AuthorizationCode.last.access_token.session.user.id, payload[:sub]
+    assert_equal AuthorizationCode.last.access_token.session.user.id.to_s, payload[:sub]
   end
 
   test "must_redirect_with_error_when_valid_id_token_prompt_none_and_no_active_user_session_on_device_for_that_user" do
     payload = {
       iss: OIDC_PROVIDER_CONFIG[:iss],
-      sub: users(:example3).id
+      sub: users(:example3).id.to_s
     }
     valid_id_token = JWT.encode payload, TokenDecode::RSA_PRIVATE, 'RS256'
     request_params = request_validation_example
