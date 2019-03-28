@@ -29,7 +29,7 @@ class AccessTokenTest < ActiveSupport::TestCase
 
   test "id_token_method_must_generate_valid_jws_token" do
     encrypted_access_token = access_tokens(:example).token
-    token = access_tokens(:example).id_token(encrypted_access_token)
+    token = access_tokens(:example).id_token(encrypted_access_token, 'test_nonce')
     decoded_token = TokenDecode::IDToken.new(token).decode
     payload = decoded_token.first
     headers = decoded_token.last
@@ -43,6 +43,7 @@ class AccessTokenTest < ActiveSupport::TestCase
       assert_equal payload["c_hash"], Base64.encode64(Digest::SHA256.hexdigest(access_tokens(:example).authorization_code.code)[0,32])
     else
       assert_nil payload["c_hash"]
+      assert_equal payload["nonce"], 'test_nonce'
     end
     assert_equal headers["alg"], 'RS256'
   end
