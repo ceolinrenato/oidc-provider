@@ -28,7 +28,8 @@ class AuthorizationEndpointController < ApplicationController
     CustomExceptions::AccountSelectionRequired,
     CustomExceptions::RequestNotSupported,
     CustomExceptions::RequestUriNotSupported,
-    CustomExceptions::RegistrationNotSupported => exception
+    CustomExceptions::RegistrationNotSupported,
+    CustomExceptions::InvalidIDToken => exception
     if @redirect_uri
         redirect_with_error @redirect_uri.uri, exception
     else
@@ -110,8 +111,15 @@ class AuthorizationEndpointController < ApplicationController
   def handle_prompt_none
     set_device
     raise CustomExceptions::LoginRequired unless @device && @device.active_session_count > 0
-    raise CustomExceptions::AccountSelectionRequired if @device.active_session_count > 1
-    @session = @device.sessions.first
+    raise CustomExceptions::AccountSelectionRequired if @device.active_session_count > 1 && !params[:id_token_hint]
+    if params[:id_token_hint]
+      token_hint = TokenDecode::IDToken.new(params[:id_token_hint]).decode verify_expiration: false
+      @session = @device.sessions.find_by 'user_id = :user_id',
+        { user_id: token_hint.first["sub"] }
+      raise CustomExceptions::LoginRequired unless @session && @session.active?
+    else
+      @session = @device.sessions.first
+    end
     @session.update! last_activity: Time.now
     @user = @session.user
     send AUTHORIZATION_FLOWS[@response_type]

@@ -9,19 +9,20 @@ module TokenDecode
       @token = token
     end
 
-    def decode
-      decode_jwt(@token)
+    def decode(options = { verify_expiration: true })
+      decode_jwt(@token, options)
     end
 
     private
 
-    def decode_jwt(token)
+    def decode_jwt(token, options = { verify_expiration: true })
       JWT.decode token, RSA_PRIVATE.public_key, true,
         {
           algorithm: 'RS256',
           exp_leeway: 1.minute,
           iss: OIDC_PROVIDER_CONFIG[:iss],
-          verify_iss: true
+          verify_iss: true,
+          verify_expiration: options[:verify_expiration]
         }
     rescue JWT::DecodeError
       case self.class.to_s
