@@ -46,7 +46,7 @@ class RefreshGrantTest < ActionDispatch::IntegrationTest
     assert_not DeviceToken.find_by(token: cookies[:device_token]).used
   end
 
-  test "must_return_unauthorized_grant_type_if_not_authorized_grant_type" do
+  test "must_return_unsupported_grant_type_if_not_supported_grant_type" do
     request_params = example_token_request(:example)
     request_params[:grant_type] = 'unsupported'
     post '/oauth2/token', params: request_params
