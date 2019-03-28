@@ -21,7 +21,7 @@ class AccessToken < ApplicationRecord
     encrypt(jwt_encode(payload))
   end
 
-  def id_token(nonce = nil)
+  def id_token(encrypted_access_token, nonce = nil)
     payload = {
       iss: OIDC_PROVIDER_CONFIG[:iss],
       sub: session.user.id.to_s,
@@ -30,7 +30,7 @@ class AccessToken < ApplicationRecord
       iat: updated_at.to_i,
       sid: session.token,
       auth_time: session.auth_time.to_i,
-      at_hash: calc_at_hash
+      at_hash: calc_at_hash(encrypted_access_token)
     }
     if authorization_code
       payload[:nonce] = authorization_code.nonce if authorization_code.nonce
@@ -46,17 +46,18 @@ class AccessToken < ApplicationRecord
   def encrypt(data)
     cipher = OpenSSL::Cipher::AES256.new(:CBC)
     cipher.encrypt
+    iv = cipher.random_iv
     cipher.key = TokenDecode::AES_KEY
-    cipher.iv = TokenDecode::AES_IV
-    Base64.encode64(cipher.update(data) + cipher.final)
+    cipher.iv = iv
+    "#{Base64.encode64(iv)}.#{Base64.encode64(cipher.update(data) + cipher.final)}"
   end
 
   def jwt_encode(payload)
     JWT.encode payload, TokenDecode::RSA_PRIVATE, 'RS256'
   end
 
-  def calc_at_hash
-    Base64.encode64(Digest::SHA256.hexdigest(token)[0,32])
+  def calc_at_hash(encrypted_access_token)
+    Base64.encode64(Digest::SHA256.hexdigest(encrypted_access_token)[0,32])
   end
 
   def calc_c_hash

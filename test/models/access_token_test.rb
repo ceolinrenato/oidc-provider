@@ -28,7 +28,8 @@ class AccessTokenTest < ActiveSupport::TestCase
   end
 
   test "id_token_method_must_generate_valid_jws_token" do
-    token = access_tokens(:example).id_token
+    encrypted_access_token = access_tokens(:example).token
+    token = access_tokens(:example).id_token(encrypted_access_token)
     decoded_token = TokenDecode::IDToken.new(token).decode
     payload = decoded_token.first
     headers = decoded_token.last
@@ -36,7 +37,7 @@ class AccessTokenTest < ActiveSupport::TestCase
     assert_equal payload["aud"], access_tokens(:example).relying_party.client_id
     assert_equal payload["sid"], access_tokens(:example).session.token
     assert_equal payload["auth_time"], access_tokens(:example).session.auth_time.to_i
-    assert_equal payload["at_hash"], Base64.encode64(Digest::SHA256.hexdigest(access_tokens(:example).token)[0,32])
+    assert_equal payload["at_hash"], Base64.encode64(Digest::SHA256.hexdigest(encrypted_access_token)[0,32])
     if access_tokens(:example).authorization_code
       assert_equal payload["nonce"], access_tokens(:example).authorization_code.nonce if access_tokens(:example).authorization_code.nonce
       assert_equal payload["c_hash"], Base64.encode64(Digest::SHA256.hexdigest(access_tokens(:example).authorization_code.code)[0,32])
