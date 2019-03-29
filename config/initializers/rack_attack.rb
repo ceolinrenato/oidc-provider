@@ -9,5 +9,5 @@ end
 ActiveSupport::Notifications.subscribe('rack.attack') do |name, start, finish, request_id, req|
   Rails.logger.info "[Rack::Attack][Blocked] " <<
                     "remote_ip: \"#{req.ip}\", " <<
-                    "path: \"#{req.path}"
+                    "path: \"#{req.path}\""
 end
