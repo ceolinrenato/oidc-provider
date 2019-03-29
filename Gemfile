@@ -50,3 +50,4 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'browser'
 gem 'simplecov', require: false, group: :test
 gem 'jwt'
+gem 'rack-attack'
