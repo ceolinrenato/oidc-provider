@@ -25,6 +25,18 @@ class CodeGrantTest < ActionDispatch::IntegrationTest
     assert AuthorizationCode.find_by(code: example_token_request(:example)[:code]).used
   end
 
+  test "must_not_return_id_token_if_access_token_has_no_openid_scope" do
+    post '/oauth2/token', params: example_token_request(:example2)
+    assert_response :success
+    response_body = parsed_response(@response)
+    assert_not_nil response_body["access_token"]
+    assert_nil response_body["id_token"]
+    assert_not_nil response_body["refresh_token"]
+    assert_equal response_body["token_type"], "Bearer"
+    assert_equal response_body["expires_in"], OIDC_PROVIDER_CONFIG[:expiration_time]
+    assert AuthorizationCode.find_by(code: example_token_request(:example2)[:code]).used
+  end
+
   test "must_return_unsupported_grant_type_if_not_supported_grant_type" do
     request_params = example_token_request(:example)
     request_params[:grant_type] = 'unsupported'
