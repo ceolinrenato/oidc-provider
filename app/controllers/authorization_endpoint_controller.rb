@@ -15,10 +15,12 @@ class AuthorizationEndpointController < ApplicationController
   include DeviceHelper
 
   def request_validation
-    params_validation
-    handle_prompt_none and return if params[:prompt] == 'none'
-    redirect_with_params SIGN_IN_SERVICE_CONFIG[:uri],
-      params.permit(:client_id, :redirect_uri, :response_type, :scope, :state, :nonce, :prompt)
+    ActiveRecord::Base.transaction do
+      params_validation
+      handle_prompt_none and return if params[:prompt] == 'none'
+      redirect_with_params SIGN_IN_SERVICE_CONFIG[:uri],
+        params.permit(:client_id, :redirect_uri, :response_type, :scope, :state, :nonce, :prompt)
+    end
   rescue CustomExceptions::InvalidRequest,
     CustomExceptions::InvalidClient,
     CustomExceptions::InvalidRedirectURI,
