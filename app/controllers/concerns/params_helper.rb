@@ -14,6 +14,7 @@ module ParamsHelper
     set_redirect_uri_by_param
     check_for_unsupported_params
     set_response_type
+    set_response_mode
     parse_scopes
   end
 

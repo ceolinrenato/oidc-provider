@@ -149,4 +149,8 @@ class AuthorizationEndpointController < ApplicationController
       }
   end
 
+  def redirect_with_response(location, response)
+    @response_mode == 'query' ? redirect_with_params(location, response) : redirect_with_fragment(location, response)
+  end
+
 end

@@ -35,7 +35,6 @@ module AuthorizationFlowHelper
   }
 
   def authorization_code_flow
-    set_response_mode
     generate_auth_code
     generate_access_token
     generate_auth_scopes
@@ -49,7 +48,6 @@ module AuthorizationFlowHelper
 
   def implicit_flow
     raise CustomExceptions::InvalidRequest.new 34 unless params[:nonce]
-    set_response_mode
     generate_access_token
     generate_auth_scopes
     response = Hash.new
@@ -64,7 +62,6 @@ module AuthorizationFlowHelper
   end
 
   def hybrid_flow
-    set_response_mode
     generate_auth_code
     generate_access_token
     generate_auth_scopes
@@ -79,15 +76,6 @@ module AuthorizationFlowHelper
     response[:expires_in] = OIDC_PROVIDER_CONFIG[:expiration_time]
     response[:state] = params[:state] if params[:state]
     redirect_with_response @redirect_uri.uri, response
-  end
-
-  def set_response_mode
-    @response_mode = params[:response_mode] ? params[:response_mode] : AUTHORIZATION_FLOWS[@response_type][:default_mode]
-    raise CustomExceptions::InvalidRequest.new 35 unless ['query', 'fragment'].include?(@response_mode)
-  end
-
-  def redirect_with_response(location, response)
-    @response_mode == 'query' ? redirect_with_params(location, response) : redirect_with_fragment(location, response)
   end
 
 end
