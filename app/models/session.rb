@@ -19,11 +19,7 @@ class Session < ApplicationRecord
   end
 
   def active?(max_age = nil)
-    if max_age
-      !expired? && !signed_out && !aged?(max_age)
-    else
-      !expired? && !signed_out
-    end
+    !expired? && !signed_out && !aged?(max_age)
   end
 
 end
