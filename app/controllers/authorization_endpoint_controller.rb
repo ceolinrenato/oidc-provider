@@ -134,6 +134,12 @@ class AuthorizationEndpointController < ApplicationController
     redirect_to uri.to_s, status: :found
   end
 
+  def redirect_with_fragment(location, fragment)
+    uri = URI(location)
+    uri.fragment = fragment.to_query
+    redirect_to uri.to_s, status: :found
+  end
+
   def redirect_with_error(location, exception)
     redirect_with_params location,
       {

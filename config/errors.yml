@@ -64,3 +64,5 @@
   :error_description: "The provided Access Token is invalid."
 - :error_code: 33
   :error_description: "The provided ID Token is invalid."
+- :error_code: 34
+  :error_description: "'nonce' is required."

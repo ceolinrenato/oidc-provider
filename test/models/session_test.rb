@@ -6,7 +6,8 @@ class SessionTest < ActiveSupport::TestCase
     {
       user: users(:example),
       device: devices(:example2),
-      last_activity: Time.now
+      last_activity: Time.now,
+      auth_time: Time.now
     }
   end
 

@@ -3,12 +3,15 @@ module ResponseTypeHelper
 
   private
 
-  # Token ResponseType Support not yet implemented, but needed for testing
-  if Rails.env.test?
-    SUPPORTED_RESPONSE_TYPES = ['code', 'token']
-  else
-    SUPPORTED_RESPONSE_TYPES = ['code']
-  end
+  SUPPORTED_RESPONSE_TYPES = [
+    'code',
+    'id_token',
+    'id_token token',
+    'token',
+    'code id_token',
+    'code id_token token',
+    'code token'
+  ]
 
   AUTHORIZED_RESPONSE_TYPES = ['code']
 
