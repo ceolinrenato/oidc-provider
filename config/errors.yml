@@ -66,3 +66,5 @@
   :error_description: "The provided ID Token is invalid."
 - :error_code: 34
   :error_description: "'nonce' is required."
+- :error_code: 35
+  :error_description: "unsupported response mode, we support 'query' and 'fragment'."

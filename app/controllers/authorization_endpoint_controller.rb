@@ -50,7 +50,7 @@ class AuthorizationEndpointController < ApplicationController
       set_or_create_device
       set_or_create_session
       @session.update! signed_out: false, auth_time: Time.now
-      send AUTHORIZATION_FLOWS[@response_type]
+      send AUTHORIZATION_FLOWS[@response_type][:method]
       set_device_token_cookie
     end
   rescue CustomExceptions::InvalidRequest,
@@ -81,7 +81,7 @@ class AuthorizationEndpointController < ApplicationController
       set_user_by_email!
       set_device!
       set_session!
-      send AUTHORIZATION_FLOWS[@response_type]
+      send AUTHORIZATION_FLOWS[@response_type][:method]
       rotate_device_token
       set_device_token_cookie
     end
@@ -124,7 +124,7 @@ class AuthorizationEndpointController < ApplicationController
     end
     @session.update! last_activity: Time.now
     @user = @session.user
-    send AUTHORIZATION_FLOWS[@response_type]
+    send AUTHORIZATION_FLOWS[@response_type][:method]
   end
 
   def redirect_with_params(location, params)
