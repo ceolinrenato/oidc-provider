@@ -252,4 +252,46 @@ class AuthorizationEndpointRequestValidationTest < ActionDispatch::IntegrationTe
     assert_redirected_to build_redirection_uri(request_params[:redirect_uri], error)
   end
 
+  test "must_redirect_with_error_if_prompt_none_multiple_sessions_and_valid_id_token_but_session_aged" do
+    payload = {
+      iss: OIDC_PROVIDER_CONFIG[:iss],
+      sub: users(:example).id.to_s
+    }
+    valid_id_token = JWT.encode payload, TokenDecode::RSA_PRIVATE, 'RS256'
+    request_params = request_validation_example
+    request_params[:prompt] = 'none'
+    request_params[:max_age] = 1.hour.to_i
+    request_params[:id_token_hint] = valid_id_token
+    get '/oauth2/authorize',
+      params: request_params,
+      headers: { 'Cookie' => set_device_token_cookie(device_tokens(:example4).token) }
+    error = {
+      error: 'login_required',
+      error_description: "End-User authetication is required.",
+      state: request_params[:state]
+    }
+    assert_redirected_to build_redirection_uri(request_params[:redirect_uri], error)
+  end
+
+  test "must_redirect_with_code_and_state_if_prompt_none_multiple_sessions_and_valid_id_token_and_session_not_aged" do
+    payload = {
+      iss: OIDC_PROVIDER_CONFIG[:iss],
+      sub: users(:example).id.to_s
+    }
+    valid_id_token = JWT.encode payload, TokenDecode::RSA_PRIVATE, 'RS256'
+    request_params = request_validation_example
+    request_params[:prompt] = 'none'
+    request_params[:max_age] = 3.hours.to_i
+    request_params[:id_token_hint] = valid_id_token
+    get '/oauth2/authorize',
+      params: request_params,
+      headers: { 'Cookie' => set_device_token_cookie(device_tokens(:example4).token) }
+    success_params = {
+      code: AuthorizationCode.last.code,
+      state: request_params[:state]
+    }
+    assert_redirected_to build_redirection_uri(request_params[:redirect_uri], success_params)
+    assert_equal AuthorizationCode.last.access_token.session.user.id.to_s, payload[:sub]
+  end
+
 end

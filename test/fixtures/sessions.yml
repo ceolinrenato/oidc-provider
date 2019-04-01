@@ -36,7 +36,7 @@ active1:
   device: example4
   token: SKAJDH917SHDLADsa
   last_activity: <%= Time.now - Session::SESSION_EXPIRATION_TIME + 1.hour %>
-  auth_time: <%= Time.now %>
+  auth_time: <%= Time.now - 2.hours %>
 
 active2:
   user: example2
