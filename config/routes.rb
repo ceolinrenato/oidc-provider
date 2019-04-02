@@ -18,9 +18,14 @@ Rails.application.routes.draw do
   delete 'sessions/:session_token',                 to: 'session_management#destroy'
 
   # TokenEndpoint Routes
-  post   '/oauth2/token',                           to: 'token_endpoint#grant_token'
+  post   'oauth2/token',                           to: 'token_endpoint#grant_token'
 
-  # UserInfo Endpoint
-  get    '/userinfo',                               to: 'users#show'
-  post   '/userinfo',                               to: 'users#show'
+  # UserInfo Routes
+  get    'userinfo',                               to: 'users#show'
+  post   'userinfo',                               to: 'users#show'
+
+  # Discovery Routes
+  get    '.well-known/openid-configuration',       to: 'discovery#show'
+  get    'jwks.json',                              to: 'discovery#jwk'
+
 end
