@@ -19,4 +19,7 @@ Rails.application.routes.draw do
 
   # TokenEndpoint Routes
   post   '/oauth2/token',                           to: 'token_endpoint#grant_token'
+
+  # UserInfo Endpoint
+  get    '/userinfo',                               to: 'users#show'
 end
