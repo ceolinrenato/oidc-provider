@@ -39,26 +39,25 @@ module AuthorizationFlowHelper
     generate_access_token
     generate_auth_scopes
     generate_refresh_token
-    response = {
+    response_data = {
       code: @authorization_code.code,
       state: params[:state]
     }
-    redirect_with_response @redirect_uri.uri, response
+    redirect_with_response @redirect_uri.uri, response_data
   end
 
   def implicit_flow
-    raise CustomExceptions::InvalidRequest.new 34 unless params[:nonce]
     generate_access_token
     generate_auth_scopes
-    response = Hash.new
+    response_data = Hash.new
     if @response_type.split.include? 'token'
-      response[:access_token] = @access_token.token
-      response[:token_type] = 'Bearer'
+      response_data[:access_token] = @access_token.token
+      response_data[:token_type] = 'Bearer'
     end
-    response[:id_token] = @access_token.id_token(response[:access_token], params[:nonce]) if @response_type.split.include? 'id_token'
-    response[:expires_in] = OIDC_PROVIDER_CONFIG[:expiration_time]
-    response[:state] = params[:state] if params[:state]
-    redirect_with_response @redirect_uri.uri, response
+    response_data[:id_token] = @access_token.id_token(response_data[:access_token], params[:nonce]) if @response_type.split.include? 'id_token'
+    response_data[:expires_in] = OIDC_PROVIDER_CONFIG[:expiration_time]
+    response_data[:state] = params[:state] if params[:state]
+    redirect_with_response @redirect_uri.uri, response_data
   end
 
   def hybrid_flow
@@ -66,16 +65,16 @@ module AuthorizationFlowHelper
     generate_access_token
     generate_auth_scopes
     generate_refresh_token
-    response = Hash.new
-    response[:code] = @authorization_code.code
+    response_data = Hash.new
+    response_data[:code] = @authorization_code.code
     if @response_type.split.include? 'token'
-      response[:access_token] = @access_token.token
-      response[:token_type] = 'Bearer'
+      response_data[:access_token] = @access_token.token
+      response_data[:token_type] = 'Bearer'
     end
-    response[:id_token] = @access_token.id_token(response[:access_token], params[:nonce]) if @response_type.split.include? 'id_token'
-    response[:expires_in] = OIDC_PROVIDER_CONFIG[:expiration_time]
-    response[:state] = params[:state] if params[:state]
-    redirect_with_response @redirect_uri.uri, response
+    response_data[:id_token] = @access_token.id_token(response_data[:access_token], params[:nonce]) if @response_type.split.include? 'id_token'
+    response_data[:expires_in] = OIDC_PROVIDER_CONFIG[:expiration_time]
+    response_data[:state] = params[:state] if params[:state]
+    redirect_with_response @redirect_uri.uri, response_data
   end
 
 end

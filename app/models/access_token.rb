@@ -49,7 +49,7 @@ class AccessToken < ApplicationRecord
     iv = cipher.random_iv
     cipher.key = TokenDecode::AES_KEY
     cipher.iv = iv
-    "#{Base64.encode64(iv)}.#{Base64.encode64(cipher.update(data) + cipher.final)}"
+    "#{Base64.urlsafe_encode64(iv, padding: false)}.#{Base64.urlsafe_encode64(cipher.update(data) + cipher.final, padding: false)}"
   end
 
   def jwt_encode(payload)
@@ -57,11 +57,11 @@ class AccessToken < ApplicationRecord
   end
 
   def calc_at_hash(encrypted_access_token)
-    Base64.encode64(Digest::SHA256.hexdigest(encrypted_access_token)[0,32])
+    Base64.urlsafe_encode64(Digest::SHA256.hexdigest(encrypted_access_token)[0,32], padding: false)
   end
 
   def calc_c_hash
-    Base64.encode64(Digest::SHA256.hexdigest(authorization_code.code)[0,32])
+    Base64.urlsafe_encode64(Digest::SHA256.hexdigest(authorization_code.code)[0,32], padding: false)
   end
 
 end
