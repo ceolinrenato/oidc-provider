@@ -13,7 +13,7 @@ class DiscoveryController < ApplicationController
       scopes_supported: Scope.all.map { |scope| scope.name },
       response_types_supported: ResponseTypeHelper::SUPPORTED_RESPONSE_TYPES,
       response_modes_supported: ['query', 'fragment'],
-      grant_types_supported: ['authorization_code', 'implicit'],
+      grant_types_supported: GrantTypeHelper::SUPPORTED_GRANT_TYPES << 'implicit',
       subject_types_supported: ['public'],
       id_token_signing_alg_values_supported: ['RS256'],
       token_enpoint_auth_methods_supported: ['client_secret_post'],
