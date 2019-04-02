@@ -47,7 +47,6 @@ module AuthorizationFlowHelper
   end
 
   def implicit_flow
-    raise CustomExceptions::InvalidRequest.new 34 unless params[:nonce]
     generate_access_token
     generate_auth_scopes
     response_data = Hash.new

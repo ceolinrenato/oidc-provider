@@ -19,7 +19,7 @@ class AuthorizationEndpointController < ApplicationController
       params_validation
       handle_prompt_none and return if params[:prompt] == 'none'
       redirect_with_params SIGN_IN_SERVICE_CONFIG[:uri],
-        params.permit(:client_id, :redirect_uri, :response_type, :scope, :state, :nonce, :prompt)
+        params.permit(:client_id, :redirect_uri, :response_type, :response_mode, :scope, :state, :nonce, :prompt, :max_age)
     end
   rescue CustomExceptions::InvalidRequest,
     CustomExceptions::InvalidClient,
@@ -36,7 +36,7 @@ class AuthorizationEndpointController < ApplicationController
         redirect_with_error @redirect_uri.uri, exception
     else
       redirect_with_params "#{SIGN_IN_SERVICE_CONFIG[:uri]}/error",
-      params.permit(:client_id, :redirect_uri, :response_type, :scope, :state, :nonce, :prompt)
+      params.permit(:client_id, :redirect_uri, :response_type, :response_mode, :scope, :state, :nonce, :prompt, :max_age)
     end
   rescue CustomExceptions::CompromisedDevice => exception
     destroy_compromised_device
