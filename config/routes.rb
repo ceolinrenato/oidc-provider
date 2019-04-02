@@ -22,4 +22,5 @@ Rails.application.routes.draw do
 
   # UserInfo Endpoint
   get    '/userinfo',                               to: 'users#show'
+  post   '/userinfo',                               to: 'users#show'
 end

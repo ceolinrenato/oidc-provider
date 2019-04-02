@@ -5,19 +5,29 @@ class ApplicationController < ActionController::API
 
   def bearer_authorization
     token = get_bearer_token
-    puts token
     unless token
-      response.headers['WWW-Authenticate'] = 'Bearer'
+      response.headers['WWW-Authenticate'] = www_auth_header
       head :unauthorized and return
     end
     @access_token = TokenDecode::AccessToken.new(token).decode
+  rescue CustomExceptions::InvalidAccessToken => exception
+    response.headers['WWW-Authenticate'] = www_auth_header exception
+    head :unauthorized and return
   end
 
   def get_bearer_token
     pattern = /^Bearer /
     header  = request.headers["Authorization"]
-    puts header
     header.gsub(pattern, '') if header && header.match(pattern)
+  end
+
+  def www_auth_header(exception = nil)
+    parts = ["Bearer realm=\"#{request.path}\""]
+    if exception
+      parts << "error=\"#{exception.error}\""
+      parts << "error_description=\"#{exception.error_description}\""
+    end
+    parts.join(', ')
   end
 
 end

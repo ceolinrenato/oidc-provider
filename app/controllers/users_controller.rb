@@ -4,7 +4,7 @@ class UsersController < ApplicationController
 
   def show
     user = User.find_by id: @access_token.first["sub"]
-    render json: user
+    render json: UserInfoSerializer.new(user)
   end
 
 end

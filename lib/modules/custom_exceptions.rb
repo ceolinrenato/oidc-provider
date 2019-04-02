@@ -137,7 +137,7 @@ module CustomExceptions
 
   class InvalidAccessToken < BaseException
     def initialize
-      @error = "invalid_access_token"
+      @error = "invalid_token"
       super @error_description, 32
     end
   end
