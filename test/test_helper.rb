@@ -25,4 +25,10 @@ class ActiveSupport::TestCase
     uri.to_s
   end
 
+  def build_redirection_uri_fragment(location, fragment)
+    uri = URI(location)
+    uri.fragment = fragment.to_query
+    uri.to_s
+  end
+
 end

@@ -14,7 +14,11 @@ module ParamsHelper
     set_redirect_uri_by_param
     check_for_unsupported_params
     set_response_type
+    set_response_mode
     parse_scopes
+    if AuthorizationFlowHelper::AUTHORIZATION_FLOWS[@response_type][:method] == :implicit_flow && !params[:nonce]
+      raise CustomExceptions::InvalidRequest.new 34
+    end
   end
 
 end

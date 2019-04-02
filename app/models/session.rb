@@ -14,8 +14,12 @@ class Session < ApplicationRecord
     Time.now > last_activity + SESSION_EXPIRATION_TIME
   end
 
-  def active?
-    !expired? && !signed_out
+  def aged?(max_age)
+    max_age ? Time.now  > auth_time + max_age.to_i : false
+  end
+
+  def active?(max_age = nil)
+    !expired? && !signed_out && !aged?(max_age)
   end
 
 end

@@ -172,6 +172,21 @@ class SessionParamsValidationTest < ActionDispatch::IntegrationTest
     assert_redirected_to build_redirection_uri(session_authorization_example[:redirect_uri], error)
   end
 
+  test "must_return_invalid_grant_if_session_aged_and_max_age" do
+    request_params = session_authorization_example
+    request_params[:email] = users(:example).email
+    request_params[:max_age] = 1.hour.to_i
+    post "/oauth2/session_authorization",
+      params: request_params,
+      headers: { 'Cookie' => set_device_token_cookie(device_tokens(:example4).token) }
+    error = {
+      error: 'invalid_grant',
+      error_description: "Session does not satisfy 'max_age' parameter, user must re-authenticate.",
+      state: request_params[:state]
+    }
+    assert_redirected_to build_redirection_uri(session_authorization_example[:redirect_uri], error)
+  end
+
   test "must_return_invalid_grant_if_user_signed_out" do
     request_params = session_authorization_example
     request_params[:email] = users(:example2).email

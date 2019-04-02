@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_27_133430) do
+ActiveRecord::Schema.define(version: 2019_04_01_141139) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,7 +38,6 @@ ActiveRecord::Schema.define(version: 2019_03_27_133430) do
 
   create_table "authorization_codes", force: :cascade do |t|
     t.string "code"
-    t.string "state"
     t.string "nonce"
     t.bigint "redirect_uri_id"
     t.boolean "used", default: false

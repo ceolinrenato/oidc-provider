@@ -4,7 +4,7 @@ module AuthorizationCodeHelper
   private
 
   def generate_auth_code
-    @authorization_code = AuthorizationCode.create! redirect_uri: @redirect_uri, state: params[:state], nonce: params[:nonce]
+    @authorization_code = AuthorizationCode.create! redirect_uri: @redirect_uri, nonce: params[:nonce]
   end
 
   def set_authorization_code

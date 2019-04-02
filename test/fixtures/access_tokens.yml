@@ -6,7 +6,7 @@ example:
   session: example
 
 example2:
-  authorization_code: example
+  authorization_code: example2
   relying_party: example
   session: example
 

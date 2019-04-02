@@ -47,17 +47,16 @@ module TokenDecode
 
     def decrypt_token(token)
       encrypted_data = token.split('.')
-      iv = Base64.decode64(encrypted_data.first)
-      raise CustomExceptions::InvalidAccessToken.new unless iv.size == 16
+      raise CustomExceptions::InvalidAccessToken.new unless encrypted_data.count == 2
+      iv = Base64.urlsafe_decode64(encrypted_data.first)
       decipher = OpenSSL::Cipher::AES256.new(:CBC)
       decipher.decrypt
       decipher.key = AES_KEY
       decipher.iv = iv
-      decipher.update(Base64.decode64(encrypted_data.last)) + decipher.final
-    rescue OpenSSL::Cipher::CipherError
+      decipher.update(Base64.urlsafe_decode64(encrypted_data.last)) + decipher.final
+    rescue OpenSSL::Cipher::CipherError, ArgumentError
       raise CustomExceptions::InvalidAccessToken.new
     end
-
   end
 
 end

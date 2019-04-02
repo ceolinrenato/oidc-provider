@@ -4,6 +4,11 @@ example:
   token: AHSdhKAJSdhkajHDka
   used: false
 
+example2:
+  access_token: example2
+  token: OOQIWDHSHAKDSasda
+  used: false
+
 used:
   access_token: example
   token: HLAshdlKHSDHALSDHASd

@@ -64,3 +64,9 @@
   :error_description: "The provided Access Token is invalid."
 - :error_code: 33
   :error_description: "The provided ID Token is invalid."
+- :error_code: 34
+  :error_description: "'nonce' is required."
+- :error_code: 35
+  :error_description: "unsupported response mode, we support 'query' and 'fragment'."
+- :error_code: 36
+  :error_description: "Session does not satisfy 'max_age' parameter, user must re-authenticate."
