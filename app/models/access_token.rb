@@ -53,7 +53,7 @@ class AccessToken < ApplicationRecord
   end
 
   def jwt_encode(payload)
-    JWT.encode payload, TokenDecode::RSA_PRIVATE, 'RS256'
+    JWT.encode payload, TokenDecode::RSA_PRIVATE, 'RS256', { kid: 'Key used to validate id_token signature'}
   end
 
   def calc_at_hash(encrypted_access_token)
