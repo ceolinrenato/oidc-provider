@@ -16,6 +16,7 @@ class ApplicationController < ActionController::API
   end
 
   def get_bearer_token
+    return params[:access_token] if request.method == 'POST'
     pattern = /^Bearer /
     header  = request.headers["Authorization"]
     header.gsub(pattern, '') if header && header.match(pattern)
