@@ -1,0 +1,26 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+example:
+  redirect_uri: example
+  code: AHdlkaHSDLhalksdasdaa
+  nonce: ABC
+  used: false
+
+example2:
+  redirect_uri: example
+  code: AHUheuaheuaheuahuesaa
+  nonce: DEF
+  used: false
+
+expired:
+  redirect_uri: example
+  code: QHWhlaSHDLKSDKHALSDHASD
+  nonce: ABC
+  used: false
+  created_at: <%= Time.now - AuthorizationCode::AUTHORIZATION_CODE_EXPIRATION_TIME %>
+
+used:
+  redirect_uri: example
+  code: KHASdhlaSHdlkaHSLDHALKD
+  nonce: ABC
+  used: true

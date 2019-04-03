@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+example:
+  relying_party: example
+  uri: 'http://localhost:3000'
+
+example2:
+  relying_party: example2
+  uri: 'http://localhost:3001'
+
+example3:
+  relying_party: example
+  uri: 'https://accounts.licentia.digital'
