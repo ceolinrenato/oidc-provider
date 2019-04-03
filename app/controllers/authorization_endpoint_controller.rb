@@ -141,12 +141,21 @@ class AuthorizationEndpointController < ApplicationController
   end
 
   def redirect_with_error(location, exception)
-    redirect_with_params location,
+    if @response_mode && @response_mode == 'fragment'
+      redirect_with_fragment location,
       {
         error: exception.error,
         error_description: exception.error_description,
         state: params[:state]
       }
+    else
+      redirect_with_params location,
+        {
+          error: exception.error,
+          error_description: exception.error_description,
+          state: params[:state]
+        }
+    end
   end
 
   def redirect_with_response(location, response)

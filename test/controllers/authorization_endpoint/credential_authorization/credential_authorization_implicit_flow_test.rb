@@ -92,7 +92,7 @@ class CredentialAuthorizationImplicitFlowTest < ActionDispatch::IntegrationTest
       error_description: "'nonce' is required.",
       state: request_params[:state]
     }
-    assert_redirected_to build_redirection_uri(request_params[:redirect_uri], error_params)
+    assert_redirected_to build_redirection_uri_fragment(request_params[:redirect_uri], error_params)
   end
 
 end
