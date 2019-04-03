@@ -57,11 +57,11 @@ class AccessToken < ApplicationRecord
   end
 
   def calc_at_hash(encrypted_access_token)
-    Base64.urlsafe_encode64(Digest::SHA256.hexdigest(encrypted_access_token).unpack('B128').first.to_s(2), padding: false)
+    Base64.urlsafe_encode64(Digest::SHA256.hexdigest(encrypted_access_token).unpack('B128').first.to_i(2).to_s(16), padding: false)
   end
 
   def calc_c_hash
-    Base64.urlsafe_encode64(Digest::SHA256.hexdigest(authorization_code.code).unpack('B128').first.to_s(2), padding: false)
+    Base64.urlsafe_encode64(Digest::SHA256.hexdigest(authorization_code.code).unpack('B128').first.to_i(2).to_s(16), padding: false)
   end
 
 end
