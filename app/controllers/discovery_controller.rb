@@ -16,7 +16,7 @@ class DiscoveryController < ApplicationController
       grant_types_supported: GrantTypeHelper::SUPPORTED_GRANT_TYPES << 'implicit',
       subject_types_supported: ['public'],
       id_token_signing_alg_values_supported: ['RS256'],
-      token_enpoint_auth_methods_supported: ['client_secret_post'],
+      token_endpoint_auth_methods_supported: ['client_secret_post'],
       claim_types_supported: ['normal'],
       claims_supported: ['sub', 'name', 'given_name', 'family_name', 'email', 'email_verified', 'updated_at'],
       claims_parameter_supported: false,
