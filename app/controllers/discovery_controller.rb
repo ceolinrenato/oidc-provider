@@ -4,6 +4,8 @@ class DiscoveryController < ApplicationController
     # service_documentation: "#{OIDC_PROVIDER_CONFIG[:iss]}/doc"
     # op_policy_uri: "#{OIDC_PROVIDER_CONFIG[:iss]}/privacy_policy"
     # op_tos_uri: "#{OIDC_PROVIDER_CONFIG[:iss]}/terms_of_service"
+    grant_types_supported = GrantTypeHelper::SUPPORTED_GRANT_TYPES
+    grant_types_supported << 'implicit'
     metadata = {
       issuer: OIDC_PROVIDER_CONFIG[:iss],
       authorization_endpoint: "#{OIDC_PROVIDER_CONFIG[:iss]}/oauth2/authorize",
@@ -13,7 +15,7 @@ class DiscoveryController < ApplicationController
       scopes_supported: Scope.all.map { |scope| scope.name },
       response_types_supported: ResponseTypeHelper::SUPPORTED_RESPONSE_TYPES,
       response_modes_supported: ['query', 'fragment'],
-      grant_types_supported: GrantTypeHelper::SUPPORTED_GRANT_TYPES << 'implicit',
+      grant_types_supported: grant_types_supported,
       subject_types_supported: ['public'],
       id_token_signing_alg_values_supported: ['RS256'],
       token_endpoint_auth_methods_supported: ['client_secret_post'],
