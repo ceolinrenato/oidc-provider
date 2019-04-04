@@ -1,24 +1,32 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
+OIDC Provider (Basic, Implicit, Hybrid and Config OP)
 
 * Ruby version
 
-* System dependencies
+2.6.2
 
 * Configuration
 
+CORS origins specified for each config/environments file: development.rb, test.rb, production.rb
+
+config/oidc_provider.yml for expiration time and issuer
+config/sign_in_service.yml for SignInService uri
+config/database.yml for database settings
+config/errors.yml for error messages
+
+rails credentials:edit for RSA and AES keys
+
+
 * Database creation
 
-* Database initialization
+rails db:setup for database initialization and seeding
+rails db:reset to wipe database and start over
 
 * How to run the test suite
 
-* Services (job queues, cache servers, search engines, etc.)
+rails tests
 
 * Deployment instructions
 
-* ...
+Deployment pipeline yet to do

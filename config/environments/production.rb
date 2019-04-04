@@ -82,5 +82,5 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
-  config.allowed_cors_origins = ['https://accounts.licentia.digital']
+  config.allowed_cors_origins = ['https://accounts.zetios.com.br']
 end
