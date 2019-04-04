@@ -6,31 +6,38 @@ module AuthorizationFlowHelper
   AUTHORIZATION_FLOWS = {
     'code' => {
       method: :authorization_code_flow,
-      default_mode: 'query'
+      default_mode: 'query',
+      requires_nonce: false
     },
     'id_token token' => {
       method: :implicit_flow,
-      default_mode: 'fragment'
+      default_mode: 'fragment',
+      requires_nonce: true
     },
     'id_token' => {
       method: :implicit_flow,
-      default_mode: 'fragment'
+      default_mode: 'fragment',
+      requires_nonce: true
     },
     'token' => {
       method: :implicit_flow,
-      default_mode: 'fragment'
+      default_mode: 'fragment',
+      requires_nonce: false
     },
     'code id_token token' => {
       method: :hybrid_flow,
-      default_mode: 'fragment'
+      default_mode: 'fragment',
+      requires_nonce: true
     },
     'code id_token' => {
       method: :hybrid_flow,
-      default_mode: 'fragment'
+      default_mode: 'fragment',
+      requires_nonce: true
     },
     'code token' => {
       method: :hybrid_flow,
-      default_mode: 'fragment'
+      default_mode: 'fragment',
+      requires_nonce: false
     }
   }
 

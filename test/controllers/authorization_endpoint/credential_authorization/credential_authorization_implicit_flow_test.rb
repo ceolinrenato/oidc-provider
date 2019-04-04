@@ -85,6 +85,7 @@ class CredentialAuthorizationImplicitFlowTest < ActionDispatch::IntegrationTest
 
   test "must_redirect_with_error_if_no_nonce_param" do
     request_params = implicit_flow_example
+    request_params[:response_type] = 'id_token token'
     request_params[:nonce] = nil
     post '/oauth2/credential_authorization', params: request_params
     error_params = {
