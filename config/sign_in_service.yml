@@ -5,4 +5,4 @@ test:
   <<: *non_production_settings
 
 production:
-  :uri: 'https://accounts.licentia.digital/SignInService'
+  :uri: 'https://accounts.zetios.com.br/SignInService'
