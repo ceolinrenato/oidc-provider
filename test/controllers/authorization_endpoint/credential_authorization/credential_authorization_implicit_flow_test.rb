@@ -80,11 +80,12 @@ class CredentialAuthorizationImplicitFlowTest < ActionDispatch::IntegrationTest
     assert_equal parsed_fragment["token_type"], "Bearer"
     id_token = TokenDecode::IDToken.new(parsed_fragment["id_token"]).decode
     assert_equal request_params[:nonce], id_token.first["nonce"]
-    assert_equal Base64.urlsafe_encode64(Digest::SHA256.hexdigest(parsed_fragment["access_token"])[0,32], padding: false), id_token.first["at_hash"]
+    assert_equal Base64.urlsafe_encode64(Digest::SHA256.digest(parsed_fragment["access_token"])[0,16], padding: false), id_token.first["at_hash"]
   end
 
   test "must_redirect_with_error_if_no_nonce_param" do
     request_params = implicit_flow_example
+    request_params[:response_type] = 'id_token token'
     request_params[:nonce] = nil
     post '/oauth2/credential_authorization', params: request_params
     error_params = {
@@ -92,7 +93,7 @@ class CredentialAuthorizationImplicitFlowTest < ActionDispatch::IntegrationTest
       error_description: "'nonce' is required.",
       state: request_params[:state]
     }
-    assert_redirected_to build_redirection_uri(request_params[:redirect_uri], error_params)
+    assert_redirected_to build_redirection_uri_fragment(request_params[:redirect_uri], error_params)
   end
 
 end

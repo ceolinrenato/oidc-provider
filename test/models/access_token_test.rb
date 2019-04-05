@@ -37,10 +37,10 @@ class AccessTokenTest < ActiveSupport::TestCase
     assert_equal payload["aud"], access_tokens(:example).relying_party.client_id
     assert_equal payload["sid"], access_tokens(:example).session.token
     assert_equal payload["auth_time"], access_tokens(:example).session.auth_time.to_i
-    assert_equal payload["at_hash"], Base64.urlsafe_encode64(Digest::SHA256.hexdigest(encrypted_access_token)[0,32], padding: false)
+    assert_equal payload["at_hash"], Base64.urlsafe_encode64(Digest::SHA256.digest(encrypted_access_token)[0,16], padding: false)
     if access_tokens(:example).authorization_code
       assert_equal payload["nonce"], access_tokens(:example).authorization_code.nonce if access_tokens(:example).authorization_code.nonce
-      assert_equal payload["c_hash"], Base64.urlsafe_encode64(Digest::SHA256.hexdigest(access_tokens(:example).authorization_code.code)[0,32], padding: false)
+      assert_equal payload["c_hash"], Base64.urlsafe_encode64(Digest::SHA256.digest(access_tokens(:example).authorization_code.code)[0,16], padding: false)
     else
       assert_nil payload["c_hash"]
       assert_equal payload["nonce"], 'test_nonce'
