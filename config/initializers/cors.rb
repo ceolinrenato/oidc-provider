@@ -6,6 +6,7 @@
 # Read more: https://github.com/cyu/rack-cors
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
+
   allow do
     origins Rails.application.config.allowed_cors_origins
 
@@ -32,4 +33,22 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
       credentials: true
 
   end
+
+  allow do
+    origins '*'
+
+    resource '/userinfo',
+      headers: :any,
+      methods: [:get, :post]
+
+    resource '/.well-known/openid-configuration',
+      headers: :any,
+      methods: [:get]
+
+    resource '/jwks.json',
+      headers: :any,
+      methods: [:get]
+
+  end
+
 end
