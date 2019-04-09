@@ -130,6 +130,16 @@ class AuthorizationEndpointRequestValidationTest < ActionDispatch::IntegrationTe
     assert_redirected_to build_redirection_uri(request_params[:redirect_uri], error)
   end
 
+  test "must_redirect_with_only_existent_scopes" do
+    request_params = request_validation_example
+    request_params[:scope] = 'openid email address'
+    get '/oauth2/authorize',
+      params: request_params
+    assert_response :found
+    uri = URI(@response.location)
+    assert_equal Rack::Utils.parse_nested_query(uri.query)["scope"], 'email openid'
+  end
+
   test "must_redirect_to_login_service_in_case_of_success" do
     get '/oauth2/authorize',
       params: request_validation_example
