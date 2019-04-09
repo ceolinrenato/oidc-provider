@@ -18,8 +18,9 @@ class AuthorizationEndpointController < ApplicationController
     ActiveRecord::Base.transaction do
       params_validation
       handle_prompt_none and return if params[:prompt] == 'none'
-      redirect_with_params SIGN_IN_SERVICE_CONFIG[:uri],
-        params.permit(:client_id, :redirect_uri, :response_type, :response_mode, :scope, :state, :nonce, :prompt, :max_age)
+      redirect_params = params.permit(:client_id, :redirect_uri, :response_type, :response_mode, :state, :nonce, :prompt, :max_age)
+      redirect_params.merge! scope: @scopes.join(' ') if @scopes.count > 0
+      redirect_with_params SIGN_IN_SERVICE_CONFIG[:uri], redirect_params
     end
   rescue CustomExceptions::InvalidRequest,
     CustomExceptions::InvalidClient,
