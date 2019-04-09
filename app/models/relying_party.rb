@@ -3,6 +3,7 @@ class RelyingParty < ApplicationRecord
   has_secure_token :client_secret
 
   has_many :redirect_uris
+  has_many :access_tokens
 
   validates :client_name, presence: true
   validates :tos_uri, URI: { https: { allow_on_localhost: false }, deny_localhost: true }, allow_blank: true
