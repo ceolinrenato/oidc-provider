@@ -14,6 +14,10 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
       headers: :any,
       methods: [:get]
 
+    resource '/sign_in_service/consent_lookup',
+      headers: :any,
+      methods: [:get]
+
     resource '/sign_in_service/request_validation',
       headers: :any,
       methods: [:get]

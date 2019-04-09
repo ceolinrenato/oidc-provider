@@ -14,6 +14,16 @@ class SignInServiceController < ApplicationController
     render json: ErrorSerializer.new(exception), status: :bad_request
   end
 
+  def consent_lookup
+    set_relying_party_by_client_id
+    set_user_by_email!
+    render json: ConsentLookupSerializer.new(@user, @relying_party)
+  rescue CustomExceptions::InvalidRequest,
+    CustomExceptions::InvalidClient,
+    CustomExceptions::EntityNotFound => exception
+    render json: ErrorSerializer.new(exception), status: :bad_request
+  end
+
   def credential_validation
     authenticate_user
     head :no_content
