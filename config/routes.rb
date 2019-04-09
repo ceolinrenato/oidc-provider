@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   # LoginService Routes
   get    'sign_in_service/email_lookup',            to: 'sign_in_service#email_lookup'
+  get    'sign_in_service/consent_lookup',          to: 'sign_in_service#consent_lookup'
   get    'sign_in_service/request_validation',      to: 'sign_in_service#request_validation'
   post   'sign_in_service/credential_validation',   to: 'sign_in_service#credential_validation'
 

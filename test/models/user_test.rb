@@ -71,4 +71,15 @@ class UserTest < ActiveSupport::TestCase
     assert_equal full_name, users(:example).full_name
   end
 
+  test "consent_method_must_return_array_with_all_relying_parties_user_consented" do
+    users().each do |user|
+      tokens = access_tokens().select { |access_token| access_token.session.user == user }
+      consents = []
+      tokens.each do |token|
+        consents << token.relying_party.client_id if token.relying_party.third_party == true
+      end
+      assert_equal consents.uniq.sort, user.consents.sort
+    end
+  end
+
 end
