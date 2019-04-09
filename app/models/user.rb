@@ -13,4 +13,14 @@ class User < ApplicationRecord
     "#{name} #{last_name}"
   end
 
+  def consents
+    RelyingParty.joins(access_tokens: :session)
+      .where('relying_parties.third_party = :third_party AND sessions.user_id = :user_id',
+        {
+          third_party: true,
+          user_id: id
+        }
+      ).map { |relying_party| relying_party.client_id }.uniq
+  end
+
 end

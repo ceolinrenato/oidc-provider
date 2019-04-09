@@ -6,10 +6,15 @@
 # Read more: https://github.com/cyu/rack-cors
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
+
   allow do
     origins Rails.application.config.allowed_cors_origins
 
     resource '/sign_in_service/email_lookup',
+      headers: :any,
+      methods: [:get]
+
+    resource '/sign_in_service/consent_lookup',
       headers: :any,
       methods: [:get]
 
