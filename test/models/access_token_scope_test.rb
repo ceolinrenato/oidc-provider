@@ -4,7 +4,7 @@ class AccessTokenScopeTest < ActiveSupport::TestCase
 
   def example_access_token_scope
     {
-      scope: scopes(:example),
+      scope: scopes(:scope_openid),
       access_token: access_tokens(:example)
     }
   end

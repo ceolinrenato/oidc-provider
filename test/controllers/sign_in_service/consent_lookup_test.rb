@@ -12,7 +12,8 @@ class ConsentLookupTest < ActionDispatch::IntegrationTest
   test "must_return_true_if_has_consent" do
     get '/sign_in_service/consent_lookup', params: example_consent_lookup
     assert_response :ok
-    assert_equal parsed_response(@response)["consent"], true
+    assert_equal true, parsed_response(@response)["consent"]
+    assert_equal relying_parties(:example).granted_scopes(users(:example)), parsed_response(@response)["granted_scopes"]
   end
 
   test "must_return_false_if_no_consent" do
@@ -20,7 +21,8 @@ class ConsentLookupTest < ActionDispatch::IntegrationTest
     request_params[:email] = users(:example2).email
     get '/sign_in_service/consent_lookup', params: request_params
     assert_response :ok
-    assert_equal parsed_response(@response)["consent"], false
+    assert_equal false, parsed_response(@response)["consent"]
+    assert_nil parsed_response(@response)["granted_scopes"]
   end
 
   test "request_must_fail_if_no_client_id" do

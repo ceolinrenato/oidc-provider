@@ -70,3 +70,7 @@
   :error_description: "unsupported response mode, we support 'query' and 'fragment'."
 - :error_code: 36
   :error_description: "Session does not satisfy 'max_age' parameter, user must re-authenticate."
+- :error_code: 37
+  :error_description: "Access Token has insufficient scopes."
+- :error_code: 38
+  :error_description: "The authenticated user lacks the permissions necessary to access the desired resource."

@@ -21,4 +21,13 @@ module UserHelper
     raise CustomExceptions::InvalidGrant.new 9 unless @user.verified_email
   end
 
+  def set_user_by_id!
+    @user = User.find_by id: params[:user_id]
+    raise CustomExceptions::EntityNotFound.new 'User' unless @user
+  end
+
+  def target_user_authorization
+    raise CustomExceptions::InsufficientPermissions.new unless @user == @authenticated_user
+  end
+
 end
