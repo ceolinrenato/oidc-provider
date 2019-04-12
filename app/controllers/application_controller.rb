@@ -1,6 +1,10 @@
 class ApplicationController < ActionController::API
   include ActionController::Cookies
 
+  def redirect_to_account_management
+    redirect_to OIDC_PROVIDER_CONFIG[:account_management], status: :found
+  end
+
   private
 
   def bearer_authorization

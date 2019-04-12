@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
+  # AccountManagement redirection
+  get    '/',                                       to: 'application#redirect_to_account_management'
+
   # LoginService Routes
   get    'sign_in_service/email_lookup',            to: 'sign_in_service#email_lookup'
   get    'sign_in_service/consent_lookup',          to: 'sign_in_service#consent_lookup'

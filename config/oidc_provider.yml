@@ -1,5 +1,7 @@
 development: &non_production_settings
   :iss: https://accounts.licentia.digital
+  :sign_in_service: https://localhost:4200
+  :account_management: https://localhost:4300
   :expiration_time: 3600
 
 test:
@@ -7,4 +9,6 @@ test:
 
 production:
   :iss: https://accounts.licentia.digital
+  :sign_in_service: https://accounts.licentia.digital/SignInService
+  :account_management: https://accounts.licentia.digital/AccountManagement
   :expiration_time: 3600

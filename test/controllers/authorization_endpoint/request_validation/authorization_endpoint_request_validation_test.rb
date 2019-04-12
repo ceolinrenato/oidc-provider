@@ -51,7 +51,7 @@ class AuthorizationEndpointRequestValidationTest < ActionDispatch::IntegrationTe
     request_params[:client_id] = nil
     get '/oauth2/authorize',
       params: request_params
-    assert_redirected_to build_redirection_uri("#{SIGN_IN_SERVICE_CONFIG[:uri]}/error", request_params)
+    assert_redirected_to build_redirection_uri("#{OIDC_PROVIDER_CONFIG[:sign_in_service]}/error", request_params)
   end
 
   test "must_include_a_valid_client_id" do
@@ -59,7 +59,7 @@ class AuthorizationEndpointRequestValidationTest < ActionDispatch::IntegrationTe
     request_params[:client_id] = 'AGsjHAKDhsakdSAK'
     get '/oauth2/authorize',
       params: request_params
-    assert_redirected_to build_redirection_uri("#{SIGN_IN_SERVICE_CONFIG[:uri]}/error", request_params)
+    assert_redirected_to build_redirection_uri("#{OIDC_PROVIDER_CONFIG[:sign_in_service]}/error", request_params)
   end
 
   test "must_include_redirect_uri" do
@@ -67,7 +67,7 @@ class AuthorizationEndpointRequestValidationTest < ActionDispatch::IntegrationTe
     request_params[:redirect_uri] = nil
     get '/oauth2/authorize',
       params: request_params
-    assert_redirected_to build_redirection_uri("#{SIGN_IN_SERVICE_CONFIG[:uri]}/error", request_params)
+    assert_redirected_to build_redirection_uri("#{OIDC_PROVIDER_CONFIG[:sign_in_service]}/error", request_params)
   end
 
   test "must_include_an_authorized_redirect_uri" do
@@ -75,7 +75,7 @@ class AuthorizationEndpointRequestValidationTest < ActionDispatch::IntegrationTe
     request_params[:redirect_uri] = relying_parties(:example2).redirect_uris.first.uri
     get '/oauth2/authorize',
       params: request_params
-    assert_redirected_to build_redirection_uri("#{SIGN_IN_SERVICE_CONFIG[:uri]}/error", request_params)
+    assert_redirected_to build_redirection_uri("#{OIDC_PROVIDER_CONFIG[:sign_in_service]}/error", request_params)
   end
 
   test "must_include_response_type" do
@@ -143,7 +143,7 @@ class AuthorizationEndpointRequestValidationTest < ActionDispatch::IntegrationTe
   test "must_redirect_to_login_service_in_case_of_success" do
     get '/oauth2/authorize',
       params: request_validation_example
-    assert_redirected_to build_redirection_uri(SIGN_IN_SERVICE_CONFIG[:uri], request_validation_example)
+    assert_redirected_to build_redirection_uri(OIDC_PROVIDER_CONFIG[:sign_in_service], request_validation_example)
   end
 
   test "must_have_a_device_if_prompt_none" do

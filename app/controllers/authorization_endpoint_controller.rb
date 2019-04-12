@@ -20,7 +20,7 @@ class AuthorizationEndpointController < ApplicationController
       handle_prompt_none and return if params[:prompt] == 'none'
       redirect_params = params.permit(:client_id, :redirect_uri, :response_type, :response_mode, :state, :nonce, :prompt, :max_age)
       redirect_params.merge! scope: @scopes.join(' ') if @scopes.count > 0
-      redirect_with_params SIGN_IN_SERVICE_CONFIG[:uri], redirect_params
+      redirect_with_params OIDC_PROVIDER_CONFIG[:sign_in_service], redirect_params
     end
   rescue CustomExceptions::InvalidRequest,
     CustomExceptions::InvalidClient,
@@ -36,7 +36,7 @@ class AuthorizationEndpointController < ApplicationController
     if @redirect_uri
         redirect_with_error @redirect_uri.uri, exception
     else
-      redirect_with_params "#{SIGN_IN_SERVICE_CONFIG[:uri]}/error",
+      redirect_with_params "#{OIDC_PROVIDER_CONFIG[:sign_in_service]}/error",
       params.permit(:client_id, :redirect_uri, :response_type, :response_mode, :scope, :state, :nonce, :prompt, :max_age)
     end
   rescue CustomExceptions::CompromisedDevice => exception
@@ -66,7 +66,7 @@ class AuthorizationEndpointController < ApplicationController
     if @redirect_uri
       redirect_with_error @redirect_uri.uri, exception
     else
-      redirect_with_error "#{SIGN_IN_SERVICE_CONFIG[:uri]}/error", exception
+      redirect_with_error "#{OIDC_PROVIDER_CONFIG[:sign_in_service]}/error", exception
     end
   rescue CustomExceptions::UnrecognizedDevice => exception
     clear_device_token_cookie
@@ -99,7 +99,7 @@ class AuthorizationEndpointController < ApplicationController
     if @redirect_uri
       redirect_with_error @redirect_uri.uri, exception
     else
-      redirect_with_error "#{SIGN_IN_SERVICE_CONFIG[:uri]}/error", exception
+      redirect_with_error "#{OIDC_PROVIDER_CONFIG[:sign_in_service]}/error", exception
     end
   rescue CustomExceptions::UnrecognizedDevice => exception
     clear_device_token_cookie

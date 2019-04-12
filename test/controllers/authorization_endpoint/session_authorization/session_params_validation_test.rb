@@ -59,7 +59,7 @@ class SessionParamsValidationTest < ActionDispatch::IntegrationTest
       error_description: "'client_id' required.",
       state: request_params[:state]
     }
-    assert_redirected_to build_redirection_uri("#{SIGN_IN_SERVICE_CONFIG[:uri]}/error", error)
+    assert_redirected_to build_redirection_uri("#{OIDC_PROVIDER_CONFIG[:sign_in_service]}/error", error)
   end
 
   test "must_include_a_valid_client_id" do
@@ -71,7 +71,7 @@ class SessionParamsValidationTest < ActionDispatch::IntegrationTest
       error_description: "Client authentication failed.",
       state: request_params[:state]
     }
-    assert_redirected_to build_redirection_uri("#{SIGN_IN_SERVICE_CONFIG[:uri]}/error", error)
+    assert_redirected_to build_redirection_uri("#{OIDC_PROVIDER_CONFIG[:sign_in_service]}/error", error)
   end
 
   test "must_include_device_token" do
@@ -108,7 +108,7 @@ class SessionParamsValidationTest < ActionDispatch::IntegrationTest
       error_description: "'redirect_uri' is required.",
       state: request_params[:state]
     }
-    assert_redirected_to build_redirection_uri("#{SIGN_IN_SERVICE_CONFIG[:uri]}/error", error)
+    assert_redirected_to build_redirection_uri("#{OIDC_PROVIDER_CONFIG[:sign_in_service]}/error", error)
   end
 
   test "must_include_an_authorized_redirect_uri" do
@@ -120,7 +120,7 @@ class SessionParamsValidationTest < ActionDispatch::IntegrationTest
       error_description: "'redirect_uri' not authorized by the client.",
       state: request_params[:state]
     }
-    assert_redirected_to build_redirection_uri("#{SIGN_IN_SERVICE_CONFIG[:uri]}/error", error)
+    assert_redirected_to build_redirection_uri("#{OIDC_PROVIDER_CONFIG[:sign_in_service]}/error", error)
   end
 
   test "must_include_email_address" do
