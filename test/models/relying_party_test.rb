@@ -81,13 +81,15 @@ class RelyingPartyTest < ActiveSupport::TestCase
 
   test "granted_scopes_method_should_return_all_scopes_a_user_granted_to_the_relying_party" do
     relying_party = relying_parties(:example)
-    granted_scopes = []
-    users(:example).sessions.each do |session|
-      session.access_tokens.each do |access_token|
-        granted_scopes << access_token.scopes.map { |scope| scope.name }
+    users().each do |user|
+      granted_scopes = []
+      user.sessions.each do |session|
+        session.access_tokens.each do |access_token|
+          granted_scopes << access_token.scopes.map { |scope| scope.name }
+        end
       end
+      assert_equal granted_scopes.flatten.uniq.sort, relying_party.granted_scopes(user)
     end
-    assert_equal granted_scopes.flatten.uniq.sort, relying_party.granted_scopes(users(:example))
   end
 
 end
