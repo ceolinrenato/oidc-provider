@@ -16,4 +16,14 @@ class RelyingParty < ApplicationRecord
     (redirect_uris.find_by uri: redirect_uri) ? true: false
   end
 
+  def granted_scopes(user)
+    Scope.joins(access_tokens: [:relying_party, :session]).where(
+      'relying_parties.id = :relying_party_id AND sessions.user_id = :user_id',
+        {
+          relying_party_id: id,
+          user_id: user.id
+        }
+    ).map { |scope| scope.name }.sort
+  end
+
 end

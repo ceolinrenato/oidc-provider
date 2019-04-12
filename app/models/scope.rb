@@ -1,11 +1,11 @@
 class Scope < ApplicationRecord
   validates :name, presence: true, uniqueness: true
+  has_many :access_token_scopes
+  has_many :access_tokens, through: :access_token_scopes
 
 
   def self.scope_list
-    list = []
-    Scope.all.each { |scope| list << scope.name }
-    list.sort
+    Scope.all.map { |scope| scope.name }.sort
   end
 
   def self.parse_authorization_scope(scope = nil)
