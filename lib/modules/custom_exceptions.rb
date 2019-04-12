@@ -149,4 +149,18 @@ module CustomExceptions
     end
   end
 
+  class InsufficientScopes < BaseException
+    def initialize
+      @error = "insufficient_scopes"
+      super @error_description, 37
+    end
+  end
+
+  class InsufficientPermissions < BaseException
+    def initialize
+      @error = "insufficient_permissions"
+      super @error_description, 38
+    end
+  end
+
 end

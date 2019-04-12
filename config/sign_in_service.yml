@@ -1,8 +1,0 @@
-development: &non_production_settings
-  :uri: 'http://localhost:4200'
-
-test:
-  <<: *non_production_settings
-
-production:
-  :uri: 'https://accounts.zetios.com.br/SignInService'

@@ -9,7 +9,8 @@ class CodeGrantTest < ActionDispatch::IntegrationTest
       code: authorization_code.code,
       redirect_uri: authorization_code.redirect_uri.uri,
       client_id: authorization_code.access_token.relying_party.client_id,
-      client_secret: authorization_code.access_token.relying_party.client_secret
+      client_secret: authorization_code.access_token.relying_party.client_secret,
+      scope: 'openid'
     }
   end
 

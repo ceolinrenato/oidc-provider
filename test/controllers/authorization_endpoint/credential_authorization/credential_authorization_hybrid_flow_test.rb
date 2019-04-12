@@ -68,8 +68,8 @@ class CredentialAuthorizationHybridFlowTest < ActionDispatch::IntegrationTest
     assert_equal parsed_fragment["expires_in"].to_i, OIDC_PROVIDER_CONFIG[:expiration_time]
     assert_equal parsed_fragment["state"], request_params[:state]
     id_token = TokenDecode::IDToken.new(parsed_fragment["id_token"]).decode
-    assert_equal request_params[:nonce], id_token.first["nonce"]
-    assert_equal Base64.urlsafe_encode64(Digest::SHA256.digest(parsed_fragment["code"])[0,16], padding: false), id_token.first["c_hash"]
+    assert_equal request_params[:nonce], id_token["nonce"]
+    assert_equal Base64.urlsafe_encode64(Digest::SHA256.digest(parsed_fragment["code"])[0,16], padding: false), id_token["c_hash"]
   end
 
   test "id_token_must_have_nonce__c_hash_and_at_hash_when_response_type_code_id_token_token" do
@@ -85,9 +85,9 @@ class CredentialAuthorizationHybridFlowTest < ActionDispatch::IntegrationTest
     assert_equal parsed_fragment["state"], request_params[:state]
     assert_equal parsed_fragment["token_type"], "Bearer"
     id_token = TokenDecode::IDToken.new(parsed_fragment["id_token"]).decode
-    assert_equal request_params[:nonce], id_token.first["nonce"]
-    assert_equal Base64.urlsafe_encode64(Digest::SHA256.digest(parsed_fragment["code"])[0,16], padding: false), id_token.first["c_hash"]
-    assert_equal Base64.urlsafe_encode64(Digest::SHA256.digest(parsed_fragment["access_token"])[0,16], padding: false), id_token.first["at_hash"]
+    assert_equal request_params[:nonce], id_token["nonce"]
+    assert_equal Base64.urlsafe_encode64(Digest::SHA256.digest(parsed_fragment["code"])[0,16], padding: false), id_token["c_hash"]
+    assert_equal Base64.urlsafe_encode64(Digest::SHA256.digest(parsed_fragment["access_token"])[0,16], padding: false), id_token["at_hash"]
   end
 
 end
