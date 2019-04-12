@@ -3,3 +3,7 @@
 example:
   access_token: example
   scope: scope_openid
+
+example2:
+  access_token: example
+  scope: scope_email

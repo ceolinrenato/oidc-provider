@@ -31,7 +31,7 @@ class ScopeTest < ActiveSupport::TestCase
   end
 
   test "test_parse_scope_method" do
-    request_scope = "#{OIDC_PROVIDER_CONFIG[:scopes].join(' ')} abcdfqw"
+    request_scope = "#{Scope::scope_list.join(' ')} abcdfqw"
     assert_equal Scope::parse_authorization_scope(request_scope), Scope::scope_list
   end
 

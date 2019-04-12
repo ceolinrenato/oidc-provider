@@ -14,6 +14,7 @@ class ApplicationController < ActionController::API
       head :unauthorized and return
     end
     @access_token = TokenDecode::AccessToken.new(token).decode
+    @authenticated_user = User.find_by id: @access_token["sub"]
   rescue CustomExceptions::InvalidAccessToken => exception
     response.headers['WWW-Authenticate'] = www_auth_header exception
     head :unauthorized and return

@@ -9,5 +9,5 @@
 # Scopes
 
 OIDC_PROVIDER_CONFIG[:scopes].each { |name| Scope.create name: name }
-account_management = RelyingParty.create name: 'Account Management'
+account_management = RelyingParty.create client_name: 'Account Management'
 RedirectUri.create relying_party: account_management, uri: OIDC_PROVIDER_CONFIG[:account_management]
