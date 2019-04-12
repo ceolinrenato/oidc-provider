@@ -76,9 +76,9 @@ class UserTest < ActiveSupport::TestCase
       tokens = access_tokens().select { |access_token| access_token.session.user == user }
       consents = []
       tokens.each do |token|
-        consents << token.relying_party.client_id if token.relying_party.third_party == true
+        consents << token.relying_party if token.relying_party.third_party
       end
-      assert_equal consents.uniq.sort, user.consents.sort
+      assert_equal consents.uniq, user.consents
     end
   end
 
