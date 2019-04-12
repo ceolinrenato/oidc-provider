@@ -23,7 +23,7 @@ class RelyingParty < ApplicationRecord
           relying_party_id: id,
           user_id: user.id
         }
-    ).map { |scope| scope.name }.sort
+    ).map { |scope| scope.name }.uniq.sort
   end
 
 end
