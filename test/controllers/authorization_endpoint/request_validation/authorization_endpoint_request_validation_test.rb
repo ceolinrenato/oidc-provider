@@ -206,9 +206,9 @@ class AuthorizationEndpointRequestValidationTest < ActionDispatch::IntegrationTe
       params: request_params,
       headers: { 'Cookie' => set_device_token_cookie(device_tokens(:example4).token) }
     success_params = {
-      code: AuthorizationCode.last.code,
-      state: request_params[:state]
+      code: AuthorizationCode.last.code
     }
+    success_params[:state] = request_params[:state] if request_params[:state]
     assert_redirected_to build_redirection_uri(request_params[:redirect_uri], success_params)
     assert_equal AuthorizationCode.last.access_token.session.user.id.to_s, payload[:sub]
   end
@@ -297,9 +297,9 @@ class AuthorizationEndpointRequestValidationTest < ActionDispatch::IntegrationTe
       params: request_params,
       headers: { 'Cookie' => set_device_token_cookie(device_tokens(:example4).token) }
     success_params = {
-      code: AuthorizationCode.last.code,
-      state: request_params[:state]
+      code: AuthorizationCode.last.code
     }
+    success_params[:state] = request_params[:state] if request_params[:state]
     assert_redirected_to build_redirection_uri(request_params[:redirect_uri], success_params)
     assert_equal AuthorizationCode.last.access_token.session.user.id.to_s, payload[:sub]
   end
