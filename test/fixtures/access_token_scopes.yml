@@ -2,4 +2,4 @@
 
 example:
   access_token: example
-  scope: example
+  scope: scope_openid

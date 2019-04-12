@@ -1,7 +1,6 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-example:
-  name: openid
-
-example2:
-  name: email
+<% OIDC_PROVIDER_CONFIG[:scopes].each do |name| %>
+scope_<%= name %>:
+  name: <%= name %>
+<% end %>

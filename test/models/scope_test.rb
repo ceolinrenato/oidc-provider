@@ -21,17 +21,17 @@ class ScopeTest < ActiveSupport::TestCase
 
   test "scope_names_should_be_unique" do
     scope = Scope.new dummy_scope
-    scope.name = scopes(:example).name
+    scope.name = scopes().first.name
     assert_not scope.save
   end
 
   test "test_scope_list_method" do
     list = Scope::scope_list
-    assert_equal list, [scopes(:example).name, scopes(:example2).name].sort
+    assert_equal list, OIDC_PROVIDER_CONFIG[:scopes].sort
   end
 
   test "test_parse_scope_method" do
-    request_scope = "#{scopes(:example).name} #{scopes(:example2).name} abcdfqw"
+    request_scope = "#{OIDC_PROVIDER_CONFIG[:scopes].join(' ')} abcdfqw"
     assert_equal Scope::parse_authorization_scope(request_scope), Scope::scope_list
   end
 

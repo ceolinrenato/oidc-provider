@@ -1,14 +1,20 @@
 development: &non_production_settings
   :iss: https://accounts.licentia.digital
-  :sign_in_service: https://localhost:4200
-  :account_management: https://localhost:4300
+  :sign_in_service: http://localhost:4200
+  :account_management: http://localhost:4300
   :expiration_time: 3600
+  :scopes:
+    - openid
+    - listDevices
 
 test:
   <<: *non_production_settings
+  :scopes:
+    - openid
+    - email
+    - listDevices
 
 production:
-  :iss: https://accounts.licentia.digital
+  <<: *non_production_settings
   :sign_in_service: https://accounts.licentia.digital/SignInService
   :account_management: https://accounts.licentia.digital/AccountManagement
-  :expiration_time: 3600

@@ -32,4 +32,7 @@ Rails.application.routes.draw do
   get    '.well-known/openid-configuration',       to: 'discovery#show'
   get    'jwks.json',                              to: 'discovery#jwk'
 
+  # Devices Routes
+  get    '/users/:user_id/devices',                to: 'devices#index_by_user'
+
 end
