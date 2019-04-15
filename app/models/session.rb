@@ -22,4 +22,13 @@ class Session < ApplicationRecord
     !expired? && !signed_out && !aged?(max_age)
   end
 
+  def frontchannel_logout_uris
+    RelyingParty.joins(:access_tokens)
+      .where('access_tokens.session_id = :session_id AND relying_parties.frontchannel_logout_uri IS NOT NULL',
+        {
+          session_id: id
+        }
+      ).uniq.map { |relying_party| relying_party.frontchannel_logout_uri }.sort
+  end
+
 end
