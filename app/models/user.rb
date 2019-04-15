@@ -20,7 +20,7 @@ class User < ApplicationRecord
           third_party: true,
           user_id: id
         }
-      ).map { |relying_party| relying_party.client_id }.uniq
+      ).uniq
   end
 
 end

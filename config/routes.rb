@@ -35,4 +35,7 @@ Rails.application.routes.draw do
   # Devices Routes
   get    '/users/:user_id/devices',                to: 'devices#index_by_user'
 
+  # RelyingParties Routes
+  get    '/users/:user_id/relying_parties',        to: 'relying_parties#index_by_user'
+
 end
