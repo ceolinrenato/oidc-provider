@@ -4,10 +4,12 @@ example:
   client_name: 'Another RP'
   client_id: hasdlHSAk1102310aAH
   client_secret: lalqjshK123120alL
+  frontchannel_logout_uri: https://example.com
   third_party: true
 
 example2:
   client_name: 'Licentia'
   client_id: bi4s11zqnS2xukwh2puuwCtk
   client_secret: ZHv5CgdCx99z6KD75fn4eLie
+  frontchannel_logout_uri: https://example2.com
 
