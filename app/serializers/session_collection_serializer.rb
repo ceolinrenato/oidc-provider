@@ -2,15 +2,12 @@ class SessionCollectionSerializer < BaseCollectionSerializer
 
   def initialize(sessions, max_age)
     collection = sessions.map do |session|
-      logout_uris = session.access_tokens.map do |access_token|
-        access_token.relying_party.frontchannel_logout_uri
-      end
       {
         session_token: session.token,
         full_name: session.user.full_name,
         email: session.user.email,
         active: session.active?(max_age),
-        frontchannel_logout_uris: logout_uris.uniq.select(&:presence)
+        frontchannel_logout_uris: session.frontchannel_logout_uris
       }
     end
     super(collection)

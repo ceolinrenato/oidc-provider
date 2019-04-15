@@ -13,7 +13,7 @@ class ConsentLookupTest < ActionDispatch::IntegrationTest
     get '/sign_in_service/consent_lookup', params: example_consent_lookup
     assert_response :ok
     assert_equal true, parsed_response(@response)["consent"]
-    assert_equal relying_parties(:example).granted_scopes(users(:example)), parsed_response(@response)["granted_scopes"]
+    assert_equal relying_parties(:example).granted_scopes(users(:example)), parsed_response(@response)["relying_party"]["granted_scopes"]
   end
 
   test "must_return_false_if_no_consent" do

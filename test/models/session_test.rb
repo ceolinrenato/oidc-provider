@@ -44,4 +44,13 @@ class SessionTest < ActiveSupport::TestCase
     assert sessions(:not_expired).active?
   end
 
+  test "front_channel_logout_uris_method_must_return_all_logout_uris_of_that_session" do
+    sessions().each do |session|
+      logout_uris = session.access_tokens.map do |access_token|
+        access_token.relying_party.frontchannel_logout_uri
+      end
+      assert_equal logout_uris.uniq.select(&:presence).sort, session.frontchannel_logout_uris
+    end
+  end
+
 end
