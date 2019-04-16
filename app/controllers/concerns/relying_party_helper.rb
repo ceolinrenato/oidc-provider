@@ -16,4 +16,9 @@ module RelyingPartyHelper
     raise CustomExceptions::InvalidClient.new unless @relying_party
   end
 
+  def third_party_authorization
+    relying_party = RelyingParty.find_by client_id: @access_token["aud"]
+    raise CustomExceptions::InsufficientPermissions.new 39 if relying_party.third_party
+  end
+
 end

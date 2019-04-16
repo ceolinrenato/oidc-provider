@@ -50,6 +50,25 @@ class ActiveSupport::TestCase
   def valid_access_token(scopes = [])
     payload = {
       iss: OIDC_PROVIDER_CONFIG[:iss],
+      aud: relying_parties(:example2).client_id,
+      sub: users(:example).id.to_s,
+      iat: Time.now.to_i,
+      exp: Time.now.to_i + OIDC_PROVIDER_CONFIG[:expiration_time],
+      scopes: scopes
+    }
+    tk = JWT.encode payload, TokenDecode::RSA_PRIVATE, 'RS256'
+    cipher = OpenSSL::Cipher::AES256.new(:CBC)
+    cipher.encrypt
+    iv = cipher.random_iv
+    cipher.key = TokenDecode::AES_KEY
+    cipher.iv = iv
+    "#{Base64.urlsafe_encode64(iv, padding: false)}.#{Base64.urlsafe_encode64(cipher.update(tk) + cipher.final, padding: false)}"
+  end
+
+  def third_party_valid_access_token(scopes = [])
+    payload = {
+      iss: OIDC_PROVIDER_CONFIG[:iss],
+      aud: relying_parties(:example).client_id,
       sub: users(:example).id.to_s,
       iat: Time.now.to_i,
       exp: Time.now.to_i + OIDC_PROVIDER_CONFIG[:expiration_time],
