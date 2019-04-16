@@ -53,6 +53,10 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
       headers: :any,
       methods: [:get]
 
+    resource '/users/*',
+      headers: :any,
+      methods: [:get, :patch, :put, :options]
+
   end
 
 end
