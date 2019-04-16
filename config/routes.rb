@@ -38,4 +38,8 @@ Rails.application.routes.draw do
   # RelyingParties Routes
   get    '/users/:user_id/relying_parties',        to: 'relying_parties#index_by_user'
 
+  # Users Routes
+  patch  '/users/:user_id',                        to: 'users#update_profile'
+  put    '/users/:user_id/password',               to: 'users#update_password'
+
 end

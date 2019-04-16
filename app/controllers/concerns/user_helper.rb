@@ -27,7 +27,7 @@ module UserHelper
   end
 
   def target_user_authorization
-    raise CustomExceptions::InsufficientPermissions.new unless @user == @authenticated_user
+    raise CustomExceptions::InsufficientPermissions.new 38 unless @user == @authenticated_user
   end
 
 end
