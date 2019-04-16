@@ -157,9 +157,9 @@ module CustomExceptions
   end
 
   class InsufficientPermissions < BaseException
-    def initialize
+    def initialize(code)
       @error = "insufficient_permissions"
-      super @error_description, 38
+      super @error_description, code
     end
   end
 
