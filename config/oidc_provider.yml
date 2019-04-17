@@ -7,7 +7,7 @@ development: &non_production_settings
     - openid
     - listDevices
     - listRelyingParties
-    - updatePassword
+    - updateProfile
 
 test:
   <<: *non_production_settings
@@ -16,7 +16,7 @@ test:
     - email
     - listDevices
     - listRelyingParties
-    - updatePassword
+    - updateProfile
 
 production:
   <<: *non_production_settings
