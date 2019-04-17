@@ -11,7 +11,8 @@ class DeviceCollectionSerializer < BaseCollectionSerializer
         desktop: (!device.mobile && !device.tablet),
         last_activity: session.last_activity,
         signed_out: session.signed_out,
-        active: session.active?
+        active: session.active?,
+        token: device.device_tokens.last.token
       }
     end
     super(collection)
