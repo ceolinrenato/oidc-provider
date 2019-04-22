@@ -1,5 +1,5 @@
 development: &non_production_settings
-  :iss: https://accounts.zetios.com.br
+  :iss: http://localhost:3000
   :sign_in_service: http://localhost:4200
   :account_management: http://localhost:4300
   :expiration_time: 3600
