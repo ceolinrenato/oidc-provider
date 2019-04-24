@@ -78,4 +78,44 @@ class UpdatePasswordTest < ActionDispatch::IntegrationTest
     assert_response :unprocessable_entity
   end
 
+  test "must_remove_all_user_sessions_on_other_devices_if_param_sign_out" do
+    request_params = example_update_password
+    request_params[:sign_out] = true
+    put "/users/#{users(:example).id}/password",
+      params: request_params,
+      headers: {
+        'Authorization' => "Bearer #{valid_access_token}",
+        'Cookie' => set_device_token_cookie(device_tokens(:example).token)
+      }
+    assert_response :no_content
+    assert_equal 1, users(:example).sessions.count
+  end
+
+  test "must_have_device_token_if_param_sign_out" do
+    request_params = example_update_password
+    request_params[:sign_out] = true
+    put "/users/#{users(:example).id}/password",
+      params: request_params,
+      headers: {
+        'Authorization' => "Bearer #{valid_access_token}"
+      }
+    assert_response :bad_request
+    assert_equal "unrecognized_device", parsed_response(@response)["error"]
+  end
+
+  test "must_destroy_compromised_devices" do
+    request_params = example_update_password
+    request_params[:sign_out] = true
+    assert_difference('Device.count', -1) do
+      put "/users/#{users(:example).id}/password",
+        params: request_params,
+        headers: {
+          'Authorization' => "Bearer #{valid_access_token}",
+          'Cookie' => set_device_token_cookie(device_tokens(:example_used).token)
+        }
+    end
+    assert_response :bad_request
+    assert_equal "compromised_device", parsed_response(@response)["error"]
+  end
+
 end

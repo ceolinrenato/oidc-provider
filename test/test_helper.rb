@@ -54,6 +54,7 @@ class ActiveSupport::TestCase
       sub: users(:example).id.to_s,
       iat: Time.now.to_i,
       exp: Time.now.to_i + OIDC_PROVIDER_CONFIG[:expiration_time],
+      sid: sessions(:example).token,
       scopes: scopes
     }
     tk = JWT.encode payload, TokenDecode::RSA_PRIVATE, 'RS256'
@@ -72,6 +73,7 @@ class ActiveSupport::TestCase
       sub: users(:example).id.to_s,
       iat: Time.now.to_i,
       exp: Time.now.to_i + OIDC_PROVIDER_CONFIG[:expiration_time],
+      sid: sessions(:example).token,
       scopes: scopes
     }
     tk = JWT.encode payload, TokenDecode::RSA_PRIVATE, 'RS256'

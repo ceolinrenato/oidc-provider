@@ -81,7 +81,7 @@ class AuthorizationEndpointController < ApplicationController
       params_validation
       set_user_by_email!
       set_device!
-      set_session!
+      set_and_validate_session!
       send AUTHORIZATION_FLOWS[@response_type][:method]
       rotate_device_token
       set_device_token_cookie
