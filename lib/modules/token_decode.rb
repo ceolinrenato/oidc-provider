@@ -41,7 +41,9 @@ module TokenDecode
   class AccessToken < IDToken
 
     def decode
-      decode_jwt(decrypt_token(@token))
+      decoded_token = decode_jwt(decrypt_token(@token))
+      raise CustomExceptions::InvalidAccessToken.new unless Session.find_by token: decoded_token["sid"]
+      decoded_token
     end
 
     private
@@ -58,6 +60,7 @@ module TokenDecode
     rescue OpenSSL::Cipher::CipherError, ArgumentError
       raise CustomExceptions::InvalidAccessToken.new
     end
+
   end
 
 end
