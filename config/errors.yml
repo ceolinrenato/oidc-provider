@@ -76,3 +76,5 @@
   :error_description: "The authenticated user lacks the permissions necessary to access the desired resource."
 - :error_code: 39
   :error_description: "The authorized relying party lacks the permissions necessary to access the desired resource."
+- :error_code: 40
+  :error_description: "The authenticated user can't remove the device he is currently using."
