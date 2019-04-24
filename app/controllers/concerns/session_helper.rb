@@ -12,21 +12,25 @@ module SessionHelper
     end
   end
 
-  def set_session!(options = { raise_on_expired: true, raise_on_signed_out: true, raise_on_aged: true })
+  def set_and_validate_session!
     @session = Session.find_by 'user_id = :user_id AND device_id = :device_id', { user_id: @user.id, device_id: @device.id }
     raise CustomExceptions::InvalidGrant.new 13 unless @session
-    raise CustomExceptions::InvalidGrant.new 14 if @session.expired? && options[:raise_on_expired]
-    raise CustomExceptions::InvalidGrant.new 16 if @session.signed_out && options[:raise_on_signed_out]
-    raise CustomExceptions::InvalidGrant.new 36 if @session.aged?(params[:max_age]) && options[:raise_on_aged]
+    raise CustomExceptions::InvalidGrant.new 14 if @session.expired?
+    raise CustomExceptions::InvalidGrant.new 16 if @session.signed_out
+    raise CustomExceptions::InvalidGrant.new 36 if @session.aged?(params[:max_age])
     @session.update! last_activity: Time.now
   end
 
-  def set_session_by_token!(options = { raise_on_expired: true, raise_on_signed_out: true, raise_on_aged: true })
+  def set_device_session_by_token!
     @session = @device.sessions.find_by token: params[:session_token]
-    raise CustomExceptions::InvalidRequest.new 15 unless @session
-    raise CustomExceptions::InvalidRequest.new 14 if @session.expired? && options[:raise_on_expired]
-    raise CustomExceptions::InvalidRequest.new 16 if @session.signed_out && options[:raise_on_signed_out]
-    raise CustomExceptions::InvalidRequest.new 36 if @session.aged?(params[:max_age]) && options[:raise_on_aged]
+    raise CustomExceptions::EntityNotFound.new 'Session' unless @session
     @session.update! last_activity: Time.now
   end
+
+  def set_user_session_by_token!
+    @session = @user.sessions.find_by token: params[:session_token]
+    raise CustomExceptions::EntityNotFound.new 'Session' unless @session
+    @session.update! last_activity: Time.now
+  end
+
 end
