@@ -8,17 +8,9 @@
 
 # Offense count: 1
 # Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyleForMultiline.
-# SupportedStylesForMultiline: comma, consistent_comma, no_comma
-# Style/TrailingCommaInHashLiteral:
+# Style/UnneededCondition:
 #   Exclude:
-#     - 'test/models/access_token_test.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-Style/UnneededCondition:
-  Exclude:
-    - 'app/controllers/concerns/response_type_helper.rb'
+#     - 'app/controllers/concerns/response_type_helper.rb'
 
 # Offense count: 15
 # Cop supports --auto-correct.
