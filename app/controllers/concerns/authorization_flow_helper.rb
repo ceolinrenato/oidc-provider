@@ -39,7 +39,7 @@ module AuthorizationFlowHelper
       default_mode: 'fragment',
       requires_nonce: false
     }
-  }
+  }.freeze
 
   def authorization_code_flow
     generate_auth_code

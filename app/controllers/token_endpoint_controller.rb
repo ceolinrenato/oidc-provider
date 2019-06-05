@@ -27,7 +27,7 @@ class TokenEndpointController < ApplicationController
   GRANTS = {
     'authorization_code' => :code_grant,
     'refresh_token' => :refresh_grant
-  }
+  }.freeze
 
   def code_grant
     set_authorization_code

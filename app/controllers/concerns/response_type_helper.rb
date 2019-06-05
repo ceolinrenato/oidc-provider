@@ -11,10 +11,10 @@ module ResponseTypeHelper
     'code id_token',
     'code id_token token',
     'code token'
-  ]
+  ].freeze
 
   AUTHORIZED_RESPONSE_TYPES = if Rails.env.test?
-                                ['code']
+                                ['code'].freeze
                               else
                                 [
                                   'code',
@@ -24,7 +24,7 @@ module ResponseTypeHelper
                                   'code id_token',
                                   'code id_token token',
                                   'code token'
-                                ]
+                                ].freeze
                               end
 
   def set_response_type

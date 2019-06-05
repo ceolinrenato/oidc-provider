@@ -6,12 +6,12 @@ module GrantTypeHelper
   # Password GrantType not yet implemented, but needed for testing
 
   SUPPORTED_GRANT_TYPES = if Rails.env.test?
-                            ['authorization_code', 'refresh_token', 'password']
+                            ['authorization_code', 'refresh_token', 'password'].freeze
                           else
-                            ['authorization_code', 'refresh_token']
+                            ['authorization_code', 'refresh_token'].freeze
                           end
 
-  AUTHORIZED_GRANT_TYPES = ['authorization_code', 'refresh_token']
+  AUTHORIZED_GRANT_TYPES = ['authorization_code', 'refresh_token'].freeze
 
   def set_grant_type
     raise CustomExceptions::InvalidRequest.new 29 unless params[:grant_type]

@@ -6,22 +6,16 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 2
-# Style/MixinUsage:
-#   Exclude:
-#     - 'bin/setup'
-#     - 'bin/update'
-
 # Offense count: 8
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle.
 # SupportedStyles: literals, strict
-Style/MutableConstant:
-  Exclude:
-    - 'app/controllers/concerns/authorization_flow_helper.rb'
-    - 'app/controllers/concerns/grant_type_helper.rb'
-    - 'app/controllers/concerns/response_type_helper.rb'
-    - 'app/controllers/token_endpoint_controller.rb'
+# Style/MutableConstant:
+#   Exclude:
+#     - 'app/controllers/concerns/authorization_flow_helper.rb'
+#     - 'app/controllers/concerns/grant_type_helper.rb'
+#     - 'app/controllers/concerns/response_type_helper.rb'
+#     - 'app/controllers/token_endpoint_controller.rb'
 
 # Offense count: 1
 # Cop supports --auto-correct.

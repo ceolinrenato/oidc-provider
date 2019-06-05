@@ -12,7 +12,7 @@ class DiscoveryController < ApplicationController
       scopes_supported: Scope.scope_list,
       response_types_supported: ResponseTypeHelper::SUPPORTED_RESPONSE_TYPES,
       response_modes_supported: ['query', 'fragment'],
-      grant_types_supported: GrantTypeHelper::SUPPORTED_GRANT_TYPES.clone << 'implicit',
+      grant_types_supported: GrantTypeHelper::SUPPORTED_GRANT_TYPES.dup << 'implicit',
       subject_types_supported: ['public'],
       id_token_signing_alg_values_supported: ['RS256'],
       token_endpoint_auth_methods_supported: ['client_secret_post'],
