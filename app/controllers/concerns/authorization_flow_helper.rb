@@ -46,7 +46,7 @@ module AuthorizationFlowHelper
     generate_access_token
     generate_auth_scopes
     generate_refresh_token
-    response_data = Hash.new
+    response_data = {}
     response_data[:code] = @authorization_code.code
     response_data[:state] = params[:state] if params[:state]
     redirect_with_response @redirect_uri.uri, response_data
