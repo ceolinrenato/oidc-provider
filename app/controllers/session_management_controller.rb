@@ -41,7 +41,7 @@ class SessionManagementController < ApplicationController
       third_party_authorization
       set_user_session_by_token!
       set_device!
-      raise CustomExceptions::InsufficientPermissions.new 40 if @device == @session.device
+      raise CustomExceptions::InsufficientPermissions, 40 if @device == @session.device
       @session.destroy!
     end
     head :no_content

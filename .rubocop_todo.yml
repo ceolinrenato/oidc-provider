@@ -6,19 +6,12 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: PreferredDelimiters.
-# Style/PercentLiteralDelimiters:
-#   Exclude:
-#     - 'config/application.rb'
-
 # Offense count: 50
 # Cop supports --auto-correct.
 # Configuration parameters: .
 # SupportedStyles: compact, exploded
-Style/RaiseArgs:
-  EnforcedStyle: compact
+# Style/RaiseArgs:
+#   EnforcedStyle: compact
 
 # Offense count: 2
 # Cop supports --auto-correct.

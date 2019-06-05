@@ -11,7 +11,7 @@ module CustomExceptions
 
     def error_description=(code)
       error_object = error_list.find { |error| error[:error_code] == code }
-      raise ErrorNotFound.new code unless error_object
+      raise ErrorNotFound, code unless error_object
       @error_code = error_object[:error_code]
       @error_description = error_object[:error_description]
     end

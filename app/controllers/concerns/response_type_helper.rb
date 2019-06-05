@@ -28,14 +28,14 @@ module ResponseTypeHelper
                               end
 
   def set_response_type
-    raise CustomExceptions::InvalidRequest.new 12 unless params[:response_type]
-    raise CustomExceptions::UnsupportedResponseType.new unless SUPPORTED_RESPONSE_TYPES.include? params[:response_type]
-    raise CustomExceptions::UnauthorizedClient.new 11 unless AUTHORIZED_RESPONSE_TYPES.include?(params[:response_type]) || (@relying_party.third_party == false)
+    raise CustomExceptions::InvalidRequest, 12 unless params[:response_type]
+    raise CustomExceptions::UnsupportedResponseType unless SUPPORTED_RESPONSE_TYPES.include? params[:response_type]
+    raise CustomExceptions::UnauthorizedClient, 11 unless AUTHORIZED_RESPONSE_TYPES.include?(params[:response_type]) || (@relying_party.third_party == false)
     @response_type = params[:response_type]
   end
 
   def set_response_mode
     @response_mode = params[:response_mode] ? params[:response_mode] : AuthorizationFlowHelper::AUTHORIZATION_FLOWS[@response_type][:default_mode]
-    raise CustomExceptions::InvalidRequest.new 35 unless ['query', 'fragment'].include?(@response_mode)
+    raise CustomExceptions::InvalidRequest, 35 unless ['query', 'fragment'].include?(@response_mode)
   end
 end

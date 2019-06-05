@@ -31,7 +31,7 @@ class UsersController < ApplicationController
       set_user_by_id!
       target_user_authorization
       third_party_authorization
-      raise CustomExceptions::InvalidGrant.new 8 unless @user.authenticate params[:old_password]
+      raise CustomExceptions::InvalidGrant, 8 unless @user.authenticate params[:old_password]
       @user.password = params[:new_password]
       @user.save!
       handle_remove_other_sessions if params[:sign_out]

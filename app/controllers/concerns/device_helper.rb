@@ -30,7 +30,7 @@ module DeviceHelper
     device_token = DeviceToken.find_by(token: cookies[:device_token])
     raise CustomExceptions::UnrecognizedDevice unless device_token || !options[:raise_on_invalid]
     @device = device_token.device if device_token
-    raise CustomExceptions::CompromisedDevice.new if device_token&.used
+    raise CustomExceptions::CompromisedDevice if device_token&.used
   end
 
   def set_or_create_device
