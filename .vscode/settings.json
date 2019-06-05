@@ -1,2 +1,6 @@
 {
+  "ruby.lint": {
+    "rubocop": true,
+    "ruby": true
+  }
 }
