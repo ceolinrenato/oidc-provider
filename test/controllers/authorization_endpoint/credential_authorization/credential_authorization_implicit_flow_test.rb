@@ -79,7 +79,7 @@ class CredentialAuthorizationImplicitFlowTest < ActionDispatch::IntegrationTest
     assert_equal parsed_fragment["token_type"], "Bearer"
     id_token = TokenDecode::IDToken.new(parsed_fragment["id_token"]).decode
     assert_equal request_params[:nonce], id_token["nonce"]
-    assert_equal Base64.urlsafe_encode64(Digest::SHA256.digest(parsed_fragment["access_token"])[0,16], padding: false), id_token["at_hash"]
+    assert_equal Base64.urlsafe_encode64(Digest::SHA256.digest(parsed_fragment["access_token"])[0, 16], padding: false), id_token["at_hash"]
   end
 
   test "must_redirect_with_error_if_no_nonce_param" do

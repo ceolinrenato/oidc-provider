@@ -56,10 +56,10 @@ class AccessToken < ApplicationRecord
   end
 
   def calc_at_hash(encrypted_access_token)
-    Base64.urlsafe_encode64(Digest::SHA256.digest(encrypted_access_token)[0,16], padding: false)
+    Base64.urlsafe_encode64(Digest::SHA256.digest(encrypted_access_token)[0, 16], padding: false)
   end
 
   def calc_c_hash
-    Base64.urlsafe_encode64(Digest::SHA256.digest(authorization_code.code)[0,16], padding: false)
+    Base64.urlsafe_encode64(Digest::SHA256.digest(authorization_code.code)[0, 16], padding: false)
   end
 end

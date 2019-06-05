@@ -8,33 +8,6 @@
 
 # Offense count: 2
 # Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: symmetrical, new_line, same_line
-Layout/MultilineMethodCallBraceLayout:
-  Exclude:
-    - 'app/models/session.rb'
-    - 'app/models/user.rb'
-
-# Offense count: 2
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, IndentationWidth.
-# SupportedStyles: aligned, indented, indented_relative_to_receiver
-Layout/MultilineMethodCallIndentation:
-  Exclude:
-    - 'app/models/session.rb'
-    - 'app/models/user.rb'
-
-# Offense count: 8
-# Cop supports --auto-correct.
-Layout/SpaceAfterComma:
-  Exclude:
-    - 'app/models/access_token.rb'
-    - 'test/controllers/authorization_endpoint/credential_authorization/credential_authorization_hybrid_flow_test.rb'
-    - 'test/controllers/authorization_endpoint/credential_authorization/credential_authorization_implicit_flow_test.rb'
-    - 'test/models/access_token_test.rb'
-
-# Offense count: 2
-# Cop supports --auto-correct.
 # Configuration parameters: AllowForAlignment.
 Layout/SpaceAroundOperators:
   Exclude:
