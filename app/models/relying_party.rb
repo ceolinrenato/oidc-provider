@@ -13,7 +13,7 @@ class RelyingParty < ApplicationRecord
   validates :frontchannel_logout_uri, FrontChannelURI: true, allow_blank: true
 
   def authorized_redirect_uri?(redirect_uri)
-    (redirect_uris.find_by uri: redirect_uri) ? true: false
+    (redirect_uris.find_by uri: redirect_uri) ? true : false
   end
 
   def granted_scopes(user)
