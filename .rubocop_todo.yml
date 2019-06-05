@@ -6,26 +6,13 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 2
-# Cop supports --auto-correct.
-# Style/EmptyLiteral:
-#   Exclude:
-#     - 'app/controllers/concerns/authorization_flow_helper.rb'
-
-# Offense count: 117
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: always, never
-Style/FrozenStringLiteralComment:
-  Enabled: false
-
 # Offense count: 3
 # Configuration parameters: MinBodyLength.
-Style/GuardClause:
-  Exclude:
-    - 'app/controllers/concerns/device_helper.rb'
-    - 'app/controllers/concerns/params_helper.rb'
-    - 'app/models/concerns/validators.rb'
+# Style/GuardClause:
+#   Exclude:
+#     - 'app/controllers/concerns/device_helper.rb'
+#     - 'app/controllers/concerns/params_helper.rb'
+#     - 'app/models/concerns/validators.rb'
 
 # Offense count: 1
 Style/IfInsideElse:
