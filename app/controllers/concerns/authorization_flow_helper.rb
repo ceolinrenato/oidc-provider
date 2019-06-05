@@ -56,7 +56,7 @@ module AuthorizationFlowHelper
   def implicit_flow
     generate_access_token
     generate_auth_scopes
-    response_data = Hash.new
+    response_data = {}
     if @response_type.split.include? 'token'
       response_data[:access_token] = @access_token.token
       response_data[:token_type] = 'Bearer'
@@ -72,7 +72,7 @@ module AuthorizationFlowHelper
     generate_access_token
     generate_auth_scopes
     generate_refresh_token
-    response_data = Hash.new
+    response_data = {}
     response_data[:code] = @authorization_code.code
     if @response_type.split.include? 'token'
       response_data[:access_token] = @access_token.token

@@ -33,3 +33,6 @@ Security/YAMLLoad:
 Style/ClassAndModuleChildren:
   Exclude:
     - 'test/test_helper.rb'
+
+Style/Documentation:
+  Enabled: false
