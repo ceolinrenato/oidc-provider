@@ -20,5 +20,4 @@ module RefreshTokenHelper
     RefreshToken.create access_token: @refresh_token.access_token
     @refresh_token = RefreshToken.last
   end
-
 end

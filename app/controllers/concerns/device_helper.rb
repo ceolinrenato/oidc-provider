@@ -60,5 +60,4 @@ module DeviceHelper
     @device.destroy
     clear_device_token_cookie
   end
-
 end

@@ -20,5 +20,4 @@ module ParamsHelper
       raise CustomExceptions::InvalidRequest.new 34
     end
   end
-
 end

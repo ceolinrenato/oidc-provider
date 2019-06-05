@@ -1,5 +1,4 @@
 module CustomExceptions
-
   class BaseException < StandardError
     attr_reader :error, :error_code, :error_description
 
@@ -162,5 +161,4 @@ module CustomExceptions
       super @error_description, code
     end
   end
-
 end

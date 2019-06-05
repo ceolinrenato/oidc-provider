@@ -38,5 +38,4 @@ module ResponseTypeHelper
     @response_mode = params[:response_mode] ? params[:response_mode] : AuthorizationFlowHelper::AUTHORIZATION_FLOWS[@response_type][:default_mode]
     raise CustomExceptions::InvalidRequest.new 35 unless ['query', 'fragment'].include?(@response_mode)
   end
-
 end

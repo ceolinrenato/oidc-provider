@@ -32,5 +32,4 @@ module SessionHelper
     raise CustomExceptions::EntityNotFound.new 'Session' unless @session
     @session.update! last_activity: Time.now
   end
-
 end

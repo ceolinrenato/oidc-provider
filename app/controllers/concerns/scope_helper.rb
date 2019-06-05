@@ -17,5 +17,4 @@ module ScopeHelper
   def scope_authorization(required_scopes)
     raise CustomExceptions::InsufficientScopes.new unless (@access_token["scopes"] & required_scopes).count == required_scopes.count
   end
-
 end

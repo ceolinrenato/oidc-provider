@@ -83,5 +83,4 @@ module AuthorizationFlowHelper
     response_data[:state] = params[:state] if params[:state]
     redirect_with_response @redirect_uri.uri, response_data
   end
-
 end

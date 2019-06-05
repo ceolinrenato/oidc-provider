@@ -8,5 +8,4 @@ module RedirectUriHelper
     @redirect_uri = RedirectUri.find_by 'relying_party_id = :relying_party_id AND uri = :uri', { relying_party_id: @relying_party.id, uri: params[:redirect_uri] }
     raise CustomExceptions::InvalidRedirectURI.new unless @redirect_uri
   end
-
 end

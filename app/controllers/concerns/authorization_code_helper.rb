@@ -16,5 +16,4 @@ module AuthorizationCodeHelper
     raise CustomExceptions::InvalidRequest.new 3 unless params[:redirect_uri]
     raise CustomExceptions::InvalidGrant.new 26 unless @authorization_code.redirect_uri.uri == params[:redirect_uri]
   end
-
 end

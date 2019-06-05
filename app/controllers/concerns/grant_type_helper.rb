@@ -19,5 +19,4 @@ module GrantTypeHelper
     raise CustomExceptions::UnauthorizedClient.new 27 unless (AUTHORIZED_GRANT_TYPES.include? params[:grant_type] or @relying_party.third_party == false)
     @grant_type = params[:grant_type]
   end
-
 end

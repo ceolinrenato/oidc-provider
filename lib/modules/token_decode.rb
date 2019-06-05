@@ -1,5 +1,4 @@
 module TokenDecode
-
   RSA_PRIVATE = OpenSSL::PKey::RSA.new Rails.application.credentials.dig(:oidc, :private_key)
   AES_KEY = Base64.decode64(Rails.application.credentials.dig(:oidc, :aes_key))
 
@@ -58,5 +57,4 @@ module TokenDecode
       raise CustomExceptions::InvalidAccessToken.new
     end
   end
-
 end

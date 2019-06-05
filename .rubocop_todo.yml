@@ -6,28 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 17
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: empty_lines, empty_lines_except_namespace, empty_lines_special, no_empty_lines
-Layout/EmptyLinesAroundModuleBody:
-  Exclude:
-    - 'app/controllers/concerns/access_token_helper.rb'
-    - 'app/controllers/concerns/authorization_code_helper.rb'
-    - 'app/controllers/concerns/authorization_flow_helper.rb'
-    - 'app/controllers/concerns/device_helper.rb'
-    - 'app/controllers/concerns/grant_type_helper.rb'
-    - 'app/controllers/concerns/params_helper.rb'
-    - 'app/controllers/concerns/redirect_uri_helper.rb'
-    - 'app/controllers/concerns/refresh_token_helper.rb'
-    - 'app/controllers/concerns/relying_party_helper.rb'
-    - 'app/controllers/concerns/response_type_helper.rb'
-    - 'app/controllers/concerns/scope_helper.rb'
-    - 'app/controllers/concerns/session_helper.rb'
-    - 'app/controllers/concerns/user_helper.rb'
-    - 'lib/modules/custom_exceptions.rb'
-    - 'lib/modules/token_decode.rb'
-
 # Offense count: 1
 # Cop supports --auto-correct.
 # Configuration parameters: AllowForAlignment, AllowBeforeTrailingComments, ForceEqualSignAlignment.
