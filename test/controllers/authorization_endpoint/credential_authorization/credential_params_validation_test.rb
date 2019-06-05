@@ -77,8 +77,8 @@ class CredentialParamsValidationTest < ActionDispatch::IntegrationTest
 
   test "must_ignore_unrecognized_devices" do
     post '/oauth2/credential_authorization',
-      params: credential_authorization_example,
-      headers: { 'Cookie' => set_device_token_cookie('not_existent_device') }
+         params: credential_authorization_example,
+         headers: { 'Cookie' => set_device_token_cookie('not_existent_device') }
     error = {
       error: 'unrecognized_device',
       error_description: "Unrecognized device.",
@@ -211,8 +211,8 @@ class CredentialParamsValidationTest < ActionDispatch::IntegrationTest
   test "must_destroy_compromised_devices" do
     assert_difference('Device.count', -1) do
       post '/oauth2/credential_authorization',
-        params: credential_authorization_example,
-        headers: { 'Cookie' => set_device_token_cookie(device_tokens(:example2_used).token) }
+           params: credential_authorization_example,
+           headers: { 'Cookie' => set_device_token_cookie(device_tokens(:example2_used).token) }
     end
     assert_equal cookies[:device_token], ""
     error = {

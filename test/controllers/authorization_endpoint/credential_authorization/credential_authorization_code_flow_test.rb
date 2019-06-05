@@ -29,8 +29,8 @@ class CredentialAuthorizationCodeFlowTest < ActionDispatch::IntegrationTest
   test "credential_authorization_method_should_use_the_same_device_if_device_token_provided" do
     assert_no_difference('Device.count') do
       post '/oauth2/credential_authorization',
-        params: credential_authorization_example,
-        headers: { 'Cookie' => set_device_token_cookie(device_tokens(:example).token) }
+           params: credential_authorization_example,
+           headers: { 'Cookie' => set_device_token_cookie(device_tokens(:example).token) }
     end
     success_params = {
       code: AuthorizationCode.last.code,
@@ -66,8 +66,8 @@ class CredentialAuthorizationCodeFlowTest < ActionDispatch::IntegrationTest
   test "credential_authorization_method_should_not_create_a_new_session_if_user_already_has_a_session_on_device" do
     assert_no_difference('Session.count') do
       post '/oauth2/credential_authorization',
-        params: credential_authorization_example,
-        headers: { 'Cookie' => set_device_token_cookie(device_tokens(:example).token) }
+           params: credential_authorization_example,
+           headers: { 'Cookie' => set_device_token_cookie(device_tokens(:example).token) }
     end
     success_params = {
       code: AuthorizationCode.last.code,
@@ -135,8 +135,8 @@ class CredentialAuthorizationCodeFlowTest < ActionDispatch::IntegrationTest
   test "credential_authorization_method_response_should_return_the_same_device_token_if_device_provided" do
     device_token = device_tokens(:example).token
     post '/oauth2/credential_authorization',
-      params: credential_authorization_example,
-      headers: { 'Cookie' => set_device_token_cookie(device_token) }
+         params: credential_authorization_example,
+         headers: { 'Cookie' => set_device_token_cookie(device_token) }
     assert_equal cookies[:device_token], device_token
     success_params = {
       code: AuthorizationCode.last.code,

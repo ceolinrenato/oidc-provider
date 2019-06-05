@@ -37,7 +37,7 @@ class AuthorizationEndpointController < ApplicationController
         redirect_with_error @redirect_uri.uri, exception
     else
       redirect_with_params "#{OIDC_PROVIDER_CONFIG[:sign_in_service]}/error",
-      params.permit(:client_id, :redirect_uri, :response_type, :response_mode, :scope, :state, :nonce, :prompt, :max_age)
+                           params.permit(:client_id, :redirect_uri, :response_type, :response_mode, :scope, :state, :nonce, :prompt, :max_age)
     end
   rescue CustomExceptions::CompromisedDevice => exception
     destroy_compromised_device
@@ -118,7 +118,7 @@ class AuthorizationEndpointController < ApplicationController
     if params[:id_token_hint]
       token_hint = TokenDecode::IDToken.new(params[:id_token_hint]).decode verify_expiration: false
       @session = @device.sessions.find_by 'user_id = :user_id',
-        { user_id: token_hint["sub"] }
+                                          { user_id: token_hint["sub"] }
       raise CustomExceptions::LoginRequired unless @session && @session.active?(params[:max_age])
     else
       @session = @device.sessions.first
@@ -144,18 +144,18 @@ class AuthorizationEndpointController < ApplicationController
   def redirect_with_error(location, exception)
     if @response_mode && @response_mode == 'fragment'
       redirect_with_fragment location,
-      {
-        error: exception.error,
-        error_description: exception.error_description,
-        state: params[:state]
-      }
+                             {
+                               error: exception.error,
+                               error_description: exception.error_description,
+                               state: params[:state]
+                             }
     else
       redirect_with_params location,
-        {
-          error: exception.error,
-          error_description: exception.error_description,
-          state: params[:state]
-        }
+                           {
+                             error: exception.error,
+                             error_description: exception.error_description,
+                             state: params[:state]
+                           }
     end
   end
 

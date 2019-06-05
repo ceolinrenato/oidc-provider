@@ -50,7 +50,7 @@ class AuthorizationEndpointRequestValidationTest < ActionDispatch::IntegrationTe
     request_params = request_validation_example
     request_params[:client_id] = nil
     get '/oauth2/authorize',
-      params: request_params
+        params: request_params
     assert_redirected_to build_redirection_uri("#{OIDC_PROVIDER_CONFIG[:sign_in_service]}/error", request_params)
   end
 
@@ -58,7 +58,7 @@ class AuthorizationEndpointRequestValidationTest < ActionDispatch::IntegrationTe
     request_params = request_validation_example
     request_params[:client_id] = 'AGsjHAKDhsakdSAK'
     get '/oauth2/authorize',
-      params: request_params
+        params: request_params
     assert_redirected_to build_redirection_uri("#{OIDC_PROVIDER_CONFIG[:sign_in_service]}/error", request_params)
   end
 
@@ -66,7 +66,7 @@ class AuthorizationEndpointRequestValidationTest < ActionDispatch::IntegrationTe
     request_params = request_validation_example
     request_params[:redirect_uri] = nil
     get '/oauth2/authorize',
-      params: request_params
+        params: request_params
     assert_redirected_to build_redirection_uri("#{OIDC_PROVIDER_CONFIG[:sign_in_service]}/error", request_params)
   end
 
@@ -74,7 +74,7 @@ class AuthorizationEndpointRequestValidationTest < ActionDispatch::IntegrationTe
     request_params = request_validation_example
     request_params[:redirect_uri] = relying_parties(:example2).redirect_uris.first.uri
     get '/oauth2/authorize',
-      params: request_params
+        params: request_params
     assert_redirected_to build_redirection_uri("#{OIDC_PROVIDER_CONFIG[:sign_in_service]}/error", request_params)
   end
 
@@ -82,7 +82,7 @@ class AuthorizationEndpointRequestValidationTest < ActionDispatch::IntegrationTe
     request_params = request_validation_example
     request_params[:response_type] = nil
     get '/oauth2/authorize',
-      params: request_params
+        params: request_params
     error = {
       error: 'invalid_request',
       error_description: "'response_type' required.",
@@ -95,7 +95,7 @@ class AuthorizationEndpointRequestValidationTest < ActionDispatch::IntegrationTe
     request_params = request_validation_example
     request_params[:response_type] = 'token'
     get '/oauth2/authorize',
-      params: request_params
+        params: request_params
     error = {
       error: 'unauthorized_client',
       error_description: "The client is not authorized to request an authorization code using this method.",
@@ -108,7 +108,7 @@ class AuthorizationEndpointRequestValidationTest < ActionDispatch::IntegrationTe
     request_params = request_validation_example
     request_params[:response_type] = 'not_supported_response_type'
     get '/oauth2/authorize',
-      params: request_params
+        params: request_params
     error = {
       error: 'unsupported_response_type',
       error_description: "We do not support obtaining an authorization code using this method.",
@@ -121,7 +121,7 @@ class AuthorizationEndpointRequestValidationTest < ActionDispatch::IntegrationTe
     request_params = request_validation_example
     request_params[:scope] = "invalid $cope"
     get '/oauth2/authorize',
-      params: request_params
+        params: request_params
     error = {
       error: 'invalid_request',
       error_description: "Invalid scope format.",
@@ -134,7 +134,7 @@ class AuthorizationEndpointRequestValidationTest < ActionDispatch::IntegrationTe
     request_params = request_validation_example
     request_params[:scope] = 'openid email address'
     get '/oauth2/authorize',
-      params: request_params
+        params: request_params
     assert_response :found
     uri = URI(@response.location)
     assert_equal Rack::Utils.parse_nested_query(uri.query)["scope"], 'email openid'
@@ -142,7 +142,7 @@ class AuthorizationEndpointRequestValidationTest < ActionDispatch::IntegrationTe
 
   test "must_redirect_to_login_service_in_case_of_success" do
     get '/oauth2/authorize',
-      params: request_validation_example
+        params: request_validation_example
     assert_redirected_to build_redirection_uri(OIDC_PROVIDER_CONFIG[:sign_in_service], request_validation_example)
   end
 
@@ -150,7 +150,7 @@ class AuthorizationEndpointRequestValidationTest < ActionDispatch::IntegrationTe
     request_params = request_validation_example
     request_params[:prompt] = 'none'
     get '/oauth2/authorize',
-      params: request_params
+        params: request_params
     error = {
       error: 'login_required',
       error_description: "End-User authetication is required.",
@@ -163,8 +163,8 @@ class AuthorizationEndpointRequestValidationTest < ActionDispatch::IntegrationTe
     request_params = request_validation_example
     request_params[:prompt] = 'none'
     get '/oauth2/authorize',
-      params: request_params,
-      headers: { 'Cookie' => set_device_token_cookie(device_tokens(:example4).token) }
+        params: request_params,
+        headers: { 'Cookie' => set_device_token_cookie(device_tokens(:example4).token) }
     error = {
       error: 'account_selection_required',
       error_description: "End-User is required to select a session.",
@@ -183,8 +183,8 @@ class AuthorizationEndpointRequestValidationTest < ActionDispatch::IntegrationTe
     request_params[:prompt] = 'none'
     request_params[:id_token_hint] = invalid_id_token
     get '/oauth2/authorize',
-      params: request_params,
-      headers: { 'Cookie' => set_device_token_cookie(device_tokens(:example4).token) }
+        params: request_params,
+        headers: { 'Cookie' => set_device_token_cookie(device_tokens(:example4).token) }
     error = {
       error: 'invalid_id_token',
       error_description: "The provided ID Token is invalid.",
@@ -203,8 +203,8 @@ class AuthorizationEndpointRequestValidationTest < ActionDispatch::IntegrationTe
     request_params[:prompt] = 'none'
     request_params[:id_token_hint] = valid_id_token
     get '/oauth2/authorize',
-      params: request_params,
-      headers: { 'Cookie' => set_device_token_cookie(device_tokens(:example4).token) }
+        params: request_params,
+        headers: { 'Cookie' => set_device_token_cookie(device_tokens(:example4).token) }
     success_params = {
       code: AuthorizationCode.last.code,
       state: request_params[:state]
@@ -223,8 +223,8 @@ class AuthorizationEndpointRequestValidationTest < ActionDispatch::IntegrationTe
     request_params[:prompt] = 'none'
     request_params[:id_token_hint] = valid_id_token
     get '/oauth2/authorize',
-      params: request_params,
-      headers: { 'Cookie' => set_device_token_cookie(device_tokens(:example4).token) }
+        params: request_params,
+        headers: { 'Cookie' => set_device_token_cookie(device_tokens(:example4).token) }
     error = {
       error: 'login_required',
       error_description: "End-User authetication is required.",
@@ -238,8 +238,8 @@ class AuthorizationEndpointRequestValidationTest < ActionDispatch::IntegrationTe
     request_params[:prompt] = 'none'
     request_params[:state] = 'test'
     get '/oauth2/authorize',
-      params: request_params,
-      headers: { 'Cookie' => set_device_token_cookie(device_tokens(:example2).token) }
+        params: request_params,
+        headers: { 'Cookie' => set_device_token_cookie(device_tokens(:example2).token) }
     success_params = {
       code: AuthorizationCode.last.code,
       state: request_params[:state]
@@ -251,8 +251,8 @@ class AuthorizationEndpointRequestValidationTest < ActionDispatch::IntegrationTe
     request_params = request_validation_example
     request_params[:prompt] = 'none'
     get '/oauth2/authorize',
-      params: request_params,
-      headers: { 'Cookie' => set_device_token_cookie(device_tokens(:example2_used).token) }
+        params: request_params,
+        headers: { 'Cookie' => set_device_token_cookie(device_tokens(:example2_used).token) }
     assert_equal cookies[:device_token], ""
     error = {
       error: 'compromised_device',
@@ -273,8 +273,8 @@ class AuthorizationEndpointRequestValidationTest < ActionDispatch::IntegrationTe
     request_params[:max_age] = 1.hour.to_i
     request_params[:id_token_hint] = valid_id_token
     get '/oauth2/authorize',
-      params: request_params,
-      headers: { 'Cookie' => set_device_token_cookie(device_tokens(:example4).token) }
+        params: request_params,
+        headers: { 'Cookie' => set_device_token_cookie(device_tokens(:example4).token) }
     error = {
       error: 'login_required',
       error_description: "End-User authetication is required.",
@@ -294,8 +294,8 @@ class AuthorizationEndpointRequestValidationTest < ActionDispatch::IntegrationTe
     request_params[:max_age] = 3.hours.to_i
     request_params[:id_token_hint] = valid_id_token
     get '/oauth2/authorize',
-      params: request_params,
-      headers: { 'Cookie' => set_device_token_cookie(device_tokens(:example4).token) }
+        params: request_params,
+        headers: { 'Cookie' => set_device_token_cookie(device_tokens(:example4).token) }
     success_params = {
       code: AuthorizationCode.last.code,
       state: request_params[:state]

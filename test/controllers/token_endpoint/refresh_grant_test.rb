@@ -138,8 +138,8 @@ class RefreshGrantTest < ActionDispatch::IntegrationTest
   test "device_must_be_destroyed_if_used_refresh_token_is_in_request" do
     assert_difference('Device.count', -1) do
       post '/oauth2/token',
-        params: example_token_request(:used),
-        headers: { 'Cookie' => set_device_token_cookie('any_cookie') }
+           params: example_token_request(:used),
+           headers: { 'Cookie' => set_device_token_cookie('any_cookie') }
     end
     assert_response :bad_request
     assert_equal cookies[:device_token], ""

@@ -4,14 +4,14 @@ class EmailLookupTest < ActionDispatch::IntegrationTest
 
   test "must_return_true_when_user_does_exist" do
     get '/sign_in_service/email_lookup',
-      params: { email: users(:example).email }
+        params: { email: users(:example).email }
     assert_response :ok
     assert_equal @response.body, { taken: true }.to_json
   end
 
   test "must_return_false_when_user_does_not_exist" do
     get '/sign_in_service/email_lookup',
-      params: { email: 'does_not_exist@example.com' }
+        params: { email: 'does_not_exist@example.com' }
     assert_response :ok
     assert_equal @response.body, { taken: false }.to_json
   end
