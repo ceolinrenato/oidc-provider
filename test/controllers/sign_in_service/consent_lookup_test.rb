@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class ConsentLookupTest < ActionDispatch::IntegrationTest
-
   def example_consent_lookup
     {
       email: users(:example).email,
@@ -56,5 +55,4 @@ class ConsentLookupTest < ActionDispatch::IntegrationTest
     assert_response :bad_request
     assert_equal parsed_response(@response)["error_code"], 0
   end
-
 end

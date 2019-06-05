@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class CodeGrantTest < ActionDispatch::IntegrationTest
-
   def example_token_request(code)
     authorization_code = authorization_codes(code)
     {
@@ -177,5 +176,4 @@ class CodeGrantTest < ActionDispatch::IntegrationTest
     }
     assert_equal parsed_response(@response), error
   end
-
 end

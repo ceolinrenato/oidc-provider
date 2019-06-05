@@ -25,5 +25,4 @@ class RelyingParty < ApplicationRecord
       }
     ).map { |scope| scope.name }.uniq.sort
   end
-
 end

@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class AccessTokenTest < ActiveSupport::TestCase
-
   def dummy_access_token
     {
       authorization_code: authorization_codes(:example),
@@ -41,5 +40,4 @@ class AccessTokenTest < ActiveSupport::TestCase
       assert_equal decoded_token["nonce"], 'test_nonce'
     end
   end
-
 end

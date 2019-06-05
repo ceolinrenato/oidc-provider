@@ -7,5 +7,4 @@ class PasswordToken < ApplicationRecord
   def is_verify_email_token?
     verify_email
   end
-
 end

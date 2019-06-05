@@ -1,5 +1,4 @@
 class UsersController < ApplicationController
-
   include UserHelper
   include ScopeHelper
   include RelyingPartyHelper
@@ -65,5 +64,4 @@ class UsersController < ApplicationController
       }
     ).each { |session| session.destroy! }
   end
-
 end

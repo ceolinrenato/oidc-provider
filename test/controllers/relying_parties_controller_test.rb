@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class RelyingPartiesControllerTest < ActionDispatch::IntegrationTest
-
   test "valid_request_must_return_user_consented_relying_parties" do
     get "/users/#{users(:example).id}/relying_parties",
         headers: { 'Authorization' => "Bearer #{valid_access_token(['openid', 'listRelyingParties'])}" }
@@ -42,5 +41,4 @@ class RelyingPartiesControllerTest < ActionDispatch::IntegrationTest
     assert_response :not_found
     assert_equal 0, parsed_response(@response)["error_code"]
   end
-
 end

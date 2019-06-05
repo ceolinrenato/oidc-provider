@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class CredentialValidationTest < ActionDispatch::IntegrationTest
-
   def example_credential_validation
     {
       email: users(:example).email,
@@ -47,5 +46,4 @@ class CredentialValidationTest < ActionDispatch::IntegrationTest
     post '/sign_in_service/credential_validation', params: example_credential_validation
     assert_response :no_content
   end
-
 end

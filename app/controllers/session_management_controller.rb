@@ -1,5 +1,4 @@
 class SessionManagementController < ApplicationController
-
   include SessionHelper
   include DeviceHelper
   include UserHelper
@@ -74,5 +73,4 @@ class SessionManagementController < ApplicationController
     destroy_compromised_device
     render json: ErrorSerializer.new(exception), status: :bad_request
   end
-
 end

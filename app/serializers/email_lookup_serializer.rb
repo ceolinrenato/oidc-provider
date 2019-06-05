@@ -1,5 +1,4 @@
 class EmailLookupSerializer < BaseSerializer
-
   def email_exists(user)
     user ? true : false
   end
@@ -10,5 +9,4 @@ class EmailLookupSerializer < BaseSerializer
     }
     super(email_lookup)
   end
-
 end

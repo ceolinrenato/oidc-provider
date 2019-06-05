@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class EmailLookupTest < ActionDispatch::IntegrationTest
-
   test "must_return_true_when_user_does_exist" do
     get '/sign_in_service/email_lookup',
         params: { email: users(:example).email }
@@ -20,5 +19,4 @@ class EmailLookupTest < ActionDispatch::IntegrationTest
     get '/sign_in_service/email_lookup'
     assert_response :bad_request
   end
-
 end

@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
-
   def dummy_user
     {
       name: 'Example',
@@ -81,5 +80,4 @@ class UserTest < ActiveSupport::TestCase
       assert_equal consents.uniq, user.consents
     end
   end
-
 end

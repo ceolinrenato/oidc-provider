@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class DevicesControllerTest < ActionDispatch::IntegrationTest
-
   test "valid_request_must_return_all_user_active_devices" do
     get "/users/#{users(:example).id}/devices",
         headers: { 'Authorization' => "Bearer #{valid_access_token(['openid', 'listDevices'])}" }
@@ -42,5 +41,4 @@ class DevicesControllerTest < ActionDispatch::IntegrationTest
     assert_response :not_found
     assert_equal 0, parsed_response(@response)["error_code"]
   end
-
 end

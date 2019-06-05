@@ -4,7 +4,6 @@ module TokenDecode
   AES_KEY = Base64.decode64(Rails.application.credentials.dig(:oidc, :aes_key))
 
   class IDToken
-
     def initialize(token)
       @token = token
     end
@@ -35,11 +34,9 @@ module TokenDecode
         raise JWT::DecodeError
       end
     end
-
   end
 
   class AccessToken < IDToken
-
     def decode
       decoded_token = decode_jwt(decrypt_token(@token))
       raise CustomExceptions::InvalidAccessToken.new unless Session.find_by token: decoded_token["sid"]
@@ -60,7 +57,6 @@ module TokenDecode
     rescue OpenSSL::Cipher::CipherError, ArgumentError
       raise CustomExceptions::InvalidAccessToken.new
     end
-
   end
 
 end

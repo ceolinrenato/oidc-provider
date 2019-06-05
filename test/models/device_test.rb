@@ -23,5 +23,4 @@ class DeviceTest < ActiveSupport::TestCase
       assert_equal active_count, device.active_session_count
     end
   end
-
 end

@@ -35,5 +35,4 @@ class ApplicationController < ActionController::API
     end
     parts.join(', ')
   end
-
 end

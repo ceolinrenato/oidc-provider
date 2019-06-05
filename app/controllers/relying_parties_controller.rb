@@ -1,5 +1,4 @@
 class RelyingPartiesController < ApplicationController
-
   include UserHelper
   include ScopeHelper
 
@@ -15,5 +14,4 @@ class RelyingPartiesController < ApplicationController
   rescue CustomExceptions::EntityNotFound => exception
     render json: ErrorSerializer.new(exception), status: :not_found
   end
-
 end

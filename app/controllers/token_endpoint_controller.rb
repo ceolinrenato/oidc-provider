@@ -1,5 +1,4 @@
 class TokenEndpointController < ApplicationController
-
   include GrantTypeHelper
   include RelyingPartyHelper
   include AuthorizationCodeHelper
@@ -46,5 +45,4 @@ class TokenEndpointController < ApplicationController
     set_device_token_cookie
     render json: TokenEndpointSerializer.new(access_token)
   end
-
 end

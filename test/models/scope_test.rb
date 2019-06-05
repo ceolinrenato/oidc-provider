@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class ScopeTest < ActiveSupport::TestCase
-
   def dummy_scope
     {
       name: 'list_company_users'
@@ -44,5 +43,4 @@ class ScopeTest < ActiveSupport::TestCase
     request_scope = nil
     assert_equal Scope::parse_authorization_scope(request_scope), []
   end
-
 end

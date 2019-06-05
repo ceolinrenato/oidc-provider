@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class RefreshGrantTest < ActionDispatch::IntegrationTest
-
   def example_token_request(token)
     refresh_token = refresh_tokens(token)
     {
@@ -158,5 +157,4 @@ class RefreshGrantTest < ActionDispatch::IntegrationTest
     }
     assert_equal parsed_response(@response), error
   end
-
 end

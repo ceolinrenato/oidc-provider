@@ -1,5 +1,4 @@
 class DiscoveryController < ApplicationController
-
   def show
     # service_documentation: "#{OIDC_PROVIDER_CONFIG[:iss]}/doc"
     # op_policy_uri: "#{OIDC_PROVIDER_CONFIG[:iss]}/privacy_policy"
@@ -42,5 +41,4 @@ class DiscoveryController < ApplicationController
     }
     render json: metadata
   end
-
 end

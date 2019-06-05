@@ -1,5 +1,4 @@
 class ConsentLookupSerializer < BaseSerializer
-
   def initialize(user, relying_party)
     data = {
       consent: user.consents.include?(relying_party) || !relying_party.third_party,
@@ -11,5 +10,4 @@ class ConsentLookupSerializer < BaseSerializer
     }
     super(data)
   end
-
 end

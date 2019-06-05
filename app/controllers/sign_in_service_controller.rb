@@ -1,5 +1,4 @@
 class SignInServiceController < ApplicationController
-
   include UserHelper
   include RelyingPartyHelper
   include RedirectUriHelper
@@ -46,5 +45,4 @@ class SignInServiceController < ApplicationController
          CustomExceptions::RegistrationNotSupported => exception
     render json: ErrorSerializer.new(exception), status: :bad_request
   end
-
 end

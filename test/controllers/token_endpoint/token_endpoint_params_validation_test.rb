@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class TokenEndpointParamsValidationTest < ActionDispatch::IntegrationTest
-
   def example_token_request
     {
       grant_type: 'password',
@@ -20,5 +19,4 @@ class TokenEndpointParamsValidationTest < ActionDispatch::IntegrationTest
     }
     assert_equal error, parsed_response(@response)
   end
-
 end

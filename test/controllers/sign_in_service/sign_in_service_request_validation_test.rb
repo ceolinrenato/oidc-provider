@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class LoginServiceRequestValidationTest < ActionDispatch::IntegrationTest
-
   def example_request_validation
     {
       response_type: 'code',
@@ -114,5 +113,4 @@ class LoginServiceRequestValidationTest < ActionDispatch::IntegrationTest
         params: example_request_validation
     assert_response :no_content
   end
-
 end

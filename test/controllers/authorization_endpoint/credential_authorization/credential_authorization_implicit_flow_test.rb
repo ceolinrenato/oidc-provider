@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class CredentialAuthorizationImplicitFlowTest < ActionDispatch::IntegrationTest
-
   def implicit_flow_example
     {
       response_type: 'token',
@@ -95,5 +94,4 @@ class CredentialAuthorizationImplicitFlowTest < ActionDispatch::IntegrationTest
     }
     assert_redirected_to build_redirection_uri_fragment(request_params[:redirect_uri], error_params)
   end
-
 end

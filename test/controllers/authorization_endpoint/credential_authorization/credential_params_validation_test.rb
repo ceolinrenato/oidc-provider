@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class CredentialParamsValidationTest < ActionDispatch::IntegrationTest
-
   def credential_authorization_example
     {
       response_type: 'code',
@@ -222,5 +221,4 @@ class CredentialParamsValidationTest < ActionDispatch::IntegrationTest
     }
     assert_redirected_to build_redirection_uri(credential_authorization_example[:redirect_uri], error)
   end
-
 end

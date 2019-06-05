@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class UpdatePasswordTest < ActionDispatch::IntegrationTest
-
   def example_update_password
     {
       old_password: '909031',
@@ -117,5 +116,4 @@ class UpdatePasswordTest < ActionDispatch::IntegrationTest
     assert_response :bad_request
     assert_equal "compromised_device", parsed_response(@response)["error"]
   end
-
 end

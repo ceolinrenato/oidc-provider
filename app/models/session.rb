@@ -1,5 +1,4 @@
 class Session < ApplicationRecord
-
   SESSION_EXPIRATION_TIME = 12.hours
 
   has_secure_token
@@ -30,5 +29,4 @@ class Session < ApplicationRecord
              }
             ).uniq.map { |relying_party| relying_party.frontchannel_logout_uri }.sort
   end
-
 end

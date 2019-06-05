@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class RedirectUriTest < ActiveSupport::TestCase
-
   def dummy_redirect_uri
     {
       uri: 'http://localhost:3001',
@@ -27,5 +26,4 @@ class RedirectUriTest < ActiveSupport::TestCase
     redirect_uri[:uri] = 'http://localhost:3000'
     assert_not redirect_uri.save
   end
-
 end

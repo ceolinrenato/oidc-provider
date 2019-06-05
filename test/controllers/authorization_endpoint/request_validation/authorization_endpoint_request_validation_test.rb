@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class AuthorizationEndpointRequestValidationTest < ActionDispatch::IntegrationTest
-
   def request_validation_example
     {
       response_type: 'code',
@@ -303,5 +302,4 @@ class AuthorizationEndpointRequestValidationTest < ActionDispatch::IntegrationTe
     assert_redirected_to build_redirection_uri(request_params[:redirect_uri], success_params)
     assert_equal AuthorizationCode.last.access_token.session.user.id.to_s, payload[:sub]
   end
-
 end

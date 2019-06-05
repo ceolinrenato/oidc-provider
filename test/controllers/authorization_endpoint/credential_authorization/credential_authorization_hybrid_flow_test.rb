@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class CredentialAuthorizationHybridFlowTest < ActionDispatch::IntegrationTest
-
   def example_hybrid_flow
     {
       response_type: 'code token',
@@ -89,5 +88,4 @@ class CredentialAuthorizationHybridFlowTest < ActionDispatch::IntegrationTest
     assert_equal Base64.urlsafe_encode64(Digest::SHA256.digest(parsed_fragment["code"])[0,16], padding: false), id_token["c_hash"]
     assert_equal Base64.urlsafe_encode64(Digest::SHA256.digest(parsed_fragment["access_token"])[0,16], padding: false), id_token["at_hash"]
   end
-
 end

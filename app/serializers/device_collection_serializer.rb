@@ -1,5 +1,4 @@
 class DeviceCollectionSerializer < BaseCollectionSerializer
-
   def initialize(sessions)
     collection = sessions.select { |session| session.active? }.map do |session|
       device = session.device
@@ -15,5 +14,4 @@ class DeviceCollectionSerializer < BaseCollectionSerializer
     end
     super(collection)
   end
-
 end

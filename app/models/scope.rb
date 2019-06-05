@@ -16,5 +16,4 @@ class Scope < ApplicationRecord
       []
     end
   end
-
 end

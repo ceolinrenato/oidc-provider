@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class SessionManagementControllerTest < ActionDispatch::IntegrationTest
-
   test "index_by_device_must_return_all_device_sessions" do
     get "/sessions",
         headers: { 'Cookie' => set_device_token_cookie(device_tokens(:example).token) }
@@ -210,5 +209,4 @@ class SessionManagementControllerTest < ActionDispatch::IntegrationTest
     assert_response :bad_request
     assert_equal 23, parsed_response(@response)["error_code"]
   end
-
 end

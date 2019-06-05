@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class SessionAuthorizationCodeFlowTest < ActionDispatch::IntegrationTest
-
   def session_authorization_example
     {
       response_type: 'code',
@@ -94,5 +93,4 @@ class SessionAuthorizationCodeFlowTest < ActionDispatch::IntegrationTest
     }
     assert_redirected_to build_redirection_uri(session_authorization_example[:redirect_uri], success_params)
   end
-
 end

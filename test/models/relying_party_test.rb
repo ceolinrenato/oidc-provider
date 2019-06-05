@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class RelyingPartyTest < ActiveSupport::TestCase
-
   def dummy_relying_party
     {
       client_name: 'Example'
@@ -91,5 +90,4 @@ class RelyingPartyTest < ActiveSupport::TestCase
       assert_equal granted_scopes.flatten.uniq.sort, relying_party.granted_scopes(user)
     end
   end
-
 end

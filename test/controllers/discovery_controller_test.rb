@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class DiscoveryControllerTest < ActionDispatch::IntegrationTest
-
   test "discovery_enpoint_should_respond_okay" do
     get '/.well-known/openid-configuration'
     assert_response :ok
@@ -11,5 +10,4 @@ class DiscoveryControllerTest < ActionDispatch::IntegrationTest
     get '/jwks.json'
     assert_response :ok
   end
-
 end

@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class PasswordTokenTest < ActiveSupport::TestCase
-
   def dummy_password_token
     {
       user: users(:example),
@@ -24,5 +23,4 @@ class PasswordTokenTest < ActiveSupport::TestCase
     token = PasswordToken.new invalid_email
     assert_not token.save
   end
-
 end

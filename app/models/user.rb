@@ -22,5 +22,4 @@ class User < ApplicationRecord
              }
             ).uniq
   end
-
 end

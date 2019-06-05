@@ -9,5 +9,4 @@ class AuthorizationCode < ApplicationRecord
   def expired?
     Time.now - created_at > AUTHORIZATION_CODE_EXPIRATION_TIME
   end
-
 end

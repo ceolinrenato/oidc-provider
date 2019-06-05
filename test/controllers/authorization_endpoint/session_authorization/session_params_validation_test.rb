@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class SessionParamsValidationTest < ActionDispatch::IntegrationTest
-
   def session_authorization_example
     {
       response_type: 'code',
@@ -269,5 +268,4 @@ class SessionParamsValidationTest < ActionDispatch::IntegrationTest
     }
     assert_redirected_to build_redirection_uri(session_authorization_example[:redirect_uri], error)
   end
-
 end

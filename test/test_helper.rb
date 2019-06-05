@@ -84,5 +84,4 @@ class ActiveSupport::TestCase
     cipher.iv = iv
     "#{Base64.urlsafe_encode64(iv, padding: false)}.#{Base64.urlsafe_encode64(cipher.update(tk) + cipher.final, padding: false)}"
   end
-
 end

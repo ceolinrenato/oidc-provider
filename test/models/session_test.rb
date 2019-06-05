@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class SessionTest < ActiveSupport::TestCase
-
   def dummy_session
     {
       user: users(:example),
@@ -52,5 +51,4 @@ class SessionTest < ActiveSupport::TestCase
       assert_equal logout_uris.uniq.select(&:presence).sort, session.frontchannel_logout_uris
     end
   end
-
 end

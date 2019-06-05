@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class UserInfoTest < ActionDispatch::IntegrationTest
-
   test "userinfo_endpoint_must_return_userinfo_if_valid_token" do
     get '/userinfo', headers: { 'Authorization' => "Bearer #{valid_access_token}"}
     assert_response :success
@@ -44,5 +43,4 @@ class UserInfoTest < ActionDispatch::IntegrationTest
     assert_response :unauthorized
     assert_not_nil @response.headers['WWW-Authenticate']
   end
-
 end

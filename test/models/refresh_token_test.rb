@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class RefreshTokenTest < ActiveSupport::TestCase
-
   def dummy_refresh_token
     {
       access_token: access_tokens(:example),
@@ -13,5 +12,4 @@ class RefreshTokenTest < ActiveSupport::TestCase
     refresh_token = RefreshToken.new dummy_refresh_token
     assert refresh_token.save
   end
-
 end

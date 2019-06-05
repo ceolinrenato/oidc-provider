@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class AccessTokenScopeTest < ActiveSupport::TestCase
-
   def example_access_token_scope
     {
       scope: scopes(:scope_openid),
@@ -15,5 +14,4 @@ class AccessTokenScopeTest < ActiveSupport::TestCase
     access_token_scope.access_token = access_tokens(:example2)
     assert access_token_scope.save
   end
-
 end

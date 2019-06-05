@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class UpdateProfileTest < ActionDispatch::IntegrationTest
-
   def update_profile_example
     {
       name: 'John',
@@ -71,5 +70,4 @@ class UpdateProfileTest < ActionDispatch::IntegrationTest
           headers: { 'Authorization' => "Bearer #{valid_access_token ['updateProfile']}" }
     assert_response :unprocessable_entity
   end
-
 end
