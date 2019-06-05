@@ -2,7 +2,7 @@ require 'test_helper'
 
 class UserInfoTest < ActionDispatch::IntegrationTest
   test "userinfo_endpoint_must_return_userinfo_if_valid_token" do
-    get '/userinfo', headers: { 'Authorization' => "Bearer #{valid_access_token}"}
+    get '/userinfo', headers: { 'Authorization' => "Bearer #{valid_access_token}" }
     assert_response :success
     userinfo = parsed_response(@response)
     assert_equal users(:example).id.to_s, userinfo["sub"]
