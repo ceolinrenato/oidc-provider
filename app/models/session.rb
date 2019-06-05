@@ -14,7 +14,7 @@ class Session < ApplicationRecord
   end
 
   def aged?(max_age)
-    max_age ? Time.now  > auth_time + max_age.to_i : false
+    max_age ? Time.now > auth_time + max_age.to_i : false
   end
 
   def active?(max_age = nil)
