@@ -1,5 +1,3 @@
-inherit_from: .rubocop_todo.yml
-
 Layout/EmptyLineAfterGuardClause:
   Enabled: false
 
@@ -14,14 +12,17 @@ Metrics/BlockLength:
 Metrics/ClassLength:
   Max: 300
 
+Metrics/MethodLength:
+  Max: 35
+
+Metrics/LineLength:
+  Max: 180
+
 Metrics/CyclomaticComplexity:
   Max: 9
 
 Metrics/PerceivedComplexity:
   Max: 9
-
-Metrics/MethodLength:
-  Max: 35
 
 Naming/AccessorMethodName:
   Exclude:
