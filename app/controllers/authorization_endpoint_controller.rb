@@ -33,7 +33,7 @@ class AuthorizationEndpointController < ApplicationController
          CustomExceptions::RegistrationNotSupported,
          CustomExceptions::InvalidIDToken => exception
     if @redirect_uri
-        redirect_with_error @redirect_uri.uri, exception
+      redirect_with_error @redirect_uri.uri, exception
     else
       redirect_with_params "#{OIDC_PROVIDER_CONFIG[:sign_in_service]}/error",
                            params.permit(:client_id, :redirect_uri, :response_type, :response_mode, :scope, :state, :nonce, :prompt, :max_age)
