@@ -6,22 +6,12 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 4
-# Cop supports --auto-correct.
-# Configuration parameters: AllowSafeAssignment, AllowInMultilineConditions.
-# Style/ParenthesesAroundCondition:
-#   Exclude:
-#     - 'app/controllers/concerns/device_helper.rb'
-#     - 'app/controllers/concerns/grant_type_helper.rb'
-#     - 'app/controllers/concerns/relying_party_helper.rb'
-#     - 'app/controllers/concerns/response_type_helper.rb'
-
 # Offense count: 1
 # Cop supports --auto-correct.
 # Configuration parameters: PreferredDelimiters.
-Style/PercentLiteralDelimiters:
-  Exclude:
-    - 'config/application.rb'
+# Style/PercentLiteralDelimiters:
+#   Exclude:
+#     - 'config/application.rb'
 
 # Offense count: 50
 # Cop supports --auto-correct.
