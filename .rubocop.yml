@@ -50,3 +50,7 @@ Style/NumericLiterals:
 
 Style/SymbolArray:
   EnforcedStyle: brackets
+
+
+Style/WordArray:
+  EnforcedStyle: brackets

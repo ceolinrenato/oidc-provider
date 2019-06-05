@@ -33,7 +33,7 @@ module OIDCProvider
     config.api_only = true
     config.middleware.use ActionDispatch::Cookies
     config.middleware.use Rack::Attack
-    config.eager_load_paths += %W[#{config.root}/lib/modules]
+    config.eager_load_paths << "#{config.root}/lib/modules"
     config.time_zone = 'Brasilia'
   end
 end
