@@ -19,8 +19,8 @@ class SignInServiceController < ApplicationController
     set_user_by_email!
     render json: ConsentLookupSerializer.new(@user, @relying_party)
   rescue CustomExceptions::InvalidRequest,
-    CustomExceptions::InvalidClient,
-    CustomExceptions::EntityNotFound => exception
+         CustomExceptions::InvalidClient,
+         CustomExceptions::EntityNotFound => exception
     render json: ErrorSerializer.new(exception), status: :bad_request
   end
 
@@ -35,15 +35,15 @@ class SignInServiceController < ApplicationController
     params_validation
     head :no_content
   rescue CustomExceptions::InvalidRequest,
-    CustomExceptions::InvalidClient,
-    CustomExceptions::InvalidRedirectURI,
-    CustomExceptions::UnsupportedResponseType,
-    CustomExceptions::UnauthorizedClient,
-    CustomExceptions::LoginRequired,
-    CustomExceptions::AccountSelectionRequired,
-    CustomExceptions::RequestNotSupported,
-    CustomExceptions::RequestUriNotSupported,
-    CustomExceptions::RegistrationNotSupported => exception
+         CustomExceptions::InvalidClient,
+         CustomExceptions::InvalidRedirectURI,
+         CustomExceptions::UnsupportedResponseType,
+         CustomExceptions::UnauthorizedClient,
+         CustomExceptions::LoginRequired,
+         CustomExceptions::AccountSelectionRequired,
+         CustomExceptions::RequestNotSupported,
+         CustomExceptions::RequestUriNotSupported,
+         CustomExceptions::RegistrationNotSupported => exception
     render json: ErrorSerializer.new(exception), status: :bad_request
   end
 

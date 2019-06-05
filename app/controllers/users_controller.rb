@@ -21,7 +21,7 @@ class UsersController < ApplicationController
     render json: @user.errors, status: :unprocessable_entity and return unless @user.valid?
     render json: UserInfoSerializer.new(@user)
   rescue CustomExceptions::InsufficientScopes,
-    CustomExceptions::InsufficientPermissions => exception
+         CustomExceptions::InsufficientPermissions => exception
     render json: ErrorSerializer.new(exception), status: :forbidden
   rescue CustomExceptions::EntityNotFound => exception
     render json: ErrorSerializer.new(exception), status: :not_found
@@ -41,8 +41,8 @@ class UsersController < ApplicationController
   rescue ActiveRecord::RecordInvalid
     render json: @user.errors, status: :unprocessable_entity
   rescue CustomExceptions::InsufficientScopes,
-    CustomExceptions::InsufficientPermissions,
-    CustomExceptions::InvalidGrant => exception
+         CustomExceptions::InsufficientPermissions,
+         CustomExceptions::InvalidGrant => exception
     render json: ErrorSerializer.new(exception), status: :forbidden
   rescue CustomExceptions::EntityNotFound => exception
     render json: ErrorSerializer.new(exception), status: :not_found

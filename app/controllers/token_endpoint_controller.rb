@@ -14,10 +14,10 @@ class TokenEndpointController < ApplicationController
       send GRANTS[@grant_type]
     end
   rescue CustomExceptions::InvalidRequest,
-    CustomExceptions::InvalidClient,
-    CustomExceptions::UnauthorizedClient,
-    CustomExceptions::UnsupportedGrantType,
-    CustomExceptions::InvalidGrant => exception
+         CustomExceptions::InvalidClient,
+         CustomExceptions::UnauthorizedClient,
+         CustomExceptions::UnsupportedGrantType,
+         CustomExceptions::InvalidGrant => exception
     render json: ErrorSerializer.new(exception), status: :bad_request
   rescue CustomExceptions::CompromisedDevice => exception
     destroy_compromised_device

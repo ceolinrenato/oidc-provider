@@ -23,16 +23,16 @@ class AuthorizationEndpointController < ApplicationController
       redirect_with_params OIDC_PROVIDER_CONFIG[:sign_in_service], redirect_params
     end
   rescue CustomExceptions::InvalidRequest,
-    CustomExceptions::InvalidClient,
-    CustomExceptions::InvalidRedirectURI,
-    CustomExceptions::UnsupportedResponseType,
-    CustomExceptions::UnauthorizedClient,
-    CustomExceptions::LoginRequired,
-    CustomExceptions::AccountSelectionRequired,
-    CustomExceptions::RequestNotSupported,
-    CustomExceptions::RequestUriNotSupported,
-    CustomExceptions::RegistrationNotSupported,
-    CustomExceptions::InvalidIDToken => exception
+         CustomExceptions::InvalidClient,
+         CustomExceptions::InvalidRedirectURI,
+         CustomExceptions::UnsupportedResponseType,
+         CustomExceptions::UnauthorizedClient,
+         CustomExceptions::LoginRequired,
+         CustomExceptions::AccountSelectionRequired,
+         CustomExceptions::RequestNotSupported,
+         CustomExceptions::RequestUriNotSupported,
+         CustomExceptions::RegistrationNotSupported,
+         CustomExceptions::InvalidIDToken => exception
     if @redirect_uri
         redirect_with_error @redirect_uri.uri, exception
     else
@@ -55,14 +55,14 @@ class AuthorizationEndpointController < ApplicationController
       set_device_token_cookie
     end
   rescue CustomExceptions::InvalidRequest,
-    CustomExceptions::InvalidGrant,
-    CustomExceptions::InvalidClient,
-    CustomExceptions::InvalidRedirectURI,
-    CustomExceptions::UnsupportedResponseType,
-    CustomExceptions::UnauthorizedClient,
-    CustomExceptions::RequestNotSupported,
-    CustomExceptions::RequestUriNotSupported,
-    CustomExceptions::RegistrationNotSupported => exception
+         CustomExceptions::InvalidGrant,
+         CustomExceptions::InvalidClient,
+         CustomExceptions::InvalidRedirectURI,
+         CustomExceptions::UnsupportedResponseType,
+         CustomExceptions::UnauthorizedClient,
+         CustomExceptions::RequestNotSupported,
+         CustomExceptions::RequestUriNotSupported,
+         CustomExceptions::RegistrationNotSupported => exception
     if @redirect_uri
       redirect_with_error @redirect_uri.uri, exception
     else
@@ -87,15 +87,15 @@ class AuthorizationEndpointController < ApplicationController
       set_device_token_cookie
     end
   rescue CustomExceptions::InvalidRequest,
-    CustomExceptions::InvalidGrant,
-    CustomExceptions::InvalidClient,
-    CustomExceptions::InvalidRedirectURI,
-    CustomExceptions::EntityNotFound,
-    CustomExceptions::UnauthorizedClient,
-    CustomExceptions::UnsupportedResponseType,
-    CustomExceptions::RequestNotSupported,
-    CustomExceptions::RequestUriNotSupported,
-    CustomExceptions::RegistrationNotSupported => exception
+         CustomExceptions::InvalidGrant,
+         CustomExceptions::InvalidClient,
+         CustomExceptions::InvalidRedirectURI,
+         CustomExceptions::EntityNotFound,
+         CustomExceptions::UnauthorizedClient,
+         CustomExceptions::UnsupportedResponseType,
+         CustomExceptions::RequestNotSupported,
+         CustomExceptions::RequestUriNotSupported,
+         CustomExceptions::RegistrationNotSupported => exception
     if @redirect_uri
       redirect_with_error @redirect_uri.uri, exception
     else
