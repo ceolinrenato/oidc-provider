@@ -20,5 +20,6 @@ test:
 
 production:
   <<: *non_production_settings
+  :iss: https://accounts.licentia.digital
   :sign_in_service: https://accounts.licentia.digital/SignInService
   :account_management: https://accounts.licentia.digital/AccountManagement
