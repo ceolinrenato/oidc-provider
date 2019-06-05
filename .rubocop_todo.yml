@@ -6,15 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 4
-# Cop supports --auto-correct.
-Layout/EmptyLines:
-  Exclude:
-    - 'app/controllers/token_endpoint_controller.rb'
-    - 'app/models/scope.rb'
-    - 'config/environments/development.rb'
-    - 'test/controllers/sign_in_service/consent_lookup_test.rb'
-
 # Offense count: 6
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle.

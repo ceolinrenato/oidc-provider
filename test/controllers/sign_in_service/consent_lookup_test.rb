@@ -57,5 +57,4 @@ class ConsentLookupTest < ActionDispatch::IntegrationTest
     assert_equal parsed_response(@response)["error_code"], 0
   end
 
-
 end

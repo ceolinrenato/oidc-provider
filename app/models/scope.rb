@@ -3,7 +3,6 @@ class Scope < ApplicationRecord
   has_many :access_token_scopes
   has_many :access_tokens, through: :access_token_scopes
 
-
   def self.scope_list
     Scope.all.map { |scope| scope.name }.sort
   end

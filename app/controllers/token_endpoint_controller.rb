@@ -6,7 +6,6 @@ class TokenEndpointController < ApplicationController
   include RefreshTokenHelper
   include DeviceHelper
 
-
   def grant_token
     ActiveRecord::Base.transaction do
       authenticate_relying_party
