@@ -4,7 +4,7 @@ module SessionHelper
   private
 
   def set_or_create_session
-    @session = Session.find_by 'user_id = :user_id AND device_id = :device_id', { user_id: @user.id, device_id: @device.id }
+    @session = Session.find_by 'user_id = :user_id AND device_id = :device_id', user_id: @user.id, device_id: @device.id
     if @session
       @session.update! last_activity: Time.now
     else
@@ -13,7 +13,7 @@ module SessionHelper
   end
 
   def set_and_validate_session!
-    @session = Session.find_by 'user_id = :user_id AND device_id = :device_id', { user_id: @user.id, device_id: @device.id }
+    @session = Session.find_by 'user_id = :user_id AND device_id = :device_id', user_id: @user.id, device_id: @device.id
     raise CustomExceptions::InvalidGrant.new 13 unless @session
     raise CustomExceptions::InvalidGrant.new 14 if @session.expired?
     raise CustomExceptions::InvalidGrant.new 16 if @session.signed_out

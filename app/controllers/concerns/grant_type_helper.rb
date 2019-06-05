@@ -16,7 +16,7 @@ module GrantTypeHelper
   def set_grant_type
     raise CustomExceptions::InvalidRequest.new 29 unless params[:grant_type]
     raise CustomExceptions::UnsupportedGrantType.new unless SUPPORTED_GRANT_TYPES.include? params[:grant_type]
-    raise CustomExceptions::UnauthorizedClient.new 27 unless (AUTHORIZED_GRANT_TYPES.include? params[:grant_type] or @relying_party.third_party == false)
+    raise CustomExceptions::UnauthorizedClient.new 27 unless (AUTHORIZED_GRANT_TYPES.include?(params[:grant_type]) || (@relying_party.third_party == false))
     @grant_type = params[:grant_type]
   end
 end

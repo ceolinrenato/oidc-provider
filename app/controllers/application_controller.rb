@@ -8,19 +8,19 @@ class ApplicationController < ActionController::API
   private
 
   def bearer_authorization
-    token = get_bearer_token
+    token = bearer_token
     unless token
       response.headers['WWW-Authenticate'] = www_auth_header
-      head :unauthorized and return
+      head(:unauthorized) && return
     end
     @access_token = TokenDecode::AccessToken.new(token).decode
     @authenticated_user = User.find_by id: @access_token["sub"]
-  rescue CustomExceptions::InvalidAccessToken => exception
-    response.headers['WWW-Authenticate'] = www_auth_header exception
-    head :unauthorized and return
+  rescue CustomExceptions::InvalidAccessToken => e
+    response.headers['WWW-Authenticate'] = www_auth_header e
+    head(:unauthorized) && return
   end
 
-  def get_bearer_token
+  def bearer_token
     return params[:access_token] if request.method == 'POST' && !request.headers['Authorization']
     pattern = /^Bearer /
     header  = request.headers["Authorization"]

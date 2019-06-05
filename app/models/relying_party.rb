@@ -19,10 +19,8 @@ class RelyingParty < ApplicationRecord
   def granted_scopes(user)
     Scope.joins(access_tokens: [:relying_party, :session]).where(
       'relying_parties.id = :relying_party_id AND sessions.user_id = :user_id',
-      {
-        relying_party_id: id,
-        user_id: user.id
-      }
+      relying_party_id: id,
+      user_id: user.id
     ).map { |scope| scope.name }.uniq.sort
   end
 end

@@ -6,119 +6,15 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 25
-Metrics/AbcSize:
-  Max: 31
-
-# Offense count: 2
-# Configuration parameters: CountComments, ExcludedMethods.
-# ExcludedMethods: refine
-Metrics/BlockLength:
-  Max: 135
-
-# Offense count: 10
-# Configuration parameters: CountComments.
-Metrics/ClassLength:
-  Max: 280
-
-# Offense count: 3
-Metrics/CyclomaticComplexity:
-  Max: 9
-
-# Offense count: 25
-# Configuration parameters: CountComments, ExcludedMethods.
-Metrics/MethodLength:
-  Max: 30
-
-# Offense count: 3
-Metrics/PerceivedComplexity:
-  Max: 9
-
-# Offense count: 3
-Naming/AccessorMethodName:
-  Exclude:
-    - 'app/controllers/application_controller.rb'
-    - 'lib/modules/custom_exceptions.rb'
-    - 'test/test_helper.rb'
-
-# Offense count: 1
-# Configuration parameters: NamePrefix, NamePrefixBlacklist, NameWhitelist, MethodDefinitionMacros.
-# NamePrefix: is_, has_, have_
-# NamePrefixBlacklist: is_, has_, have_
-# NameWhitelist: is_a?
-# MethodDefinitionMacros: define_method, define_singleton_method
-Naming/PredicateName:
-  Exclude:
-    - 'spec/**/*'
-    - 'app/models/password_token.rb'
-
-# Offense count: 37
-# Cop supports --auto-correct.
-# Configuration parameters: PreferredName.
-Naming/RescuedExceptionsVariableName:
-  Exclude:
-    - 'app/controllers/application_controller.rb'
-    - 'app/controllers/authorization_endpoint_controller.rb'
-    - 'app/controllers/devices_controller.rb'
-    - 'app/controllers/relying_parties_controller.rb'
-    - 'app/controllers/session_management_controller.rb'
-    - 'app/controllers/sign_in_service_controller.rb'
-    - 'app/controllers/token_endpoint_controller.rb'
-    - 'app/controllers/users_controller.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-Security/YAMLLoad:
-  Exclude:
-    - 'config/initializers/load_config_initializer.rb'
-
-# Offense count: 6
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: always, conditionals
-Style/AndOr:
-  Exclude:
-    - 'app/controllers/application_controller.rb'
-    - 'app/controllers/authorization_endpoint_controller.rb'
-    - 'app/controllers/concerns/grant_type_helper.rb'
-    - 'app/controllers/concerns/response_type_helper.rb'
-    - 'app/controllers/users_controller.rb'
-
-# Offense count: 14
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: braces, no_braces, context_dependent
-Style/BracesAroundHashParameters:
-  Exclude:
-    - 'app/controllers/authorization_endpoint_controller.rb'
-    - 'app/controllers/concerns/redirect_uri_helper.rb'
-    - 'app/controllers/concerns/relying_party_helper.rb'
-    - 'app/controllers/concerns/session_helper.rb'
-    - 'app/controllers/users_controller.rb'
-    - 'app/models/access_token.rb'
-    - 'app/models/device.rb'
-    - 'app/models/relying_party.rb'
-    - 'app/models/session.rb'
-    - 'app/models/user.rb'
-    - 'lib/modules/token_decode.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: AutoCorrect, EnforcedStyle.
-# SupportedStyles: nested, compact
-Style/ClassAndModuleChildren:
-  Exclude:
-    - 'test/test_helper.rb'
-
 # Offense count: 10
 # Cop supports --auto-correct.
-Style/ColonMethodCall:
-  Exclude:
-    - 'app/controllers/concerns/scope_helper.rb'
-    - 'app/controllers/discovery_controller.rb'
-    - 'app/models/scope.rb'
-    - 'app/serializers/consent_lookup_serializer.rb'
-    - 'test/models/scope_test.rb'
+# Style/ColonMethodCall:
+#   Exclude:
+#     - 'app/controllers/concerns/scope_helper.rb'
+#     - 'app/controllers/discovery_controller.rb'
+#     - 'app/models/scope.rb'
+#     - 'app/serializers/consent_lookup_serializer.rb'
+#     - 'test/models/scope_test.rb'
 
 # Offense count: 2
 # Cop supports --auto-correct.

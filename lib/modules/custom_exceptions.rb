@@ -3,13 +3,13 @@ module CustomExceptions
     attr_reader :error, :error_code, :error_description
 
     def initialize(message, code = nil)
-      set_description_by_code(code) if code
+      self.error_description = code if code
       super message
     end
 
     private
 
-    def set_description_by_code(code)
+    def error_description=(code)
       error_object = error_list.find { |error| error[:error_code] == code }
       raise ErrorNotFound.new code unless error_object
       @error_code = error_object[:error_code]

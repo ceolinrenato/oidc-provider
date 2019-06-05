@@ -2,3 +2,34 @@ inherit_from: .rubocop_todo.yml
 
 Layout/EmptyLineAfterGuardClause:
   Enabled: false
+
+Metrics/AbcSize:
+  Max: 35
+
+Metrics/BlockLength:
+  Exclude:
+    - 'db/schema.rb'
+    - 'config/initializers/cors.rb'
+
+Metrics/ClassLength:
+  Max: 300
+
+Metrics/CyclomaticComplexity:
+  Max: 9
+
+Metrics/PerceivedComplexity:
+  Max: 9
+
+Metrics/MethodLength:
+  Max: 35
+
+Naming/AccessorMethodName:
+  Exclude:
+    - 'test/test_helper.rb'
+
+Security/YAMLLoad:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  Exclude:
+    - 'test/test_helper.rb'
