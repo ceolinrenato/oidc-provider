@@ -23,9 +23,9 @@ module TokenDecode
       jwt.first
     rescue JWT::DecodeError
       case self.class.to_s
-      when "TokenDecode::AccessToken"
+      when 'TokenDecode::AccessToken'
         raise CustomExceptions::InvalidAccessToken
-      when "TokenDecode::IDToken"
+      when 'TokenDecode::IDToken'
         raise CustomExceptions::InvalidIDToken
       else
         raise JWT::DecodeError
@@ -36,7 +36,7 @@ module TokenDecode
   class AccessToken < IDToken
     def decode
       decoded_token = decode_jwt(decrypt_token(@token))
-      raise CustomExceptions::InvalidAccessToken unless Session.find_by token: decoded_token["sid"]
+      raise CustomExceptions::InvalidAccessToken unless Session.find_by token: decoded_token['sid']
       decoded_token
     end
 

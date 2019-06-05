@@ -5,7 +5,7 @@ class TokenEndpointSerializer < BaseSerializer
     scopes = access_token.scopes.map { |scope| scope.name }
     response_body = {
       access_token: encrypted_access_token,
-      token_type: "Bearer",
+      token_type: 'Bearer',
       refresh_token: access_token.refresh_tokens.last.token,
       expires_in: OIDC_PROVIDER_CONFIG[:expiration_time]
     }

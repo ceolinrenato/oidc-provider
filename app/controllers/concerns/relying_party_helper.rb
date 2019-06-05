@@ -17,7 +17,7 @@ module RelyingPartyHelper
   end
 
   def third_party_authorization
-    relying_party = RelyingParty.find_by client_id: @access_token["aud"]
+    relying_party = RelyingParty.find_by client_id: @access_token['aud']
     raise CustomExceptions::InsufficientPermissions, 39 if relying_party.third_party
   end
 end

@@ -14,7 +14,7 @@ class ApplicationController < ActionController::API
       head(:unauthorized) && return
     end
     @access_token = TokenDecode::AccessToken.new(token).decode
-    @authenticated_user = User.find_by id: @access_token["sub"]
+    @authenticated_user = User.find_by id: @access_token['sub']
   rescue CustomExceptions::InvalidAccessToken => e
     response.headers['WWW-Authenticate'] = www_auth_header e
     head(:unauthorized) && return
@@ -23,7 +23,7 @@ class ApplicationController < ActionController::API
   def bearer_token
     return params[:access_token] if request.method == 'POST' && !request.headers['Authorization']
     pattern = /^Bearer /
-    header  = request.headers["Authorization"]
+    header  = request.headers['Authorization']
     header.gsub(pattern, '') if header&.match(pattern)
   end
 

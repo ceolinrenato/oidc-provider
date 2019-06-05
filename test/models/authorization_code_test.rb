@@ -8,7 +8,7 @@ class AuthorizationCodeTest < ActiveSupport::TestCase
     }
   end
 
-  test "should_create_valid_authorization_code" do
+  test 'should_create_valid_authorization_code' do
     authorization_code = AuthorizationCode.new dummy_authorization_code
     assert authorization_code.save
   end
