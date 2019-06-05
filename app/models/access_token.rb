@@ -15,7 +15,7 @@ class AccessToken < ApplicationRecord
       exp: updated_at.to_i + OIDC_PROVIDER_CONFIG[:expiration_time],
       iat: updated_at.to_i,
       sid: session.token,
-      scopes: scopes.map { |scope| scope.name }
+      scopes: scopes.map(&:name)
     }
     encrypt(jwt_encode(payload))
   end

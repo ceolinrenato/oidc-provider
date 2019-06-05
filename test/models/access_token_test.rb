@@ -20,7 +20,7 @@ class AccessTokenTest < ActiveSupport::TestCase
     assert_equal decoded_token['sub'], access_tokens(:example).session.user.id.to_s
     assert_equal decoded_token['aud'], access_tokens(:example).relying_party.client_id
     assert_equal decoded_token['sid'], access_tokens(:example).session.token
-    assert_equal decoded_token['scopes'], (access_tokens(:example).scopes.map { |scope| scope.name })
+    assert_equal decoded_token['scopes'], access_tokens(:example).scopes.map(&:name)
   end
 
   test 'id_token_method_must_generate_valid_jws_token' do

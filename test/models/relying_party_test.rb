@@ -84,7 +84,7 @@ class RelyingPartyTest < ActiveSupport::TestCase
       granted_scopes = []
       user.sessions.each do |session|
         session.access_tokens.each do |access_token|
-          granted_scopes << access_token.scopes.map { |scope| scope.name }
+          granted_scopes << access_token.scopes.map(&:name)
         end
       end
       assert_equal granted_scopes.flatten.uniq.sort, relying_party.granted_scopes(user)

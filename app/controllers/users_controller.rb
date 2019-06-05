@@ -60,6 +60,6 @@ class UsersController < ApplicationController
     @user.sessions.where(
       'device_id != :device_id',
       device_id: @device.id
-    ).each { |session| session.destroy! }
+    ).each(&:destroy!)
   end
 end

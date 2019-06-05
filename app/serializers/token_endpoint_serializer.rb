@@ -2,7 +2,7 @@ class TokenEndpointSerializer < BaseSerializer
   def initialize(access_token)
     access_token.touch
     encrypted_access_token = access_token.token
-    scopes = access_token.scopes.map { |scope| scope.name }
+    scopes = access_token.scopes.map(&:name)
     response_body = {
       access_token: encrypted_access_token,
       token_type: 'Bearer',

@@ -21,6 +21,6 @@ class RelyingParty < ApplicationRecord
       'relying_parties.id = :relying_party_id AND sessions.user_id = :user_id',
       relying_party_id: id,
       user_id: user.id
-    ).map { |scope| scope.name }.uniq.sort
+    ).map(&:name).uniq.sort
   end
 end

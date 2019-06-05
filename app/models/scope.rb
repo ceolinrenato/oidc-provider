@@ -4,7 +4,7 @@ class Scope < ApplicationRecord
   has_many :access_tokens, through: :access_token_scopes
 
   def self.scope_list
-    Scope.all.map { |scope| scope.name }.sort
+    Scope.all.map(&:name).sort
   end
 
   def self.parse_authorization_scope(scope = nil)

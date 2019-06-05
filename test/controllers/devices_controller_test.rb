@@ -5,7 +5,7 @@ class DevicesControllerTest < ActionDispatch::IntegrationTest
     get "/users/#{users(:example).id}/devices",
         headers: { 'Authorization' => "Bearer #{valid_access_token(['openid', 'listDevices'])}" }
     assert_response :ok
-    assert_equal users(:example).sessions.select { |session| session.active? }.count, parsed_response(@response).count
+    assert_equal users(:example).sessions.select(&:active?).count, parsed_response(@response).count
   end
 
   test 'request_must_return_unauthorized_if_no_access_token' do
