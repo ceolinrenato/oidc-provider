@@ -6,7 +6,6 @@
 # Read more: https://github.com/cyu/rack-cors
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
-
   allow do
     origins Rails.application.config.allowed_cors_origins
 
@@ -35,7 +34,6 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
              headers: :any,
              methods: [:delete, :patch, :options],
              credentials: true
-
   end
 
   allow do
@@ -56,7 +54,5 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
     resource '/users/*',
              headers: :any,
              methods: [:get, :patch, :put, :options]
-
   end
-
 end
