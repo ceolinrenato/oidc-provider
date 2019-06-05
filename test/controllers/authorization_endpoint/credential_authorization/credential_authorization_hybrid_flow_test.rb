@@ -57,7 +57,7 @@ class CredentialAuthorizationHybridFlowTest < ActionDispatch::IntegrationTest
     assert_equal parsed_fragment["token_type"], "Bearer"
   end
 
-    test "id_token_must_have_nonce_and_c_hash_when_response_type_code_id_token" do
+  test "id_token_must_have_nonce_and_c_hash_when_response_type_code_id_token" do
     request_params = example_hybrid_flow
     request_params[:response_type] = 'code id_token'
     post '/oauth2/credential_authorization', params: request_params
