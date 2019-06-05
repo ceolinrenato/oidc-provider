@@ -44,3 +44,6 @@ Style/MixinUsage:
   Exclude:
     - 'bin/setup'
     - 'bin/update'
+
+Style/NumericLiterals:
+  Enabled: false

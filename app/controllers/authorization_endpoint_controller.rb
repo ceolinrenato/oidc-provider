@@ -18,7 +18,7 @@ class AuthorizationEndpointController < ApplicationController
       params_validation
       handle_prompt_none && return if params[:prompt] == 'none'
       redirect_params = params.permit(:client_id, :redirect_uri, :response_type, :response_mode, :state, :nonce, :prompt, :max_age)
-      redirect_params.merge! scope: @scopes.join(' ') if @scopes.count > 0
+      redirect_params.merge! scope: @scopes.join(' ') if @scopes.count.positive?
       redirect_with_params OIDC_PROVIDER_CONFIG[:sign_in_service], redirect_params
     end
   rescue CustomExceptions::InvalidRequest,
@@ -112,7 +112,7 @@ class AuthorizationEndpointController < ApplicationController
 
   def handle_prompt_none
     set_device
-    raise CustomExceptions::LoginRequired unless @device && @device.active_session_count > 0
+    raise CustomExceptions::LoginRequired unless @device&.active_session_count&.positive?
     raise CustomExceptions::AccountSelectionRequired if @device.active_session_count > 1 && !params[:id_token_hint]
     if params[:id_token_hint]
       token_hint = TokenDecode::IDToken.new(params[:id_token_hint]).decode verify_expiration: false
