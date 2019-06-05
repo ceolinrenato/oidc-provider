@@ -24,7 +24,7 @@ class ApplicationController < ActionController::API
     return params[:access_token] if request.method == 'POST' && !request.headers['Authorization']
     pattern = /^Bearer /
     header  = request.headers["Authorization"]
-    header.gsub(pattern, '') if header && header.match(pattern)
+    header.gsub(pattern, '') if header&.match(pattern)
   end
 
   def www_auth_header(exception = nil)

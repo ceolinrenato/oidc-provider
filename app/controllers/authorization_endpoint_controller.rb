@@ -118,7 +118,7 @@ class AuthorizationEndpointController < ApplicationController
       token_hint = TokenDecode::IDToken.new(params[:id_token_hint]).decode verify_expiration: false
       @session = @device.sessions.find_by 'user_id = :user_id',
                                           user_id: token_hint["sub"]
-      raise CustomExceptions::LoginRequired unless @session && @session.active?(params[:max_age])
+      raise CustomExceptions::LoginRequired unless @session&.active?(params[:max_age])
     else
       @session = @device.sessions.first
     end

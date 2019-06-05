@@ -6,21 +6,14 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 50
-# Cop supports --auto-correct.
-# Configuration parameters: .
-# SupportedStyles: compact, exploded
-# Style/RaiseArgs:
-#   EnforcedStyle: compact
-
 # Offense count: 2
 # Cop supports --auto-correct.
 # Configuration parameters: ConvertCodeThatCanStartToReturnNil, Whitelist.
 # Whitelist: present?, blank?, presence, try, try!
-Style/SafeNavigation:
-  Exclude:
-    - 'app/controllers/application_controller.rb'
-    - 'app/controllers/authorization_endpoint_controller.rb'
+# Style/SafeNavigation:
+#   Exclude:
+#     - 'app/controllers/application_controller.rb'
+#     - 'app/controllers/authorization_endpoint_controller.rb'
 
 # Offense count: 774
 # Cop supports --auto-correct.
