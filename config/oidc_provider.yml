@@ -20,5 +20,6 @@ test:
 
 production:
   <<: *non_production_settings
+  :iss: https://accounts.zetios.com.br
   :sign_in_service: https://accounts.zetios.com.br/SignInService
   :account_management: https://accounts.zetios.com.br/AccountManagement
