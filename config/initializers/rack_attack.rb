@@ -6,7 +6,7 @@ Rack::Attack.blocklist('allow2ban login scrapers') do |req|
   end
 end
 
-ActiveSupport::Notifications.subscribe('rack.attack') do |name, start, finish, request_id, req|
+ActiveSupport::Notifications.subscribe('rack.attack') do |_name, _start, _finish, _request_id, req|
   Rails.logger.info "[Rack::Attack][Blocked] " <<
                     "remote_ip: \"#{req.ip}\", " <<
                     "path: \"#{req.path}\""
