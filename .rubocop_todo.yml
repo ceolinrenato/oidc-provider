@@ -6,24 +6,14 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 10
-# Cop supports --auto-correct.
-# Style/ColonMethodCall:
-#   Exclude:
-#     - 'app/controllers/concerns/scope_helper.rb'
-#     - 'app/controllers/discovery_controller.rb'
-#     - 'app/models/scope.rb'
-#     - 'app/serializers/consent_lookup_serializer.rb'
-#     - 'test/models/scope_test.rb'
-
 # Offense count: 2
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SingleLineConditionsOnly, IncludeTernaryExpressions.
 # SupportedStyles: assign_to_condition, assign_inside_condition
-Style/ConditionalAssignment:
-  Exclude:
-    - 'app/controllers/concerns/grant_type_helper.rb'
-    - 'app/controllers/concerns/response_type_helper.rb'
+# Style/ConditionalAssignment:
+#   Exclude:
+#     - 'app/controllers/concerns/grant_type_helper.rb'
+#     - 'app/controllers/concerns/response_type_helper.rb'
 
 # Offense count: 74
 Style/Documentation:

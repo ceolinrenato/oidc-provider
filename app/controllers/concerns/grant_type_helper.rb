@@ -5,11 +5,11 @@ module GrantTypeHelper
 
   # Password GrantType not yet implemented, but needed for testing
 
-  if Rails.env.test?
-    SUPPORTED_GRANT_TYPES = ['authorization_code', 'refresh_token', 'password']
-  else
-    SUPPORTED_GRANT_TYPES = ['authorization_code', 'refresh_token']
-  end
+  SUPPORTED_GRANT_TYPES = if Rails.env.test?
+                            ['authorization_code', 'refresh_token', 'password']
+                          else
+                            ['authorization_code', 'refresh_token']
+                          end
 
   AUTHORIZED_GRANT_TYPES = ['authorization_code', 'refresh_token']
 
