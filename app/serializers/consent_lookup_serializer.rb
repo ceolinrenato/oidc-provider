@@ -5,7 +5,7 @@ class ConsentLookupSerializer < BaseSerializer
       relying_party: {
         client_name: relying_party.client_name,
         logo_uri: relying_party.logo_uri,
-        granted_scopes: relying_party.third_party ? relying_party.granted_scopes(user) : Scope::scope_list
+        granted_scopes: relying_party.third_party ? relying_party.granted_scopes(user) : Scope.scope_list
       }
     }
     super(data)

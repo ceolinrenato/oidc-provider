@@ -4,7 +4,7 @@ module ScopeHelper
   private
 
   def parse_scopes
-    @scopes = Scope::parse_authorization_scope params[:scope]
+    @scopes = Scope.parse_authorization_scope params[:scope]
   end
 
   def generate_auth_scopes

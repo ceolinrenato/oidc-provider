@@ -9,7 +9,7 @@ class DiscoveryController < ApplicationController
       token_endpoint: "#{OIDC_PROVIDER_CONFIG[:iss]}/oauth2/token",
       userinfo_endpoint: "#{OIDC_PROVIDER_CONFIG[:iss]}/userinfo",
       jwks_uri: "#{OIDC_PROVIDER_CONFIG[:iss]}/jwks.json",
-      scopes_supported: Scope::scope_list,
+      scopes_supported: Scope.scope_list,
       response_types_supported: ResponseTypeHelper::SUPPORTED_RESPONSE_TYPES,
       response_modes_supported: ['query', 'fragment'],
       grant_types_supported: GrantTypeHelper::SUPPORTED_GRANT_TYPES.clone << 'implicit',
