@@ -15,12 +15,8 @@ class User < ApplicationRecord
 
   def consents
     RelyingParty.joins(access_tokens: :session)
-      .where('relying_parties.third_party = :third_party AND sessions.user_id = :user_id',
-        {
-          third_party: true,
-          user_id: id
-        }
-      ).uniq
+                .where('relying_parties.third_party = :third_party AND sessions.user_id = :user_id',
+                       third_party: true,
+                       user_id: id).uniq
   end
-
 end

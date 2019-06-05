@@ -1,5 +1,4 @@
 class SessionCollectionSerializer < BaseCollectionSerializer
-
   def initialize(sessions, max_age)
     collection = sessions.map do |session|
       {
@@ -12,5 +11,4 @@ class SessionCollectionSerializer < BaseCollectionSerializer
     end
     super(collection)
   end
-
 end

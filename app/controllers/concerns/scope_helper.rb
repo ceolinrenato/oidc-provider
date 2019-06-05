@@ -4,7 +4,7 @@ module ScopeHelper
   private
 
   def parse_scopes
-    @scopes = Scope::parse_authorization_scope params[:scope]
+    @scopes = Scope.parse_authorization_scope params[:scope]
   end
 
   def generate_auth_scopes
@@ -15,7 +15,6 @@ module ScopeHelper
   end
 
   def scope_authorization(required_scopes)
-    raise CustomExceptions::InsufficientScopes.new unless (@access_token["scopes"] & required_scopes).count == required_scopes.count
+    raise CustomExceptions::InsufficientScopes unless (@access_token['scopes'] & required_scopes).count == required_scopes.count
   end
-
 end

@@ -42,5 +42,4 @@ Rails.application.routes.draw do
   # Users Routes
   patch  '/users/:user_id',                        to: 'users#update_profile'
   put    '/users/:user_id/password',               to: 'users#update_password'
-
 end

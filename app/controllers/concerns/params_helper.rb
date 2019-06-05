@@ -16,9 +16,6 @@ module ParamsHelper
     set_response_type
     set_response_mode
     parse_scopes
-    if AuthorizationFlowHelper::AUTHORIZATION_FLOWS[@response_type][:requires_nonce] && !params[:nonce]
-      raise CustomExceptions::InvalidRequest.new 34
-    end
+    raise CustomExceptions::InvalidRequest, 34 if AuthorizationFlowHelper::AUTHORIZATION_FLOWS[@response_type][:requires_nonce] && !params[:nonce]
   end
-
 end

@@ -1,5 +1,4 @@
 class AuthorizationEndpointController < ApplicationController
-
   include RelyingPartyHelper
   include RedirectUriHelper
   include ParamsHelper
@@ -17,31 +16,31 @@ class AuthorizationEndpointController < ApplicationController
   def request_validation
     ActiveRecord::Base.transaction do
       params_validation
-      handle_prompt_none and return if params[:prompt] == 'none'
+      handle_prompt_none && return if params[:prompt] == 'none'
       redirect_params = params.permit(:client_id, :redirect_uri, :response_type, :response_mode, :state, :nonce, :prompt, :max_age)
-      redirect_params.merge! scope: @scopes.join(' ') if @scopes.count > 0
+      redirect_params.merge! scope: @scopes.join(' ') if @scopes.count.positive?
       redirect_with_params OIDC_PROVIDER_CONFIG[:sign_in_service], redirect_params
     end
   rescue CustomExceptions::InvalidRequest,
-    CustomExceptions::InvalidClient,
-    CustomExceptions::InvalidRedirectURI,
-    CustomExceptions::UnsupportedResponseType,
-    CustomExceptions::UnauthorizedClient,
-    CustomExceptions::LoginRequired,
-    CustomExceptions::AccountSelectionRequired,
-    CustomExceptions::RequestNotSupported,
-    CustomExceptions::RequestUriNotSupported,
-    CustomExceptions::RegistrationNotSupported,
-    CustomExceptions::InvalidIDToken => exception
+         CustomExceptions::InvalidClient,
+         CustomExceptions::InvalidRedirectURI,
+         CustomExceptions::UnsupportedResponseType,
+         CustomExceptions::UnauthorizedClient,
+         CustomExceptions::LoginRequired,
+         CustomExceptions::AccountSelectionRequired,
+         CustomExceptions::RequestNotSupported,
+         CustomExceptions::RequestUriNotSupported,
+         CustomExceptions::RegistrationNotSupported,
+         CustomExceptions::InvalidIDToken => e
     if @redirect_uri
-        redirect_with_error @redirect_uri.uri, exception
+      redirect_with_error @redirect_uri.uri, e
     else
       redirect_with_params "#{OIDC_PROVIDER_CONFIG[:sign_in_service]}/error",
-      params.permit(:client_id, :redirect_uri, :response_type, :response_mode, :scope, :state, :nonce, :prompt, :max_age)
+                           params.permit(:client_id, :redirect_uri, :response_type, :response_mode, :scope, :state, :nonce, :prompt, :max_age)
     end
-  rescue CustomExceptions::CompromisedDevice => exception
+  rescue CustomExceptions::CompromisedDevice => e
     destroy_compromised_device
-    redirect_with_error @redirect_uri.uri, exception
+    redirect_with_error @redirect_uri.uri, e
   end
 
   def credential_authorization
@@ -55,25 +54,25 @@ class AuthorizationEndpointController < ApplicationController
       set_device_token_cookie
     end
   rescue CustomExceptions::InvalidRequest,
-    CustomExceptions::InvalidGrant,
-    CustomExceptions::InvalidClient,
-    CustomExceptions::InvalidRedirectURI,
-    CustomExceptions::UnsupportedResponseType,
-    CustomExceptions::UnauthorizedClient,
-    CustomExceptions::RequestNotSupported,
-    CustomExceptions::RequestUriNotSupported,
-    CustomExceptions::RegistrationNotSupported => exception
+         CustomExceptions::InvalidGrant,
+         CustomExceptions::InvalidClient,
+         CustomExceptions::InvalidRedirectURI,
+         CustomExceptions::UnsupportedResponseType,
+         CustomExceptions::UnauthorizedClient,
+         CustomExceptions::RequestNotSupported,
+         CustomExceptions::RequestUriNotSupported,
+         CustomExceptions::RegistrationNotSupported => e
     if @redirect_uri
-      redirect_with_error @redirect_uri.uri, exception
+      redirect_with_error @redirect_uri.uri, e
     else
-      redirect_with_error "#{OIDC_PROVIDER_CONFIG[:sign_in_service]}/error", exception
+      redirect_with_error "#{OIDC_PROVIDER_CONFIG[:sign_in_service]}/error", e
     end
-  rescue CustomExceptions::UnrecognizedDevice => exception
+  rescue CustomExceptions::UnrecognizedDevice => e
     clear_device_token_cookie
-    redirect_with_error @redirect_uri.uri, exception
-  rescue CustomExceptions::CompromisedDevice => exception
+    redirect_with_error @redirect_uri.uri, e
+  rescue CustomExceptions::CompromisedDevice => e
     destroy_compromised_device
-    redirect_with_error @redirect_uri.uri, exception
+    redirect_with_error @redirect_uri.uri, e
   end
 
   def session_authorization
@@ -87,39 +86,39 @@ class AuthorizationEndpointController < ApplicationController
       set_device_token_cookie
     end
   rescue CustomExceptions::InvalidRequest,
-    CustomExceptions::InvalidGrant,
-    CustomExceptions::InvalidClient,
-    CustomExceptions::InvalidRedirectURI,
-    CustomExceptions::EntityNotFound,
-    CustomExceptions::UnauthorizedClient,
-    CustomExceptions::UnsupportedResponseType,
-    CustomExceptions::RequestNotSupported,
-    CustomExceptions::RequestUriNotSupported,
-    CustomExceptions::RegistrationNotSupported => exception
+         CustomExceptions::InvalidGrant,
+         CustomExceptions::InvalidClient,
+         CustomExceptions::InvalidRedirectURI,
+         CustomExceptions::EntityNotFound,
+         CustomExceptions::UnauthorizedClient,
+         CustomExceptions::UnsupportedResponseType,
+         CustomExceptions::RequestNotSupported,
+         CustomExceptions::RequestUriNotSupported,
+         CustomExceptions::RegistrationNotSupported => e
     if @redirect_uri
-      redirect_with_error @redirect_uri.uri, exception
+      redirect_with_error @redirect_uri.uri, e
     else
-      redirect_with_error "#{OIDC_PROVIDER_CONFIG[:sign_in_service]}/error", exception
+      redirect_with_error "#{OIDC_PROVIDER_CONFIG[:sign_in_service]}/error", e
     end
-  rescue CustomExceptions::UnrecognizedDevice => exception
+  rescue CustomExceptions::UnrecognizedDevice => e
     clear_device_token_cookie
-    redirect_with_error @redirect_uri.uri, exception
-  rescue CustomExceptions::CompromisedDevice => exception
+    redirect_with_error @redirect_uri.uri, e
+  rescue CustomExceptions::CompromisedDevice => e
     destroy_compromised_device
-    redirect_with_error @redirect_uri.uri, exception
+    redirect_with_error @redirect_uri.uri, e
   end
 
   private
 
   def handle_prompt_none
     set_device
-    raise CustomExceptions::LoginRequired unless @device && @device.active_session_count > 0
+    raise CustomExceptions::LoginRequired unless @device&.active_session_count&.positive?
     raise CustomExceptions::AccountSelectionRequired if @device.active_session_count > 1 && !params[:id_token_hint]
     if params[:id_token_hint]
       token_hint = TokenDecode::IDToken.new(params[:id_token_hint]).decode verify_expiration: false
       @session = @device.sessions.find_by 'user_id = :user_id',
-        { user_id: token_hint["sub"] }
-      raise CustomExceptions::LoginRequired unless @session && @session.active?(params[:max_age])
+                                          user_id: token_hint['sub']
+      raise CustomExceptions::LoginRequired unless @session&.active?(params[:max_age])
     else
       @session = @device.sessions.first
     end
@@ -144,23 +143,18 @@ class AuthorizationEndpointController < ApplicationController
   def redirect_with_error(location, exception)
     if @response_mode && @response_mode == 'fragment'
       redirect_with_fragment location,
-      {
-        error: exception.error,
-        error_description: exception.error_description,
-        state: params[:state]
-      }
+                             error: exception.error,
+                             error_description: exception.error_description,
+                             state: params[:state]
     else
       redirect_with_params location,
-        {
-          error: exception.error,
-          error_description: exception.error_description,
-          state: params[:state]
-        }
+                           error: exception.error,
+                           error_description: exception.error_description,
+                           state: params[:state]
     end
   end
 
   def redirect_with_response(location, response)
     @response_mode == 'query' ? redirect_with_params(location, response) : redirect_with_fragment(location, response)
   end
-
 end

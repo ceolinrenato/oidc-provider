@@ -7,9 +7,7 @@ module Validators
           record.errors[attribute] << (options[:message] || 'uri must use https scheme')
         end
       end
-      if options[:deny_localhost] && URI(value).hostname == 'localhost'
-        record.errors[attribute] << (options[:message] || 'use of localhost as hostname is denied')
-      end
+      record.errors[attribute] << (options[:message] || 'use of localhost as hostname is denied') if options[:deny_localhost] && URI(value).hostname == 'localhost'
     end
   end
 

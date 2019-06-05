@@ -1,5 +1,4 @@
 class RelyingPartyCollectionSerializer < BaseCollectionSerializer
-
   def initialize(user, relying_parties)
     collection = relying_parties.map do |relying_party|
       {
@@ -10,5 +9,4 @@ class RelyingPartyCollectionSerializer < BaseCollectionSerializer
     end
     super(collection)
   end
-
 end

@@ -1,5 +1,4 @@
 class AccessToken < ApplicationRecord
-
   belongs_to :authorization_code, optional: true
   belongs_to :session
   belongs_to :relying_party
@@ -16,7 +15,7 @@ class AccessToken < ApplicationRecord
       exp: updated_at.to_i + OIDC_PROVIDER_CONFIG[:expiration_time],
       iat: updated_at.to_i,
       sid: session.token,
-      scopes: scopes.map { |scope| scope.name }
+      scopes: scopes.map(&:name)
     }
     encrypt(jwt_encode(payload))
   end
@@ -36,7 +35,7 @@ class AccessToken < ApplicationRecord
       payload[:nonce] = authorization_code.nonce if authorization_code.nonce
       payload[:c_hash] = calc_c_hash
     else
-      payload[:nonce] = nonce if nonce
+      payload[:nonce] = nonce
     end
     jwt_encode(payload)
   end
@@ -53,15 +52,14 @@ class AccessToken < ApplicationRecord
   end
 
   def jwt_encode(payload)
-    JWT.encode payload, TokenDecode::RSA_PRIVATE, 'RS256', { kid: 'Key used to validate id_token signature'}
+    JWT.encode payload, TokenDecode::RSA_PRIVATE, 'RS256', kid: 'Key used to validate id_token signature'
   end
 
   def calc_at_hash(encrypted_access_token)
-    Base64.urlsafe_encode64(Digest::SHA256.digest(encrypted_access_token)[0,16], padding: false)
+    Base64.urlsafe_encode64(Digest::SHA256.digest(encrypted_access_token)[0, 16], padding: false)
   end
 
   def calc_c_hash
-    Base64.urlsafe_encode64(Digest::SHA256.digest(authorization_code.code)[0,16], padding: false)
+    Base64.urlsafe_encode64(Digest::SHA256.digest(authorization_code.code)[0, 16], padding: false)
   end
-
 end

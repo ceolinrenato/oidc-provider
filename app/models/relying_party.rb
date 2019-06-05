@@ -13,17 +13,14 @@ class RelyingParty < ApplicationRecord
   validates :frontchannel_logout_uri, FrontChannelURI: true, allow_blank: true
 
   def authorized_redirect_uri?(redirect_uri)
-    (redirect_uris.find_by uri: redirect_uri) ? true: false
+    redirect_uris.find_by(uri: redirect_uri) ? true : false
   end
 
   def granted_scopes(user)
     Scope.joins(access_tokens: [:relying_party, :session]).where(
       'relying_parties.id = :relying_party_id AND sessions.user_id = :user_id',
-        {
-          relying_party_id: id,
-          user_id: user.id
-        }
-    ).map { |scope| scope.name }.uniq.sort
+      relying_party_id: id,
+      user_id: user.id
+    ).map(&:name).uniq.sort
   end
-
 end

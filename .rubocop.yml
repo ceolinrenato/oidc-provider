@@ -1,0 +1,57 @@
+Layout/EmptyLineAfterGuardClause:
+  Enabled: false
+
+Metrics/AbcSize:
+  Max: 35
+
+Metrics/BlockLength:
+  Exclude:
+    - 'db/schema.rb'
+    - 'config/initializers/cors.rb'
+
+Metrics/ClassLength:
+  Max: 300
+
+Metrics/MethodLength:
+  Max: 35
+
+Metrics/LineLength:
+  Max: 180
+
+Metrics/CyclomaticComplexity:
+  Max: 9
+
+Metrics/PerceivedComplexity:
+  Max: 9
+
+Naming/AccessorMethodName:
+  Exclude:
+    - 'test/test_helper.rb'
+
+Security/YAMLLoad:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  Exclude:
+    - 'test/test_helper.rb'
+
+Style/Documentation:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/MixinUsage:
+  Exclude:
+    - 'bin/setup'
+    - 'bin/update'
+
+Style/NumericLiterals:
+  Enabled: false
+
+Style/SymbolArray:
+  EnforcedStyle: brackets
+
+
+Style/WordArray:
+  EnforcedStyle: brackets

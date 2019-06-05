@@ -1,11 +1,9 @@
 class TokenEndpointController < ApplicationController
-
   include GrantTypeHelper
   include RelyingPartyHelper
   include AuthorizationCodeHelper
   include RefreshTokenHelper
   include DeviceHelper
-
 
   def grant_token
     ActiveRecord::Base.transaction do
@@ -14,14 +12,14 @@ class TokenEndpointController < ApplicationController
       send GRANTS[@grant_type]
     end
   rescue CustomExceptions::InvalidRequest,
-    CustomExceptions::InvalidClient,
-    CustomExceptions::UnauthorizedClient,
-    CustomExceptions::UnsupportedGrantType,
-    CustomExceptions::InvalidGrant => exception
-    render json: ErrorSerializer.new(exception), status: :bad_request
-  rescue CustomExceptions::CompromisedDevice => exception
+         CustomExceptions::InvalidClient,
+         CustomExceptions::UnauthorizedClient,
+         CustomExceptions::UnsupportedGrantType,
+         CustomExceptions::InvalidGrant => e
+    render json: ErrorSerializer.new(e), status: :bad_request
+  rescue CustomExceptions::CompromisedDevice => e
     destroy_compromised_device
-    render json: ErrorSerializer.new(exception), status: :bad_request
+    render json: ErrorSerializer.new(e), status: :bad_request
   end
 
   private
@@ -29,7 +27,7 @@ class TokenEndpointController < ApplicationController
   GRANTS = {
     'authorization_code' => :code_grant,
     'refresh_token' => :refresh_grant
-  }
+  }.freeze
 
   def code_grant
     set_authorization_code
@@ -47,5 +45,4 @@ class TokenEndpointController < ApplicationController
     set_device_token_cookie
     render json: TokenEndpointSerializer.new(access_token)
   end
-
 end

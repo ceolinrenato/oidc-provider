@@ -1,7 +1,6 @@
 class DeviceCollectionSerializer < BaseCollectionSerializer
-
   def initialize(sessions)
-    collection = sessions.select { |session| session.active? }.map do |session|
+    collection = sessions.select(&:active?).map do |session|
       device = session.device
       {
         browser: "#{device.browser_name} (#{device.browser_version})",
@@ -15,5 +14,4 @@ class DeviceCollectionSerializer < BaseCollectionSerializer
     end
     super(collection)
   end
-
 end

@@ -1,5 +1,4 @@
 class UsersController < ApplicationController
-
   include UserHelper
   include ScopeHelper
   include RelyingPartyHelper
@@ -18,13 +17,13 @@ class UsersController < ApplicationController
     @user.name = params[:name] if params[:name]
     @user.last_name = params[:last_name] if params[:last_name]
     @user.save
-    render json: @user.errors, status: :unprocessable_entity and return unless @user.valid?
+    render(json: @user.errors, status: :unprocessable_entity) && return unless @user.valid?
     render json: UserInfoSerializer.new(@user)
   rescue CustomExceptions::InsufficientScopes,
-    CustomExceptions::InsufficientPermissions => exception
-    render json: ErrorSerializer.new(exception), status: :forbidden
-  rescue CustomExceptions::EntityNotFound => exception
-    render json: ErrorSerializer.new(exception), status: :not_found
+         CustomExceptions::InsufficientPermissions => e
+    render json: ErrorSerializer.new(e), status: :forbidden
+  rescue CustomExceptions::EntityNotFound => e
+    render json: ErrorSerializer.new(e), status: :not_found
   end
 
   def update_password
@@ -32,7 +31,7 @@ class UsersController < ApplicationController
       set_user_by_id!
       target_user_authorization
       third_party_authorization
-      raise CustomExceptions::InvalidGrant.new 8 unless @user.authenticate params[:old_password]
+      raise CustomExceptions::InvalidGrant, 8 unless @user.authenticate params[:old_password]
       @user.password = params[:new_password]
       @user.save!
       handle_remove_other_sessions if params[:sign_out]
@@ -41,17 +40,17 @@ class UsersController < ApplicationController
   rescue ActiveRecord::RecordInvalid
     render json: @user.errors, status: :unprocessable_entity
   rescue CustomExceptions::InsufficientScopes,
-    CustomExceptions::InsufficientPermissions,
-    CustomExceptions::InvalidGrant => exception
-    render json: ErrorSerializer.new(exception), status: :forbidden
-  rescue CustomExceptions::EntityNotFound => exception
-    render json: ErrorSerializer.new(exception), status: :not_found
-  rescue CustomExceptions::UnrecognizedDevice => exception
+         CustomExceptions::InsufficientPermissions,
+         CustomExceptions::InvalidGrant => e
+    render json: ErrorSerializer.new(e), status: :forbidden
+  rescue CustomExceptions::EntityNotFound => e
+    render json: ErrorSerializer.new(e), status: :not_found
+  rescue CustomExceptions::UnrecognizedDevice => e
     clear_device_token_cookie
-    render json: ErrorSerializer.new(exception), status: :bad_request
-  rescue CustomExceptions::CompromisedDevice => exception
+    render json: ErrorSerializer.new(e), status: :bad_request
+  rescue CustomExceptions::CompromisedDevice => e
     destroy_compromised_device
-    render json: ErrorSerializer.new(exception), status: :bad_request
+    render json: ErrorSerializer.new(e), status: :bad_request
   end
 
   private
@@ -60,10 +59,7 @@ class UsersController < ApplicationController
     set_device!
     @user.sessions.where(
       'device_id != :device_id',
-      {
-        device_id: @device.id
-      }
-    ).each { |session| session.destroy! }
+      device_id: @device.id
+    ).each(&:destroy!)
   end
-
 end
