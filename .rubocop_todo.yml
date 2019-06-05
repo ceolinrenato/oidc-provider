@@ -6,40 +6,11 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 1
-# Style/IfInsideElse:
+# Offense count: 2
+# Style/MixinUsage:
 #   Exclude:
-#     - 'app/models/access_token.rb'
-
-# Offense count: 2
-# Cop supports --auto-correct.
-Style/IfUnlessModifier:
-  Exclude:
-    - 'app/controllers/concerns/params_helper.rb'
-    - 'app/models/concerns/validators.rb'
-
-# Offense count: 2
-# Cop supports --auto-correct.
-Style/LineEndConcatenation:
-  Exclude:
-    - 'config/initializers/rack_attack.rb'
-
-# Offense count: 6
-# Cop supports --auto-correct.
-# Configuration parameters: IgnoredMethods.
-Style/MethodCallWithoutArgsParentheses:
-  Exclude:
-    - 'test/models/device_test.rb'
-    - 'test/models/relying_party_test.rb'
-    - 'test/models/scope_test.rb'
-    - 'test/models/session_test.rb'
-    - 'test/models/user_test.rb'
-
-# Offense count: 2
-Style/MixinUsage:
-  Exclude:
-    - 'bin/setup'
-    - 'bin/update'
+#     - 'bin/setup'
+#     - 'bin/update'
 
 # Offense count: 8
 # Cop supports --auto-correct.

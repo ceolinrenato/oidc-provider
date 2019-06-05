@@ -80,7 +80,7 @@ class RelyingPartyTest < ActiveSupport::TestCase
 
   test "granted_scopes_method_should_return_all_scopes_a_user_granted_to_the_relying_party" do
     relying_party = relying_parties(:example)
-    users().each do |user|
+    users.each do |user|
       granted_scopes = []
       user.sessions.each do |session|
         session.access_tokens.each do |access_token|

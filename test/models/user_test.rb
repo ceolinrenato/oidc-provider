@@ -71,8 +71,8 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "consent_method_must_return_array_with_all_relying_parties_user_consented" do
-    users().each do |user|
-      tokens = access_tokens().select { |access_token| access_token.session.user == user }
+    users.each do |user|
+      tokens = access_tokens.select { |access_token| access_token.session.user == user }
       consents = []
       tokens.each do |token|
         consents << token.relying_party if token.relying_party.third_party

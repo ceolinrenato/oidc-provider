@@ -20,7 +20,7 @@ class ScopeTest < ActiveSupport::TestCase
 
   test "scope_names_should_be_unique" do
     scope = Scope.new dummy_scope
-    scope.name = scopes().first.name
+    scope.name = scopes.first.name
     assert_not scope.save
   end
 
