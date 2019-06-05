@@ -9,12 +9,12 @@
 # Offense count: 4
 # Cop supports --auto-correct.
 # Configuration parameters: AllowSafeAssignment, AllowInMultilineConditions.
-Style/ParenthesesAroundCondition:
-  Exclude:
-    - 'app/controllers/concerns/device_helper.rb'
-    - 'app/controllers/concerns/grant_type_helper.rb'
-    - 'app/controllers/concerns/relying_party_helper.rb'
-    - 'app/controllers/concerns/response_type_helper.rb'
+# Style/ParenthesesAroundCondition:
+#   Exclude:
+#     - 'app/controllers/concerns/device_helper.rb'
+#     - 'app/controllers/concerns/grant_type_helper.rb'
+#     - 'app/controllers/concerns/relying_party_helper.rb'
+#     - 'app/controllers/concerns/response_type_helper.rb'
 
 # Offense count: 1
 # Cop supports --auto-correct.

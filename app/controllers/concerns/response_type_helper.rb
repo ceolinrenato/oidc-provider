@@ -30,7 +30,7 @@ module ResponseTypeHelper
   def set_response_type
     raise CustomExceptions::InvalidRequest.new 12 unless params[:response_type]
     raise CustomExceptions::UnsupportedResponseType.new unless SUPPORTED_RESPONSE_TYPES.include? params[:response_type]
-    raise CustomExceptions::UnauthorizedClient.new 11 unless (AUTHORIZED_RESPONSE_TYPES.include?(params[:response_type]) || (@relying_party.third_party == false))
+    raise CustomExceptions::UnauthorizedClient.new 11 unless AUTHORIZED_RESPONSE_TYPES.include?(params[:response_type]) || (@relying_party.third_party == false)
     @response_type = params[:response_type]
   end
 
