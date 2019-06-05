@@ -35,7 +35,7 @@ class AccessToken < ApplicationRecord
       payload[:nonce] = authorization_code.nonce if authorization_code.nonce
       payload[:c_hash] = calc_c_hash
     else
-      payload[:nonce] = nonce if nonce
+      payload[:nonce] = nonce
     end
     jwt_encode(payload)
   end
